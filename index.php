@@ -3,76 +3,13 @@
     <!--end header-->
     
     <!--main-->
-	<link rel="stylesheet" type="text/css" href="./css/style-index-search.css">
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div id="main_container">
-                <h3>Accommodations all over South Africa. All in one place.</h3>
-                <form action="search.php" method="get" id="search_form">
-                    <label>I am looking for accommodation at: </label><br>
-                    <span id="search_error" class="err"></span>
-                    <br>
-                    <div class="search_keyword">
-                        <span class="fas fa-map-marker-alt"></span>
-                        <input type="text" id="search_keyword" name="search" placeholder="E.g. Johannesburg" >
-                    </div>
-                    <div class="user">
-                        <span class="fas fa-user"></span>
-                        <select id="sharing" name="sharing">
-                            <option value="any" selected>Any Sharing</option>
-                            <option value="double">Double Sharing</option>
-                            <option value="single">Single Sharing</option>
-                            <option value="multi">Multi-Sharing</option>
-                        </select>
-                    </div>
-                    <div class="search">
-                        <button type="button" onclick="search_function()">
-                            <span class="fas fa-search"></span>
-                            SEARCH
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="col-sm-1"></div>
-    </div>
+    <?php require 'search_div.php'; ?>
+    <link rel="stylesheet" type="text/css" href="./css/style-index-search.css">
+    <link rel="stylesheet" type="text/css" href="./css/style-index.css">
+
     <!--end main-->
     <!--***********featured accommodations***********-->
-    <style rel="sytlesheet" type="text/css">        
-        #featured_accommodations_heading{
-            margin-top: 8%;
-        }
-        #featured_accommodations_heading p{
-            border-bottom: 2px solid lightblue;            
-        }
-        #featured_accommodations_heading p a{
-            float: right;
-            text-decoration: none;
-        }
-        #featured_accommodations .featured_accommodations{
-            width: 100%;
-            height: 250px;
-            float: left;
-            margin-bottom: 1%;            
-        }
-        #featured_accommodations .featured_accommodations .accommodation{
-            width: 20%;
-            height: 100%;
-            padding: 3px;
-            float: left;            
-        }
-        #featured_accommodations .featured_accommodations .accommodation .image{ 
-            width: 100%;
-            height: 74%;            
-        }
-        #featured_accommodations .featured_accommodations .accommodation .image img{ 
-            border-radius: 8px;
-        }
-        #featured_accommodations .featured_accommodations .accommodation_detaails .checked {
-            color: orange;
-        }
-    </style>
+
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -146,55 +83,6 @@
     </div>
 
     <!--*********** accommodations in my location ***********-->
-    <style rel="sytlesheet" type="text/css">        
-        #accommodations_heading{
-            margin-top: 4%;
-        }
-        #accommodations_heading p{
-            border-bottom: 2px solid lightblue;            
-        }
-        #accommodations_heading p a{
-            float: right;
-            text-decoration: none;
-        }
-        #accommodations_by_location .accommodations_by_location{
-            width: 100%;
-            height: 250px;
-            float: left;
-            margin-bottom: 1%;            
-        }
-        #accommodations_by_location .accommodations_by_location .accommodation{
-            width: 20%;
-            height: 100%;
-            padding: 3px;
-            float: left;            
-        }
-        #accommodations_by_location .accommodations_by_location .accommodation .image{ 
-            width: 100%;
-            height: 74%;
-            position: relative;
-            text-align: center;
-        }
-        #accommodations_by_location .accommodations_by_location .accommodation .image img{ 
-            border-radius: 8px;
-        }
-        #accommodations_by_location .accommodations_by_location .accommodation .image img:hover{ 
-            -sm-transform: scale(1.05); /*IE 9*/
-            -webkit-transform: scale(1.05); /*Safari3-8*/
-            transform: scale(1.05);
-        }
-        #accommodations_by_location .accommodations_by_location .accommodation .image .accommodation_name{ 
-            position: absolute;
-            bottom: 7px;
-            right: 10px;
-            color: black;
-            background-color: lightgray;
-            padding: 1% 4%;
-            border-radius: 12px;
-        }
-
-    </style>        
-
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -239,16 +127,6 @@
     </div>
 
     <!--*************** Reviews **********************-->
-
-    <style rel="sytlesheet" type="text/css">        
-        #post_accommodation{
-            background-color: skyblue;
-            padding: 3% 5%;
-            border-radius: 20px;
-            border: 1px solid lightblue;
-        }
-    
-    </style>
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-5">
@@ -295,41 +173,6 @@
     </div>
 
     <!--************** accommodations in big cities ******************-->
-    <style rel="sytlesheet" type="text/css">       
-        #accommodations_by_cities{
-            margin-top: 5%;
-        }
-        #accommodations_by_cities .accommodations_by_cities{
-            width: 100%;
-            height: auto;
-            float: left;
-            margin-bottom: 1%;            
-        }
-        #accommodations_by_cities .accommodations_by_cities .city{
-            width: 33%;
-            height: auto;
-            padding: 3px;
-            float: left;            
-        }
-        #accommodations_by_cities .accommodations_by_cities .city .image{ 
-            width: 100%;
-            height: 74%;
-            position: relative;
-        }
-        #accommodations_by_cities .accommodations_by_cities .city .image img{ 
-            border-radius: 8px;
-        }
-        #accommodations_by_cities .accommodations_by_cities .city .image .city_details{ 
-            position: absolute;
-            top: 7px;
-            left: 10px;
-            color: black;
-            padding: 1% 4%;
-        }
-        #accommodations_by_cities .accommodations_by_cities .city .image .city_details small{ 
-            font-size: 18px;   
-        }
-    </style>
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -370,10 +213,10 @@
                     </div>
                     <div class="city">
                         <div class="image">
-                            <a href="featured.php?&location=durban" target="_blank">
-                                <img src="./images/places/durban.jpeg" alt="Lithuba Residence" style="width: 100%; height: 100%; ">
+                            <a href="featured.php?&location=capetown" target="_blank">
+                                <img src="./images/places/capetown.jpeg" alt="South Point" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
-                                    <strong>Durban</strong><br>
+                                    <strong>Cape town</strong><br>
                                     <small>Coming soon</small>
                                 </div>
                             </a> 
@@ -381,10 +224,10 @@
                     </div>
                     <div class="city">
                         <div class="image">
-                            <a href="featured.php?&location=capetown" target="_blank">
-                                <img src="./images/places/capetown.jpeg" alt="South Point" style="width: 100%; height: 100%; ">
+                            <a href="featured.php?&location=durban" target="_blank">
+                                <img src="./images/places/durban.jpeg" alt="Lithuba Residence" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
-                                    <strong>Cape town</strong><br>
+                                    <strong>Durban</strong><br>
                                     <small>Coming soon</small>
                                 </div>
                             </a> 

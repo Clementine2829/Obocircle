@@ -1,0 +1,57 @@
+#footer1{
+    text-align: center;            
+}
+#footer1 .subscribe_footer{
+    padding-top: 2%;       
+    border-top: 2px solid skyblue;
+}
+#footer1 .subscribe_footer .subsribe {
+    background-color: lightsteelblue;
+    border-radius: 50px;
+    padding: .5%;
+    margin: auto 20%;
+    width: 60%;
+
+}
+#footer1 .subscribe_footer .subsribe input[type=email] {
+    width: 70%;
+    border: none;
+    padding: 1% 2%;
+    margin-left: 2%;
+    background-color: lightsteelblue;
+    outline: none;
+}
+#footer1 .subscribe_footer .subsribe input[type=button] {
+    padding: 2%;
+    width: 27%;
+    background-color: blue;
+    color: white;
+    border-radius: 50px;
+    outline: none;
+    border: 2px solid blue;
+}
+#footer1 .subscribe_footer .subsribe input[type=button]:hover {
+    background-color: lightsteelblue;
+}
+#footer3,
+#footer2{
+    margin-top: 2%;
+}
+#footer2 .footer_container{
+    padding-right: 2%;            
+}
+#footer2 .footer_container a{
+    text-decoration: none;
+}
+#footer3 .footer_container  a{
+    text-decoration: none;
+    margin-left: 2%;
+}
+#footer4{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+#footer4 a{
+    text-decoration: none;
+}
+.err{color: red;}

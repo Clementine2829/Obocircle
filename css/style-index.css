@@ -1,0 +1,122 @@
+#featured_accommodations_heading{
+    margin-top: 8%;
+}
+#featured_accommodations_heading p{
+    border-bottom: 2px solid lightblue;            
+}
+#featured_accommodations_heading p a{
+    float: right;
+    text-decoration: none;
+}
+#featured_accommodations .featured_accommodations{
+    width: 100%;
+    height: 250px;
+    float: left;
+    margin-bottom: 1%;            
+}
+#featured_accommodations .featured_accommodations .accommodation{
+    width: 20%;
+    height: 100%;
+    padding: 3px;
+    float: left;            
+}
+#featured_accommodations .featured_accommodations .accommodation .image{ 
+    width: 100%;
+    height: 74%;            
+}
+#featured_accommodations .featured_accommodations .accommodation .image img{ 
+    border-radius: 8px;
+}
+#featured_accommodations .featured_accommodations .accommodation_detaails .checked {
+    color: orange;
+}
+/*********** accommodations in my location ***********/
+#accommodations_heading{
+    margin-top: 4%;
+}
+#accommodations_heading p{
+    border-bottom: 2px solid lightblue;            
+}
+#accommodations_heading p a{
+    float: right;
+    text-decoration: none;
+}
+#accommodations_by_location .accommodations_by_location{
+    width: 100%;
+    height: 250px;
+    float: left;
+    margin-bottom: 1%;            
+}
+#accommodations_by_location .accommodations_by_location .accommodation{
+    width: 20%;
+    height: 100%;
+    padding: 3px;
+    float: left;            
+}
+#accommodations_by_location .accommodations_by_location .accommodation .image{ 
+    width: 100%;
+    height: 74%;
+    position: relative;
+    text-align: center;
+}
+#accommodations_by_location .accommodations_by_location .accommodation .image img{ 
+    border-radius: 8px;
+}
+#accommodations_by_location .accommodations_by_location .accommodation .image img:hover{ 
+    -sm-transform: scale(1.05); /*IE 9*/
+    -webkit-transform: scale(1.05); /*Safari3-8*/
+    transform: scale(1.05);
+}
+#accommodations_by_location .accommodations_by_location .accommodation .image .accommodation_name{ 
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+    color: black;
+    background-color: lightgray;
+    padding: 1% 4%;
+    border-radius: 12px;
+}
+/*************** Reviews **********************/
+#post_accommodation{
+    background-color: skyblue;
+    padding: 3% 5%;
+    border-radius: 20px;
+    border: 1px solid lightblue;
+}
+
+/************** accommodations in big cities ******************/
+#accommodations_by_cities{
+    margin-top: 5%;
+}
+#accommodations_by_cities .accommodations_by_cities{
+    width: 100%;
+    height: auto;
+    float: left;
+    margin-bottom: 1%;            
+}
+#accommodations_by_cities .accommodations_by_cities .city{
+    width: 33%;
+    height: auto;
+    padding: 3px;
+    float: left;            
+}
+#accommodations_by_cities .accommodations_by_cities .city .image{ 
+    width: 100%;
+    height: 74%;
+    position: relative;
+}
+#accommodations_by_cities .accommodations_by_cities .city .image img{ 
+    border-radius: 8px;
+}
+#accommodations_by_cities .accommodations_by_cities .city .image .city_details{ 
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    color: black;
+    padding: 1% 4%;
+}
+#accommodations_by_cities .accommodations_by_cities .city .image .city_details small{ 
+    font-size: 15px; 
+    font-style: italic;
+    color: white;
+}
