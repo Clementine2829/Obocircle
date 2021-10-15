@@ -1,0 +1,41 @@
+#main_container{
+    margin-top: 6%;
+}
+#main_container h3, 
+#main_container label,
+#search_error{
+    margin-left: 2%;
+}
+#main_container .search_keyword,
+#main_container .user,
+#main_container .search{
+    display: inline;
+    padding: 2% 2%;
+    border: 1px solid skyblue;
+    border-radius: 50px;
+    margin: 2% 1%; 
+}
+#main_container .search{
+    background-color: skyblue;
+}
+#main_container .search_keyword input{
+    width: 45%;
+    padding: 1%;
+    border: none;
+    outline: none;
+}
+#main_container .user select{
+    width: 20%;
+    padding: 1% 2%;
+    border: none;
+    outline: none;
+}
+#main_container .search button{
+    width: auto;
+    padding: 1% 2%;
+    border: none;
+    outline: none;
+    background-color: skyblue;
+    color: white;
+}
+.err{color: red}

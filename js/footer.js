@@ -1,6 +1,6 @@
 $(document).ready(function () {
-/*    footer();
-	let cart = $("#cart").html();
+    footer();
+/*	let cart = $("#cart").html();
     load_cart();
     setTimeout(function(){
 		if(cart == 0){	
@@ -13,13 +13,13 @@ $(document).ready(function () {
 */});
 function load_cart(){
 	let loc = "#cart";
-	let url = "server/notifications.incl.php?action=cart";
+	let url = "./server/notifications.inc.php?action=cart";
 	send_data(url, displayer, loc, " ", " ");
 }
 function footer(){
 	let loc = "#the_footer";
-	let url = "footer.php";
-	send_data("", "", loc, url, displayer);
+	let url = "./footer.php";
+	send_data(url, displayer, loc);
 }
 function displayer(data, loc){
 	$(loc).html(data);
