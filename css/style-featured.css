@@ -1,0 +1,132 @@
+#filter_accommodations{
+    width: 20%;
+    float: left;
+    margin-top: 5%;
+}        
+#filter_accommodations .filter_accommodations{
+    width: 100%;
+    float: left;
+    margin-right: 2%;
+}
+#filter_accommodations .filter_accommodations .filters .sub_filter{
+    border: 1px solid skyblue;
+    padding: 3%;
+    margin: auto 13% 5% auto;
+    border-radius: 12px;
+}
+#filter_accommodations .filter_accommodations .filters p span:nth-child(2){
+    float: right;
+    margin: 2% 5%;
+}
+#submit_filters,
+#reset_filters{
+    width: 90%;
+    text-align: center;
+    padding: 1%;
+    background-color: skyblue;
+    color: white;
+    border: 2px solid skyblue;
+    border-radius: 12px;
+    margin-top: 5%;
+}
+#reset_filters{
+    background-color: lightgray;
+    border-color: lightgray;
+    color: red;
+}     
+#submit_filters:hover{
+    background-color: white;
+    color: skyblue;
+}
+
+#display_results{
+    width: 80%;
+    float: left;
+    margin-top: 5%;
+}
+#display_results .accommodations{
+    width: 100%;
+    float: left;
+    margin-left: 1%;
+}
+#display_results .accommodations .accommodation{
+    width: 100%;
+    height: 150px;
+    float: left;
+    border: 1px solid gray;
+    box-shadow: 2px 2px 7px 1px;
+    border-radius: 7px;
+    margin-bottom: 2%;
+}
+#display_results .accommodations .accommodation .images,
+#display_results .accommodations .accommodation .map{
+    width: 25%;
+    height: 150px;
+    float: left;
+    margin-right: 1%;
+}
+#display_results .accommodations .accommodation .images .carousel{
+    height: 100%;
+    width: 100%;
+}
+#display_results .accommodations .accommodation .images .carousel-inner{
+    width: 100%;
+    height: 100%;
+    border-radius: 7px 0px 0px 7px;
+}
+#display_results .accommodations .accommodation .images .carousel-inner .carousel-item{
+    height: 100%;
+    width: 100%;
+}
+
+#display_results .accommodations .accommodation .map{
+    width: 25%;
+}
+#display_results .accommodations .accommodation .details{
+    width: 30%;   
+    float: left;
+    margin: 7px auto;
+}
+#display_results .accommodations .accommodation .view_deals{
+    width: 15%;   
+    float: left;
+    margin: 7px auto;
+}
+#display_results .accommodations .accommodation .details h4{
+    margin-bottom: 2px;
+}
+#display_results .accommodations .accommodation .details .stars .checked{
+    color: orange;
+}
+#display_results .accommodations .accommodation .details small{
+    font-style: italic;
+    color: gray;
+    font-size: 13px;
+    display: inline;
+}
+#display_results .accommodations .accommodation .details .nsfas{
+    margin: 2% auto 1px auto;
+
+}
+#display_results .accommodations .accommodation .details .nsfas span{
+    background-color: red;
+    border-radius: 7px;
+    color: white;
+    font-size: 15px;
+    padding: 3px 3%;
+    margin-top: 5px;
+    width: auto;
+}
+#display_results .accommodations .accommodation .view_deal .view_deal_btn{
+    background-color: gray;
+    padding: 2% 3%;
+    margin-top: 2%;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    box-shadow: 2px 2px 7px 1px;
+    margin-bottom: 1%;
+}
+#display_results .accommodations .accommodation .view_deal .price{
+    margin-left: 4%;   
+}

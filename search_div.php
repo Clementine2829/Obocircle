@@ -27,7 +27,7 @@
                     <input type="text" id="search_keyword" name="search" value="<?php echo $search; ?>" placeholder="E.g. Johannesburg" >
                 </div>
                 <div class="user">
-                    <span class="fas fa-user"></span>
+                    <span class="fas fa-users"></span>
                     <select id="sharing" name="sharing">
                         <?php
                         if($sharing == "any"){

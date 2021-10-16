@@ -8,8 +8,8 @@
 				<span class="label">Join our mailing list for updates & discounted offers</span><br><br>
 				<span class="err" id="err_email_footer"></span>
 				<div class="subsribe">
-					<input type="email" id="email_footer" onchange="get_email()" placeholder="Enter your email address" required>
-					<input type="button" onclick="subscribe()" value="Subsrcibe">
+					<input type="email" id="email_footer" onchange="subscribe()" placeholder="Enter your email address" required>
+					<input type="button" onclick="footer_subscribe()" value="Subsrcibe">
 				</div>
 			</div>
         </div>
@@ -46,7 +46,11 @@
         <div class="col-sm-1"></div>
         <div class="col-md-10">
 			<div class="footer_container">
-				<h4>Reach to us..</h4>
+				<h4>
+                    We love to hear from you
+                    <br>
+                    Lets connect
+                </h4>
 				<p style="color:#0066ff">Email: info@obocircle.com 
                 <span class="social-media">
                     <!-- Add font awesome icons -->

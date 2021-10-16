@@ -14,13 +14,13 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div id="featured_accommodations_heading">
-                <p><strong>FEATURED ACCOMMODATIONS</strong> <a href="#" class="view_more">...VIEW MORE</a></p>
+                <p><strong>FEATURED ACCOMMODATIONS</strong> <a href="featured.php" class="view_more">...VIEW MORE</a></p>
             </div>
             <div id="featured_accommodations">
                 <div class="featured_accommodations">
                     <div class="accommodation">
                         <div class="image">
-                            <a href="featured.php?accommodation=123" target="_blank">
+                            <a href="view-accommodation.php?accommodation=123" target="_blank">
                                 <img src="./images/accommodation/African House/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
                             </a> 
                         </div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="accommodation">
                         <div class="image">
-                            <a href="featured.php?accommodation=123" target="_blank">
+                            <a href="view-accommodation.php?accommodation=123" target="_blank">
                                 <img src="./images/accommodation/Lithuba residence/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
                             </a> 
                         </div>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="accommodation">
                         <div class="image">
-                            <a href="featured.php?accommodation=123" target="_blank">
+                            <a href="view-accommodation.php?accommodation=123" target="_blank">
                                 <img src="./images/accommodation/South Point/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
                             </a> 
                         </div>
@@ -92,13 +92,13 @@
                     <span data-toggle="tooltip" data-placement="left" title class="fas fas fa-info-circle" 
                         data-original-title="Click on the lock on the URL bar to grant-access"></span>
                 </small><br>
-                <p><strong>ACCOMMODATIONS @ JOHANNESBURG</strong> <a href="#" class="view_more">...VIEW MORE</a></p>
+                <p><strong>ACCOMMODATIONS @ JOHANNESBURG</strong> <a href="./featured.php?location=Johannesburg" class="view_more">...VIEW MORE</a></p>
             </div>
             <div id="accommodations_by_location">
                 <div class="accommodations_by_location">
                     <div class="accommodation">
                         <div class="image">
-                            <a href="featured.php?accommodation=123&location=johannesburg" target="_blank">
+                            <a href="view-accommodation.php?accommodation=123&location=johannesburg" target="_blank">
                                 <img src="./images/accommodation/African House/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
                                 <div class="accommodation_name">House Africa</div>
                             </a> 
@@ -106,7 +106,7 @@
                     </div>
                     <div class="accommodation">
                         <div class="image">
-                            <a href="featured.php?accommodation=123&location=vaal" target="_blank">
+                            <a href="view-accommodation.php?accommodation=123&location=vaal" target="_blank">
                                 <img src="./images/accommodation/Lithuba residence/res1.jpg" alt="Lithuba Residence" style="width: 100%; height: 100%; ">
                                 <div class="accommodation_name">Lithuba Residence</div>
                             </a> 
@@ -114,7 +114,7 @@
                     </div>
                     <div class="accommodation">
                         <div class="image">
-                            <a href="featured.php?accommodation=123&location=pretoria" target="_blank">
+                            <a href="view-accommodation.php?accommodation=123&location=pretoria" target="_blank">
                                 <img src="./images/accommodation/South Point/res1.jpg" alt="South Point" style="width: 100%; height: 100%; ">
                                 <div class="accommodation_name">South Point</div>
                             </a> 
@@ -250,18 +250,9 @@
     <!--script-->
 	<script src="js/validate_email.js" type="text/javascript"></script>
 	<script src="js/footer.js" type="text/javascript"></script>
+	<script src="js/search.js" type="text/javascript"></script>
     <script type="text/javascript">
-        function search_function(){
-            $("#search_error").html("");
-            let search = $("#search_keyword").val();
-            if(search == ""){
-                $("#search_error").html("Enter a keyword to search<br>");
-                return;
-            }else{
-                window.location = "./search.php?search=" + search + "&sharing=" + $("#sharing").val();
-                //$("#search_form").submit();
-            }
-        }
+
     </script>
 </body>      
 </html>

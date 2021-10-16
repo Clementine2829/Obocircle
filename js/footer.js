@@ -56,20 +56,29 @@ function send_data(url,func=foo, loc, loading="", loading_text="", btn=""){
 }
 //used by the subscribe footer page
 function subscribe(){
-	let email = $("#subscribe_email").val();
-	let err_email = $("#subscribe_email_err");
+	let email = $("#email_footer");
+	let err_email = $("#err_email_footer");
 	let err_msg_1 = "Email address is required<br>";
 	let err_msg_2 = "Enter valid email address<br>";
 	return get_email(email, err_email, err_msg_1, err_msg_2, '');
 }
 function footer_subscribe(){
 	let email = subscribe();
-	let loc = $("#subscribe_email_err");
+	let loc = $("#err_email_footer");
 	send_subscription(email, loc);
 }
 function send_subscription(email, loc, name="", category=1){
 	if(email){
-		let url = "../server/subscribe.php?email=" + email;
-		send_data(url, displayer, loc);
+		let url = "./server/subscribe.incl.php?email=" + email;
+		send_data(url, clear_subscribe, loc, "Loading, please wait");
 	}	
+}
+function clear_subscribe(data, loc){
+    if(data == "Thank you for subscribing with us."){
+        $("#email_footer").val("");
+    }
+    $(loc).html(data);
+    setTimeout(function(){
+        $("#err_email_footer").html("");
+    }, 90000); //clear after 90sec
 }
