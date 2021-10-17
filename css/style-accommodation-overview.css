@@ -1,0 +1,126 @@
+#header_btns{
+    float: left;
+    width: 100%;
+    padding: 0px 0px 0px 10px;
+    margin-top: 3%;
+    border-radius: 15px;
+    background-image: linear-gradient(to right, rgba(150, 100, 0,1), rgba(100, 100, 100,.1), rgba(50, 50, 50,0));        
+}
+#header_btns .header_btns:nth-child(1){
+    float: left;
+}
+#header_btns .header_btns:nth-child(2){
+    float: right;
+}
+#header_btns .header_btns:nth-child(1) a{
+    color: blue;
+}
+#header_btns .header_btns:nth-child(2) button{
+    border-radius: 15px;
+    width: auto;
+    border: 2px solid lightgray;
+    outline: none;
+    background-color: lightgray;
+    color: blue;
+}
+/**********************************************************/
+#accommodation{
+    margin-top: 4%;
+}
+#accommodation,
+#overview_container,
+#overview_container .sub_container{
+    width: 100%;
+    float: left;
+}
+#overview_container .sub_container:nth-child(1) .image{
+    width: 28%;
+    margin-right: 2%;
+    height: 180px;
+    position: relative;
+    float: left;
+}
+#overview_container .sub_container:nth-child(1) .image div{
+    cursor: pointer;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    color: white;
+    background-color: gray;
+    padding: 1% 4%;
+    border-radius: 12px 0px 0px 0px;
+}
+
+#overview_container .sub_container:nth-child(1) .info{
+    width: 30%;
+    float: left;
+}
+#overview_container .sub_container:nth-child(1) .info h4 {
+    margin-bottom: 2px;   
+}
+#overview_container .sub_container:nth-child(1) .info .stars .checked {
+    color: orange;
+}
+#overview_container .sub_container:nth-child(1) .info small {
+    font-style: italic;
+    color: gray;
+    font-size: 13px;
+    display: inline;
+}
+#overview_container .sub_container:nth-child(1) .info .nsfas{
+    margin: 1% auto 1px auto;
+}
+#overview_container .sub_container:nth-child(1) .info .nsfas span {
+    background-color: red;
+    border-radius: 7px;
+    color: white;
+    font-size: 15px;
+    padding: 3px 3%;
+    width: auto;
+}   
+
+#overview_container .sub_container:nth-child(1) .price{
+    width: 40%;
+    float: left;
+}
+#overview_container .sub_container:nth-child(1) .price div {
+    float: right;
+    width: 90%;
+    margin-top: 2%;
+    margin-right: 5%;
+}
+#overview_container .sub_container:nth-child(1) .price div table, 
+#overview_container .sub_container:nth-child(1) .price div table tr{
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+#overview_container .sub_container:nth-child(1) .price div table tr{
+    border-bottom: 2px solid lightblue;
+}
+#overview_container .sub_container:nth-child(1) .price div table tr th,
+#overview_container .sub_container:nth-child(1) .price div table tr td{
+    padding: 7px 0px;
+}
+#overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(1){
+    width: 35%;
+}
+#overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(2),
+#overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(3){
+    width: 22%;        
+}
+#overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(4){
+    width: 30%;        
+}    
+/*************************************************************************/
+#btn_apply button {
+    padding: 7px;
+    width: 20%;
+    text-align: center;
+    border-color: transparent;
+    color: white;
+    background-color: orange;
+}
+#btn_apply button:nth-child(2) {
+    background-color: purple;
+}

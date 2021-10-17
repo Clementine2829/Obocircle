@@ -2,7 +2,6 @@
     <?php require_once('./header.php'); ?>
     <!--end header-->
 
-
     <?php require_once('./search_div.php'); ?>
 
     <!--main structure-->
@@ -96,6 +95,7 @@
                 <div class="accommodations">
                     <div class="accommodation">
                         <div class="images">
+                            <!--<div id="accommodation1" class="carousel slide" data-ride="carousel" data-interval="false">//auto-slide off-->
                             <div id="accommodation1" class="carousel slide" data-ride="carousel">
                               <!-- Indicators -->
                               <ul class="carousel-indicators">
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <div class="map">
-
+                            <div id="google_map_div"></div>
                         </div>
                         <div class="details">
                             <h4>African House</h4>
@@ -148,7 +148,7 @@
                                 6.9 </p>
                             <small>12 Reviews</small>
                             <p class="nsfas"><span>NSFAS Accredited</span></p>
-                            <p class="location"><strong>Johannesburg</strong></p>
+                            <p class="location"><span class="fas fa-map-marker-alt"></span> <strong>Johannesburg</strong></p>
                         </div>
                         <div class="view_deal">
                             <button onclick="view_accommodation('123')" class="view_deal_btn">
@@ -216,7 +216,7 @@
                                                       display: inline;">
                             / </p>
                             <small> 0 Reviews</small><br><br>
-                            <p class="location"><strong>Pretoria</strong></p>
+                            <p class="location"><span class="fas fa-map-marker-alt"></span> <strong>Pretoria</strong></p>
                         </div>
                         <div class="view_deal">
                             <button onclick="view_accommodation('123')" class="view_deal_btn">
@@ -263,6 +263,29 @@
             send_data(url, displayer, loc)
             */
         }
+        
+        
     </script>
+    <script type="text/javascript">
+
+    	
+  function this_map(){
+    var my_latlng = {lat: -26.199070, lng: 28.058319};
+
+    var map = new google.maps.Map(document.getElementById('google_map_div'), {
+        zoom: 8, 
+        center:my_latlng
+    })
+
+    var marker = new google.maps.Marker({
+        position: my_latlng, 
+        map: map,
+        title: 'Truman House' 
+    });
+  }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=this_map"></script>
+
 </body>      
 </html>
