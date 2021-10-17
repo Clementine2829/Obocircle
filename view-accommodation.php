@@ -3,6 +3,7 @@
     <!--end header-->
 
 	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-overview.css">
+	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-about.css">
     <!--heading-->
     <div class="row">
         <div class="col-sm-1"></div>
@@ -22,17 +23,115 @@
         </div>
         <div class="col-sm-1"></div>
     </div>
-<!-- About-->
+    
+
+
+    <!-- About
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
+            <div id="about">
+                <div class="name">
+                    <h3>Living @ Rissik</h3>
+                </div>
+                <div class="address">
+                    <h5>
+                        Tell: 011 232 4455<br>
+                        Email: student@afco.co.za
+                    </h5>
+                    <h5>Address</h5>
+                    <p>
+                        1515 End Street<br>
+                        Doornfontein<br>
+                        Johannesburg 4525
+                    </p>
+                    <div id="view_on_map">
 
+                    </div>
+                </div>
+                <div class="features">
+                    <h5>Features</h5>
+                    <div>
+                        <span>
+                            <span></span> <span class="fas fa-bed"></span> 1/2/3+ person rooms 
+                        </span> 
+                        <span>
+                            <span>| </span> Own/Inroom kitchen 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-bath"></span> Commune Sharing bathroom 
+                        </span> 
+                        <span>
+                            <span>| </span> Security 24/7 
+                        </span>
+                        <span>
+                            <span>| </span> CCTV 
+                        </span>
+                        <span>
+                            <span>| </span> <span class="fas fa-fingerprint"></span> Biometric Access Control 
+                        </span> 
+                        <span>
+                            <span>| </span> Fully Furnished 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-chess"></span> Sports fields 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-child"></span> Recreational/ Entertainment Area 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fa fa-wifi"></span> Uncapped WiFi 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-dumbbell"></span> Free indoor gym 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-desktop"></span> Floor Sharing TV 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fab fa-playstation"></span> Playstation TV 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-shopping-cart"></span> Shops 
+                        </span> 
+                        <span>
+                            <span>| </span> Laundry Facilities  
+                        </span> 
+                        <span>
+                            <span>| </span> Washing Line 
+                        </span> 
+                        <span>
+                            <span>| </span> <span class="fas fa-parking"></span> Free Parking</
+                            span> 
+                    </div>
+                </div>
+                <div class="about_us">
+                    <h5>About us </h5>
+                    <p>
+                        This accommodation is new in Johannesburg, but it has been doing the most in most of the Pretoria area hence we thought it is best we bring the joy to home of everyone which is Jozi baby, hope to see you soon for reviews   
+                    </p>
+                </div>
+                <div class="manager">
+                    <h5>Hosted by</h5>
+                    <div class="info">
+                        <div class="image">
+                            <a href="#" target="_blank">
+                                <img src="./images/users/123/img1.jpg" alt="Clement" style="width: 100%; height: 100%">
+                            </a>
+                        </div>
+                        <div class="personal">
+                            <p class="name"><strong>Clementine</strong></p>
+                            <p class="joined">Joined in May, 2021</p>
+                            <p><span class="fas fa-shield-virus" style="color: red"></span> Account Verified</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-1"></div>
     </div>
-
-
-<!-- Overview
+    -->
+    <!-- Overview
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">

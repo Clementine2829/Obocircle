@@ -1,0 +1,52 @@
+#about{
+    width: 100%;
+    float: left;
+    margin: 3% 1%;
+}
+#about .name{
+    margin-bottom: 2%;
+}
+#about .address,
+#about .features,
+#about .about_us{
+    margin: 1% 2%;
+}
+#view_on_map{
+    height: 200px;
+    width: 100%;
+    background-color: lightgray;
+}
+#about .features div span{
+    color: orange;
+}
+#about .features div span span:nth-child(1){
+    color: black;
+}
+/**************************************************/
+#about .manager{
+    margin-top: 3%
+}
+#about .manager .info{
+    margin-top: 2%
+}
+#about .manager .info .image{
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+#about .manager .info .image img{
+    border-radius: 50%;
+}
+#about .manager .info .personal{
+    width: auto;
+    float: left;
+    padding-left: 3%;
+}
+#about .manager .info .personal .name{
+    font-size: 20px;
+}
+#about .manager .info .personal .joined{
+    color: gray;   
+    font-size: 12px;
+    font-style: italic;
+}
