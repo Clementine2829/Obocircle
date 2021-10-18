@@ -110,15 +110,15 @@
             </div>
           
             <?php
-        }else if($isset($_REQUEST['action']) && $_REQUEST['action'] == 'images'){
+        }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'images'){
             ?>
                 
             <?php
-        }else if($isset($_REQUEST['action']) && $_REQUEST['action'] == 'direction'){
+        }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'direction'){
             ?>
                 
             <?php
-        }else if($isset($_REQUEST['action']) && $_REQUEST['action'] == 'about'){
+        }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'about'){
             ?>
     <!-- About -->
        <div id="about">
@@ -235,7 +235,7 @@
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=my_map"></script>
           
             <?php
-        }else if($isset($_REQUEST['action']) && $_REQUEST['action'] == 'reviews'){
+        }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'reviews'){
             ?>
             <div id="reviews">
                 <h4 class="name">African House</h4>

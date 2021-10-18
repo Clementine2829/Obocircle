@@ -1,10 +1,10 @@
 	$(document).ready(function(){
 		onload(true);
-		$("#header_container a:nth-child(1)").click(function(){onload();})
-		$("#header_container a:nth-child(2)").click(function(){photos();})
-		$("#header_container a:nth-child(3)").click(function(){google_map();})
-		$("#header_container a:nth-child(4)").click(function(){about();})
-		$("#header_container a:nth-child(5)").click(function(){reviews();})
+		$("#header_btns a:nth-child(1)").click(function(){onload();})
+		$("#header_btns a:nth-child(2)").click(function(){photos();})
+		$("#header_btns a:nth-child(3)").click(function(){google_map();})
+		$("#header_btns a:nth-child(4)").click(function(){about();})
+		$("#header_btns a:nth-child(5)").click(function(){reviews();})
 	})
 	function onload(loading=false){ temp_fun_ext("overview", 1); }
 	function photos(){ temp_fun_ext("images", 2); }
@@ -17,7 +17,7 @@
         temp_fan(url, "", loading=false);
 
         $("#header_container a").css({'border-bottom':'none'})
-		$("#header_container a:nth-child(" + num + ")").css({'border-bottom':'2px solid red'})
+        $("#header_container a:nth-child(" + num + ")").css({'border-bottom':'2px solid red'})
     }
 	function temp_fan(url, fun = "", loading = false){
 		var xhttp = new XMLHttpRequest();
@@ -28,7 +28,7 @@
 			}
 			if (this.readyState == 4 && this.status == 200) {
 				$("#display_accommodation").html(this.responseText);
-				/*if(fun == 'r'){
+/*            if(fun == 'r'){
 					$('[data-toggle="tooltip"]').tooltip();
 					load_location1();
 					load_location2();

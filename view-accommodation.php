@@ -4,6 +4,7 @@
 
 	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-overview.css">
 	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-about.css">
+	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-reviews.css">
 
 	<link rel="stylesheet" type="text/css" href="./css/style-apply-accommodation.css">
     <!--heading-->
@@ -39,13 +40,6 @@
         <div class="col-sm-1"></div>    
     </div>  
 
-    <script type="text/javascript">
-        
-        function faq(){
-            $("#reviews .faq")
-        }
-    
-/*        
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -54,10 +48,22 @@
             </div>
             <div id="view_direction">
             </div>
+            <input id="start" value="Johannesburg"> 
+            <input id="end" value="Pretoria"> 
         </div>
         <div class="col-sm-1"></div>    
     </div>
 
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=initMap"></script>
+    <script type="text/javascript">
+        
+        function faq(){
+            $("#reviews .faq")
+        }
+    
+        
+        
         function initMap() {
           const markerArray = [];
           // Instantiate a directions service.
@@ -157,7 +163,7 @@
             stepDisplay.setContent(text);
             stepDisplay.open(map, marker);
           });
-        }*/
+        }
     </script>
 
     <div class="row">
