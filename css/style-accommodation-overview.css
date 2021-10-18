@@ -1,3 +1,11 @@
+.close {
+    position: absolute;
+    right: 50px;
+    top: 25px;
+    color: red;
+    font-size: 35px;
+    font-weight: bold;
+}
 #header_btns{
     float: left;
     width: 100%;

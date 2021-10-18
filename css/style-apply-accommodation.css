@@ -1,0 +1,82 @@
+#apply_container{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,.9);
+	padding-top: 5px;
+}
+#apply_data{
+	background-color: #fefefe;
+	margin: 5% auto 15% auto;
+	border: 1px solid #888;
+	width: 80%;
+	padding: 15px;
+	padding-top: 5px;
+}
+#apply_data label{font-weight: bold;}
+#apply_data .sub_holders{
+	width: 48%;
+	float: left;
+}
+#apply_data .sub_holders div{
+	margin-bottom: 1.5%;
+}
+#apply_data input[type=text], 
+#apply_data input[type=email], 
+#apply_data input[type=number], 
+#apply_data input[type=date], 
+#apply_data select{
+	border: 2px solid lightblue;
+	padding: 3px 7px;
+	border-radius: 7px;
+	width: 25%;
+}
+#apply_data .sub_holders input[type=text], 
+#apply_data .sub_holders input[type=email], 
+#apply_data .sub_holders input[type=number], 
+#apply_data .sub_holders input[type=date], 
+#apply_data .sub_holders select{width: 45%;}
+
+#apply_data input:focus, 
+#apply_data input:active, 
+#apply_data select:focus, 
+#apply_data select:active{
+	outline: none;
+}
+#apply_data input[type=button]{
+	color: white;
+	padding: 5px 50px;
+	border: none;
+	margin: 1% auto;
+	border-radius: 7px;
+	background-color: blue;
+}
+#apply_data input[type=button]:hover{
+	background-color: rgba(0, 0, 100, .9);
+}
+#transport_notice{display: none;}
+.err{color: red;}
+@media only screen and (max-width: 800px){
+	#apply_data{
+		margin: 5% auto 15% 4%;
+		padding: 5px 15px 15px 10px;
+		width: 90%;
+	}
+	#apply_data .sub_holders{width: 100%;}
+	#apply_data .sub_holders input[type=text], 
+	#apply_data .sub_holders input[type=email], 
+	#apply_data .sub_holders input[type=number], 
+	#apply_data .sub_holders input[type=date], 
+	#apply_data .sub_holders select, 
+	#apply_data input[type=text], 
+	#apply_data input[type=email], 
+	#apply_data input[type=number], 
+	#apply_data input[type=date], 
+	#apply_data select{width: 60%;}
+}
