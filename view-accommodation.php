@@ -40,139 +40,14 @@
         <div class="col-sm-1"></div>    
     </div>  
 
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div>
-                Markers are placed at each waypoint along the route. Click on a marker to display the directions associated with that waypoint.
-            </div>
-            <div id="view_direction">
-            </div>
-            <input id="start" value="Johannesburg"> 
-            <input id="end" value="Pretoria"> 
-        </div>
-        <div class="col-sm-1"></div>    
-    </div>
-
-
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=initMap"></script>
-    <script type="text/javascript">
-        
-        function faq(){
-            $("#reviews .faq")
-        }
-    
-        
-        
-        function initMap() {
-          const markerArray = [];
-          // Instantiate a directions service.
-          const directionsService = new google.maps.DirectionsService();
-          // Create a map and center it on Manhattan.
-          const map = new google.maps.Map(document.getElementById("view_direction"), {
-            zoom: 13,
-            center: {lat: -26.199070, lng: 28.058319},
-          });
-          // Create a renderer for directions and bind it to the map.
-          const directionsRenderer = new google.maps.DirectionsRenderer({ map: map });
-          // Instantiate an info window to hold step text.
-          const stepDisplay = new google.maps.InfoWindow();
-
-          // Display the route between the initial start and end selections.
-          calculateAndDisplayRoute(
-            directionsRenderer,
-            directionsService,
-            markerArray,
-            stepDisplay,
-            map
-          );
-
-          // Listen to change events from the start and end lists.
-          const onChangeHandler = function () {
-            calculateAndDisplayRoute(
-              directionsRenderer,
-              directionsService,
-              markerArray,
-              stepDisplay,
-              map
-            );
-          };
-
-          document.getElementById("start").addEventListener("change", onChangeHandler);
-          document.getElementById("end").addEventListener("change", onChangeHandler);
-        }
-
-        function calculateAndDisplayRoute(
-          directionsRenderer,
-          directionsService,
-          markerArray,
-          stepDisplay,
-          map
-        ) {
-          // First, remove any existing markers from the map.
-          for (let i = 0; i < markerArray.length; i++) {
-            markerArray[i].setMap(null);
-          }
-
-          // Retrieve the start and end locations and create a DirectionsRequest using
-          // WALKING directions.
-          directionsService
-            .route({
-              origin: document.getElementById("start").value,
-              destination: document.getElementById("end").value,
-              travelMode: google.maps.TravelMode.WALKING,
-            })
-            .then((result) => {
-              // Route the directions and pass the response to a function to create
-              // markers for each step.
-              document.getElementById("warnings-panel").innerHTML =
-                "<b>" + result.routes[0].warnings + "</b>";
-              directionsRenderer.setDirections(result);
-              showSteps(result, markerArray, stepDisplay, map);
-            })
-            .catch((e) => {
-              window.alert("Directions request failed due to " + e);
-            });
-        }
-
-        function showSteps(directionResult, markerArray, stepDisplay, map) {
-          // For each step, place a marker, and add the text to the marker's infowindow.
-          // Also attach the marker to an array so we can keep track of it and remove it
-          // when calculating new routes.
-          const myRoute = directionResult.routes[0].legs[0];
-
-          for (let i = 0; i < myRoute.steps.length; i++) {
-            const marker = (markerArray[i] =
-              markerArray[i] || new google.maps.Marker());
-
-            marker.setMap(map);
-            marker.setPosition(myRoute.steps[i].start_location);
-            attachInstructionText(
-              stepDisplay,
-              marker,
-              myRoute.steps[i].instructions,
-              map
-            );
-          }
-        }
-
-        function attachInstructionText(stepDisplay, marker, text, map) {
-          google.maps.event.addListener(marker, "click", () => {
-            // Open an info window when the marker is clicked on, containing the text
-            // of the step.
-            stepDisplay.setContent(text);
-            stepDisplay.open(map, marker);
-          });
-        }
-    </script>
 
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div id="btn_apply">
                 <br>
-                <button onclick="load_apply_form()">Apply</button>
-                <button id="visit" onclick="visit_site('S5NQ1JudWlOQLHQupsC6wu18RyLYcj53huEl2ZWO');">
+                <button onclick="load_apply_form('123')">Apply</button>
+                <button id="visit" onclick="visit_site('123');">
                     <span class="fas fa-forward"></span> Visit site
                 </button>
             </div>
@@ -217,10 +92,10 @@
             send_data(url, displayer, loc);
         }
         function load_template(){
-            $("#apply_container").css({"display": "block"})
+            $("#display_template").css({"display": "block"})
         }
         function close_apply(){
-            $("#apply_container").css({"display": "none"})
+            $("#display_template").css({"display": "none"})
         }
         
     </script>
