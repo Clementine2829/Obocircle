@@ -90,18 +90,14 @@
 		</div>
 		<div class="col-sm-2" ></div>
 	</div>
-<!--	<button onclick="document.getElementById('de-form').style.display='block'" style="width:auto;">Sign Up</button>-->
-	<hr>
-	<p style="text-align:center;">
-		<a href="home.php" style="font-size:22px; text-decoration:none;">Home</a>
-	</p>
-	<hr>
-	<div style="text-align:center">
-		<p id="fot">
-			<span style="font-size:20px">Obocircle<span style="color:orange; fint-size:20px; margin:auto 2px;">.com</span></span> 
-			© <?php echo date('Y'); ?> | All rights reserved <br>
-			Email: info@obocircle.com
-		</p>
-	</div>
-</body>
+    <!--footer-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="the_footer"></div>
+        </div>
+    </div>
+    <!--end footer-->   
+    <!--script-->
+	<script src="js/footer.js" type="text/javascript"></script>
+</body>      
 </html>

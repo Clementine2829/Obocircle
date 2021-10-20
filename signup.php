@@ -137,19 +137,16 @@
         </div>
 		<div class="col-sm-1"></div>
     </div>
-	<div class="row" style="width:100%; float:left;">
-		<div class="col-sm-12" >
-			<hr>
-			<div style="text-align:center">
-				<span>Obocircle<span style="color:orange; margin:auto 2px;">.com</span></span> 
-				© <?php echo date('Y');?> | All rights reserved <br>
-				Email: info@obocircle.com
-				<br><br><br>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript" src="./js/signup.js"></script>
-</body>
+    <!--footer-->
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="the_footer"></div>
+        </div>
+    </div>
+    <!--end footer-->   
+    <!--script-->
+	<script src="js/footer.js" type="text/javascript"></script>
+</body>      
 </html>
 
 

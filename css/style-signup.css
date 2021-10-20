@@ -46,6 +46,8 @@ input[type=number]:active,input[type=email]:active, select:active, input[type=bu
 	color: black;
 }
 .err{color: red;}
+#footer1, 
+#footer2{display: none;}
 @media only screen and (max-width: 1199px){
 	#logo{
 		margin: 1% auto 1% 2px;

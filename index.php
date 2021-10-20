@@ -130,7 +130,7 @@
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-5">
-            <button id="post_accommodation" onclick="window.location='post-accommodation.php'">
+            <button id="post_accommodation" onclick="window.location='upload-accommodation.php'">
                 <strong>I WANT TO POST<br>AN ACCOMMODATION</strong>
             </button>
         </div>
@@ -238,7 +238,6 @@
         </div>
         <div class="col-sm-1"></div>
     </div>
-
 
     <!--footer-->
     <div class="row">
