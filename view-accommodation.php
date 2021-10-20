@@ -74,6 +74,8 @@
 	<script src="./js/footer.js" type="text/javascript"></script>
 	<script src="./js/view-accommodation_main.js" type="text/javascript"></script>
 	<script src="./js/view-accommodation_ext.js" type="text/javascript"></script>
+	<script src="./js/send-accommodation-application.js" type="text/javascript"></script>
+
     <script type="text/javascript">
         
         function visit_site(url){
@@ -88,14 +90,16 @@
         function load_apply_form(url){
             load_template();
             url = './server/apply-accommodation.php?accommodation=' + url;
-            let loc = "display_template";
+            let loc = "#display_template";
             send_data(url, displayer, loc);
         }
         function load_template(){
             $("#display_template").css({"display": "block"})
+            $("#header_btns").css({"display": "none"})
         }
         function close_apply(){
             $("#display_template").css({"display": "none"})
+            $("#header_btns").css({"display": "inline-block"})
         }
         
     </script>

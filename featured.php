@@ -215,7 +215,8 @@
                                                       color: white;
                                                       display: inline;">
                             / </p>
-                            <small> 0 Reviews</small><br><br>
+                            <small> 0 Reviews</small><br>
+                            <p class="nsfas"><span style="background-color: pink"><del>NSFAS Accredited</del></span></p>
                             <p class="location"><span class="fas fa-map-marker-alt"></span> <strong>Pretoria</strong></p>
                         </div>
                         <div class="view_deal">

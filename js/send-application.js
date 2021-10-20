@@ -1,5 +1,5 @@
 function send_application(){
-	let original_table = $('#accommodation_application_form').html(); 
+	let originalTable = $('#this_table').html(); 
 	let full_name = get_names();
 	let surname = get_surname();
 	let student_no = get_student_no();
@@ -54,8 +54,8 @@ function send_application(){
 				$('#send_a').val("Submited");
 				$('#returned_msg').html(this.responseText);
 				if(this.responseText.search("successfully")){
-					$('#accommodation_application_form').html(original_table);
-					$('#accommodation_application_form').css({'display': 'none'})
+					$('#this_table').html(originalTable);
+					$('#this_table').css({'display': 'none'})
 				}
 			}
 		}

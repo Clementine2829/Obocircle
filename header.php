@@ -39,10 +39,10 @@
 		</div>
 		<div class="col-sm-6" id="user_account">
             <div class="login">
-                <button>Login</button>
+                <button onclick="window.location='./login.php'">Login</button>
             </div>
             <div class="register">
-                <button>Register</button>
+                <button onclick="window.location='./register.php'">Register</button>
             </div>
             <div class="notifications">
                 <a href="notifications.php" id="notifications">

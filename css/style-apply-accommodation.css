@@ -1,4 +1,4 @@
-#apply_container{
+#display_template{
 	display: none;
 	position: fixed;
 	z-index: 1;

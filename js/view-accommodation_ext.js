@@ -8,7 +8,7 @@
 	})
 	function onload(loading=false){ temp_fun_ext("overview", 1); }
 	function photos(){ temp_fun_ext("images", 2); }
-	function google_map(){ temp_fun_ext("maps", 3); }
+	function google_map(){ temp_fun_ext("direction", 3); }
 	function about(){ temp_fun_ext("about", 4); }
 	function reviews(){ temp_fun_ext("reviews", 5); }
     function temp_fun_ext(action, num){

@@ -74,8 +74,8 @@
         </div>
         <div class="col-md-5">
             <small style="float: right; padding-right: 10%">
-                <a href="privacy_policy.html">Privacy Policy</a> | 
-                <a href="terms_of_use.html">Terms of Use</a> | 
+                <a href="privacy_policy.html" target="_blank">Privacy Policy</a> | 
+                <a href="terms_of_use.html" target="_blank">Terms of Use</a> | 
                 <a href="cookies.html" target="_blank">Cookies Policy</a>
             </small>            
 		</div>

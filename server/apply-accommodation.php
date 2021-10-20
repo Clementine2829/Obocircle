@@ -99,7 +99,7 @@
 <div id="apply_data">
 	<span onclick="close_apply()" class="close" title="Close Modal">&times;</span>
 	<span id="returned_msg"></span>
-	<form method="post" id="this_table">
+	<form method="post" id="accommodation_application_form">
 		<span>
 			<b>
 				<u style="font-size:24px;"><?php echo $a_names; ?></u><br>

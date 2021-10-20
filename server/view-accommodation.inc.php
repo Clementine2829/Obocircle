@@ -116,12 +116,15 @@
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'direction'){
             ?>
-           <div>
-                Markers are placed at each waypoint along the route. Click on a marker to display the directions associated with that waypoint.
-            </div>
             <div id="view_direction">
             </div>
-            <input id="start" value="Johannesburg"> 
+            <select id="start">
+                <option value="current">--default--</option> 
+                <option value="current_location">Use my current location</option> 
+                <option value="johannesburg">Johannesburg</option> 
+                <option value="johannesburg">Johannesburg</option> 
+                <option value="johannesburg">Johannesburg</option> 
+            </select>
             <input id="end" value="Pretoria"> 
 
 
@@ -196,10 +199,10 @@
             .then((result) => {
               // Route the directions and pass the response to a function to create
               // markers for each step.
-              document.getElementById("warnings-panel").innerHTML =
+              /*document.getElementById("warnings-panel").innerHTML =
                 "<b>" + result.routes[0].warnings + "</b>";
               directionsRenderer.setDirections(result);
-              showSteps(result, markerArray, stepDisplay, map);
+              showSteps(result, markerArray, stepDisplay, map);*/
             })
             .catch((e) => {
               window.alert("Directions request failed due to " + e);
