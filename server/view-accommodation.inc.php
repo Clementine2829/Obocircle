@@ -430,7 +430,7 @@
                         <p class="q">
                             Can I move in in the middle of the month? 
                             Can I move in in the middle of the month.
-                            <span class="fas fa-angle-down" style="float: right; margin-right: 5%;"></span>
+                            <span class="fas fa-angle-left" style="float: right; margin-right: 5%;"></span>
                         </p>
                         <p class="answer">
                             Yes, we allows student to move in at anytime of the month. 
