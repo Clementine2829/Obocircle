@@ -72,19 +72,23 @@
     <br>
     <label for="telephone">Telephone number</label>
     <span class="err" id="err_telephone"> * </span><br>
-    <input type="number" id='telephone'>
+    <input type="number" onblur="get_telephone()" id='telephone'>
     <br>
     <label for="website">
         Website link(Optional) <span style="color: gray; font-style: italic">E.g. https://obocircle.com/</span>
     </label>
     <span class="err" id="err_website"></span><br>
     <input type="text" id='website' placeholder="Your website URL"><br><br>
+    <span id="err_update_main_page" class="err"></span>
     <input type="button" id="update_main_page" value="Update Changes">
 </div>
 <script type="text/javascript">
+    $(document).ready(function(){
+        $("#update_main_page").click(function(){update_changes();})
+    })
     function update_changes(){
-        let nsfas = get_telephone();
-        let nsfas = get_website();
+        let telephone = get_telephone();
+        let website = get_website();
 
         let nsfas = $('#nsfas').val();
         let single_c = $('#single_c').val();
@@ -93,6 +97,31 @@
         let double_b = $('#double_b').val();
         let three_c = $('#three_c').val();
         let three_b = $('#three_b').val();
+        
+        if(telephone != ""){
+            
+        }
+        let con;
+        let payload = $('#my_room').html();
+        let pattern = /^[a-zA-Z0-9]*$/;
+        if(!payload.match(pattern) || payload == "") return;
+        if(single_c == "" || single_b == "" ||
+            double_c == "" || double_b == "" ||
+            three_c == "" || three_b == "" ||
+            single_a == "" || double_a == "" || three_a == "" || tell == "" ||  website == "")
+            con = confirm("Some fields were left empty. Confirm to proceed with changes.");
+        else con = confirm("Confirm to proceed with changes."); 
+        if(con){   
+            data = "payload=" + payload + "&single_c=" + single_c + "&single_b=" + single_b +
+                    "&double_c=" + double_c + "&double_b=" + double_b +
+                    "&three_c=" + three_c + "&three_b=" + three_b +
+                    "&single_a=" + single_a + "&double_a=" + double_a + 
+                    "&three_a=" + three_a + "&nsfas=" + nsfas + "&tell=" + tell + "&website=" + website;
+            let url = "./server/management.inc.php?action=update_main&" + data;
+            let loc = "#err_update_main_page";
+            let btn = "#update_main_page";
+            send_data(url, displayer, loc, " ", " ", btn);   
+        }
     }
     function get_telephone(){
         let tell = $('#telephone').val();
@@ -102,9 +131,9 @@
                 $('#err_telephone').html("Invalid phone number");
                 return tell;
             }else{
-                $('#err_tell').html(" * ");
+                $('#err_telephone').html(" * ");
             }
-        }else $('#err_telephone').html("");                                
+        }else $('#err_telephone').html(" * ");                                
         return "";
     }
     function get_website(){
