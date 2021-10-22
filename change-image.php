@@ -1,0 +1,1 @@
+<?php require "./management-accommodations/change-image.php"; ?>
