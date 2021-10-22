@@ -1,3 +1,25 @@
+<style type="text/css">
+    #form{margin: auto auto 1% 1%;}
+    .my_images{
+        float: left;
+        width: 33%;
+        height: 250px;
+    }
+    .my_images img{
+        width: 95%;
+        height: 80%;
+    }
+    @media only screen and (max-width: 800px){
+        .my_images{
+            width: 50%;
+            height: 250px;
+        }
+        .my_images img{
+            width: 95%;
+            height: 80%;
+        }
+    }
+</style>
 <?php session_start(); 
 /*	if(!isset($_SESSION['s_first_name']) || !isset($_SESSION['s_id']) || 
 		!isset($_SESSION['s_activated']) || !isset($_SESSION['s_pac'])){
@@ -203,9 +225,9 @@
         <a href="#" style="color: red" 
         onclick="delete_me('KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w','LveqIYoI6g201023101444.jpg','3')">delete</a>
      </div><div style="margin-top:2%">
-    <a href="change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=&src=West Gate Residence&image=empty"
-    style="border:2px solid green; padding: 5px 10px 10px 10px; 
-    background-color:green; color: white; border-radius: 10px;">
+    <a href="change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=&src=West Gate Residence&image=empty" 
+       target="_blank" 
+       style="border:2px solid green; padding: 5px 10px 10px 10px; background-color:green; color: white; border-radius: 10px;">
     Upload new Image
     </a><br><br><br><br><br><br>
 					</div>	</div>
