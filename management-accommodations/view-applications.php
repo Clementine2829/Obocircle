@@ -219,11 +219,195 @@
 	<?php
 		}
 	}*/
+
+
 	?>
+    <style rel="stylesheet" type="text/css">
+        #application_head{
+            width: 100%;
+            float: left;
+        }
+        #application_head .sub_head{
+            width: 50%;
+            float: left;
+        }
+        #application_head .sub_head p,
+        #application_head .sub_head .radio_btn{
+            width: 100%;
+            float: left;
+        }
+        #application_head .sub_head:nth-child(2){
+            text-align: right;
+            padding-right: 0%;
+            margin-top: 5%;
+        }
+        #applications{
+            width: 100%;
+            float: left;            
+        }
+        #applications table{
+            width: 100%;
+            float: left;
+            border-collapse: collapse;
+            background-color: rgb(230, 230, 230);
+        }
+        #applications table tr{
+            border-collapse: collapse;
+        }
+        #applications table tr:hover{
+            background-color: rgb(200, 200, 200);
+        }
+        #applications table tr th{
+            background-color: lightgray;   
+            padding: 7px 15px;
+            border-right: 1px solid white;
+        }
+        #applications table tr th:nth-child(1),
+        #applications table tr th:nth-child(2){
+            border-right: none;
+        }
+        #applications table tr td:nth-child(1),
+        #applications table tr td:nth-child(2),
+        #applications table tr td:nth-child(4),
+        #applications table tr td:nth-child(6),
+        #applications table tr th:nth-child(10),
+        #applications table tr th:nth-child(8),
+        #applications table tr td:nth-child(7),
+        #applications table tr td:nth-child(9),
+        #applications table tr td:nth-child(10){
+           text-align: center;
+        }
+        #applications table colgroup col:nth-child(1),
+        #applications table colgroup col:nth-child(2) {
+            width: 3%;
+        }
+        #applications table colgroup col:nth-child(3) {
+            width: 25%;
+        }
+        #applications table colgroup col:nth-child(4),
+        #applications table colgroup col:nth-child(5),
+        #applications table colgroup col:nth-child(8) {
+            width: auto;
+        }
+        #applications table colgroup col:nth-child(8) {
+            max-width: 25%;
+        }
+        #applications table colgroup col:nth-child(6),
+        #applications table colgroup col:nth-child(7) {
+            width: 10%;
+        }
+        #applications table colgroup col:nth-child(10) {
+            width: 15%;
+        }
+        #action button {
+            border: none;
+            padding: 3px 15px;
+            border-radius: 7px;
+            margin-top: 3%;
+        }
+    </style>
+    <div id="application_head">
+        <div class="sub_head">
+            <div class="radio_btns">
+                <input type="radio" name="applications" id="new_applications" checked> <strong>Pending Applications</strong><br>
+                <input type="radio" name="applications" id="other_applications"> <strong>Other Applications</strong>
+            </div>
+            <p>
+                <strong>NB!</strong>
+                <span>Some information might be hidden for security reasons!</span>
+            </p>
+        </div>
+        <div class="sub_head" style="text-aligh: right">
+            <span><strong>Sort:</strong></span>
+            <select id="sort_applications">
+                <option value="">Default</option>
+                <option value="name">Name</option>
+                <option value="payment">Payment Method</option>
+                <option value="room">Room Type</option>
+            </select>
+        </div>
+    </div>
+    <div id="applications" >
+        <table>
+            <colgroup>
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+                <col span="1">
+            </colgroup>
+            <tbody>
+                <tr>
+					<th></th>
+					<th></th>
+					<th>Name</th>
+					<th>Sex</th>
+					<th>Contact details</th>
+					<th>Institution</th>
+					<th>Payment mode</th>
+					<th>Preffered room type</th>
+					<th>Status</th>
+					<th>Date</th>
+				</tr>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <input type="checkbox" class="s_all">
+                    </td>
+                    <td>Clementine Mamo</td>
+                    <td>O</td>
+                    <td>014 *** *258</td>
+                    <td>UJ</td>
+                    <td>NSFAS</td>
+                    <td>Single Room</td>
+                    <td><span style="color: red">Declined</span></td>
+                    <td>21 Sep2021</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>
+                        <input type="checkbox" class="s_all">
+                    </td>
+                    <td>Sherly Smith</td>
+                    <td>F</td>
+                    <td>sherlysmith152***@yahoo.com</td>
+                    <td>University of Johannesburg</td>
+                    <td>NSFAS</td>
+                    <td>Single Room</td>
+                    <td><span style="color: orange">Pending</span></td>
+                    <td>05 May 2021</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>
+                        <input type="checkbox" class="s_all">
+                    </td>
+                    <td>John Doe</td>
+                    <td>M</td>
+                    <td>j****@gmail.com</td>
+                    <td>Wits</td>
+                    <td>Cash</td>
+                    <td>Double-Sharing</td>
+                    <td><span style="color: blue">Accepted</span></td>
+                    <td>15 Oct 2021</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="action">
+            <button style="background-color: skyblue;" onclick="select_all()">Select all</button>
+            <button style="background-color: green;" onclick="accept_application()">Accept</button>
+            <button style="background-color: red; color:white" onclick="decline_application()">Decline</button>
+        </div>
+    </div>
 
     <script type="text/javascript">
 		$(document).ready(function(){
-			load_data();
+			//load_data();
 			$("#results table tr td:nth-child(1) :checkbox").click(function(){
 				alert('clicked');
 //				disable_btns();

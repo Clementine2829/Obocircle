@@ -7,6 +7,7 @@ $(document).ready(function(){
     $("#applications").click(function(){load_view_applications();})
     
     
+    $("#add_new_manager").click(function(){add_new_manager();})
     
     
 })
@@ -27,6 +28,13 @@ function load_add_features(){
 }
 function load_view_applications(){
     let url = "./management-accommodations/view-applications.php";
+    let loc = "#displayer";
+    send_data(url, displayer, loc);
+}
+
+
+function add_new_manager(){
+    let url = "./management-accommodations/add-manager.php";
     let loc = "#displayer";
     send_data(url, displayer, loc);
 }
