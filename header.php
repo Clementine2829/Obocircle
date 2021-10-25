@@ -42,7 +42,7 @@
                 <button onclick="window.location='./login.php'">Login</button>
             </div>
             <div class="register">
-                <button onclick="window.location='./register.php'">Register</button>
+                <button onclick="window.location='./signup.php'">Register</button>
             </div>
             <div class="notifications">
                 <a href="notifications.php" id="notifications">

@@ -43,12 +43,6 @@
                         <input type="text" id="f_name" name="firstname" onblur="get_f_name()" placeholder="Enter your Name" value="<?php echo $firstname; ?>"> 
                     </div>	
                     <div>
-                        <label for="middlename">Middle Name:</label>
-                        <span class="err" id="err_m_name"> <?php echo $err_middlename; ?></span>
-                        <br>
-                        <input type="text" id="m_name" name="middlename" onblur="get_m_name()" placeholder="Enter your Nickname" value="<?php echo $middlename; ?>">  
-                    </div>	
-                    <div>
                         <label for="lastname">Last name:</label>
                         <span class="err" id="err_l_name"> * <?php echo $err_lastname; ?></span>
                         <br>
@@ -66,6 +60,12 @@
                         <br>
                         <input type="date" id="birthdate" name="birthdate" min="1975-01-01" max="2002-01-01" 
                                 onblur="get_birthdate()" value="<?php echo $birthdate; ?>">
+                    </div>
+                    <div>
+                        <label for="cellphone1">Cell Number:</label>
+                        <span class="err" id="err_cellphone1" > * <?php echo $err_cell_1; ?></span>
+                        <br>
+                        <input type="number" id="cellphone1" onblur="get_phone()" placeholder="Enter your phone number" name="cellphone1" value="<?php echo $cell_1; ?>">
                     </div>
                 </div>
                 <div class='sub_container'>
@@ -99,12 +99,6 @@
                         <input type="password" onblur="get_password2()" placeholder="Confirm your password" id="password2" name="password2">
                     </div>		
 
-                    <div>
-                        <label for="cellphone1">Cell Number:</label>
-                        <span class="err" id="err_cellphone1" > * <?php echo $err_cell_1; ?></span>
-                        <br>
-                        <input type="number" id="cellphone1" onblur="get_phone()" placeholder="Enter your phone number" name="cellphone1" value="<?php echo $cell_1; ?>">
-                    </div>
                     <div>
                         <label for="ref_code">Ref CODE:</label>
                         <span class="err" id="err_ref" > <?php echo $err_ref_code; ?></span>
@@ -146,6 +140,7 @@
     <!--end footer-->   
     <!--script-->
 	<script src="js/footer.js" type="text/javascript"></script>
+	<script src="js/signup.js" type="text/javascript"></script>
 </body>      
 </html>
 

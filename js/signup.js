@@ -3,7 +3,6 @@ $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 	$('#send_data').click(function(){
 		let f_name = get_f_name();
-		let m_name = get_m_name();
 		let l_name = get_l_name();
 		let gender = get_gender();
 		let birthdate = get_birthdate();
@@ -38,15 +37,6 @@ function get_f_name(){
 	txt = validate_text(name, txt, err_msg, pattern);
 	return (txt == "") ? "" : txt; 
 }
-function get_m_name(){
-	let name = "Nickname";
-	let txt = $('#m_name');
-	let pattern = /^[a-zA-Z]+$/;
-	let err_msg = $('#err_m_name')
-	if(txt.val() != "")
-		txt = validate_text(name, txt, err_msg, pattern);
-	return (txt == "") ? "" : txt; 
-}
 function get_l_name(){
 	let name = "Surname";
 	let txt = $('#l_name');
@@ -68,41 +58,18 @@ function get_birthdate(){
 	let name = "Date of birth";
 	let txt = $('#birthdate');
 	let err_msg = $('#err_birthdate')
-//			let pattern = /^(0[1‐9]|[12][0‐9]|3[01])+[\/‐]+(0[1‐9]|1[012])[\/-]+\d{4}+$/;
+//  let pattern = /^(0[1‐9]|[12][0‐9]|3[01])+[\/‐]+(0[1‐9]|1[012])[\/-]+\d{4}+$/;
 	let pattern = /^[0-9\-]*$/;
 	txt = validate_text(name, txt, err_msg, pattern);
 	return (txt == "") ? "" : txt; 
 }
 function get_email(){
-	let txt = $('#email');
-	let val = txt.val();
-	let err_msg = $('#err_email');
-	let pattern = /^[a-zA-Z0-9\.]+@+[a-zA-Z]+\.+[a-zA-Z]*$/g;
-	let pattern2 = /^[a-zA-Z0-9\.]+\@+(gmail.com|icloud.com|outlook.com|yandex.mail|yahoo.com)+$/g;
-	if(val == ""){
-		err_msg.html("Enter Email address");
-		err_box(txt);
-		return "";
-	}else if(!val.match(pattern) || !check_email(val)){
-		err_msg.html("Invalid email address");
-		err_box(txt);
-		return "";
-	}else if(!val.match(pattern2)){
-		err_msg.html("Email type not supported");
-		err_box(txt);
-		return "";
-	}else{
-		err_msg.html(' * ');
-		suc_box(txt);
-		return val;
-	}
-}
-function check_email(str){	
-	var atPos = str.lastIndexOf('@');
-	var dotPos = str.lastIndexOf('.');
-	if((dotPos < atPos) || (atPos < 3) || ((str.length - dotPos) < 2))
-		return false;
-	else return true;
+    let email = $("#email");
+    let err = $("#err_email");
+    let ms1 = "Enter Email address";
+    let ms2 = "Unsupported email domain";
+    let pattern = /^[a-zA-Z0-9\.]+\@+(gmail.com|icloud.com|outlook.com|yandex.mail|yahoo.com)+$/g;
+    return get_email(email, err, ms1, ms2, patten);
 }
 function get_password(){
 	let txt = $('#password1');

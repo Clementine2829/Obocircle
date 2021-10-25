@@ -1,7 +1,6 @@
 <?php
 
 /*echo '
-        <br>
         <h4 class="err">Zero results found.</h4>
         <p>Please make sure that the ref code is corrent and search again</p>';
 */

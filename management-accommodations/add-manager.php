@@ -61,12 +61,12 @@
         }
     }
     function get_ref(){
-        let pattern = /\d{6}/;
+        let pattern = /\d{6,6}/;
         let ref = $("#search_manager").val();
         if(ref == ""){
             $("#err_manager_code").html("Ref code is required");
             return "";
-        }else if(!ref.match(pattern)){
+        }else if(!ref.match(pattern) || ref.length != 6){
             $("#err_manager_code").html("Invalid ref code");
             return "";
         }else{

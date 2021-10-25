@@ -26,6 +26,10 @@ form .sub_container:last-child{
 	width: 100%;
 	float: left;
 }
+form .sub_container label{
+    margin-top: 2%;
+    margin-bottom: 2px;
+}
 input[type=text], input[type=password], input[type=date],
 input[type=number],input[type=email], select{
 	border: 1.5px solid lightblue;

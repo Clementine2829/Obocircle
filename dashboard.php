@@ -15,7 +15,7 @@
 					<div>	
 						<h5>Accommodations</h5>
 						<ul class="btns">
-							<li><div onclick="window.location='post-accommodation.php'">Post New</div></li>
+							<li><div onclick="window.location='upload-accommodation.php'">Post New</div></li>
 							<li><div onclick="new_accommodation()">Select New</div></li>
 						</ul>	
 					</div>
@@ -38,8 +38,8 @@
 					<div>	
 						<h5>Statistics</h5>
 						<ul class="btns">
-							<li><div id="stats_accommodation">Accommodations</div></li>
 							<li><div id="stats_applications">Applications</div></li>
+							<li><div id="stats_accommodation">Accommodations</div></li>
 						</ul>	
 					</div>										
 					<div>	

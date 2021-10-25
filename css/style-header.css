@@ -21,10 +21,10 @@
 }
 #user_account .login button,
 #user_account .register button{
-    background-color: skyblue;
+    background-color: #007bff;
     width: 100%;
     color: white;
-    border: 4px solid skyblue;
+    border: 4px solid #007bff;
     outline: none;
 }
 #user_account .notifications {
@@ -42,7 +42,7 @@
     padding-right: 15%;
     background-color: white;
     margin-right: 5%;
-    color: skyblue;
+    color: #007bff;
     border: none;
     padding: 0px;
     font-size: 22px;
@@ -61,7 +61,7 @@
     display: block;
     text-align: center;
     /*background: #1b9ce3;*/
-    color: skyblue;	
+    color: #007bff;	
     -webkit-transition: .2s all ease-in-out;
     -o-transition: .2s all ease-in-out;
     transition: .2s all ease-in-out;

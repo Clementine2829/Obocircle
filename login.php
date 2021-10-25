@@ -82,7 +82,7 @@
 						<input type="submit" value="Submit" >
 					</div>
 					<div class="form-group">
-						<a id="forgot" href="forgot-pass.php">Forgot Password?</a>
+						<a id="forgot" href="forgot-password.php">Forgot Password?</a>
 						<input type="button" style="color:red" onclick="window.location='signup.php'" value="Sign up">
 					</div>
 				</div>	
