@@ -57,7 +57,7 @@
         if(ref != ""){
             let url = "./server/find-person.php?action=management&ref=" + ref;
             let loc = "#results_manager_info";
-            send_data(url, displayer, loc, "", "", "#find_manager_btn")
+            send_data(url, displayer, loc, "", "", "#find_manager_btn");
         }
     }
     function get_ref(){
