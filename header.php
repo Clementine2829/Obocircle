@@ -38,12 +38,45 @@
 			</div>
 		</div>
 		<div class="col-sm-6" id="user_account">
-            <div class="login">
-                <button onclick="window.location='./login.php'">Login</button>
-            </div>
-            <div class="register">
-                <button onclick="window.location='./signup.php'">Register</button>
-            </div>
+            <?php
+                $_SESSION['s_id'] = "123";
+                $_SESSION["s_first_name"] = "Clementine";
+                if(isset($_SESSION['s_id'])){
+                    ?>
+						<span class="dropdown" id="loggedin_dropedown">
+							<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="">
+								<?php 
+									if(strlen($_SESSION["s_first_name"]) > 15)
+										echo "Hi, " . substr($_SESSION["s_first_name"], 0, 6) . '..';
+									else  
+										echo "Hi, " . $_SESSION["s_first_name"];
+								?>
+							</button>
+							<div class="dropdown-menu" id="dropdown_items" >
+                                <?php
+                                    if(isset($_SESSION['s_user_type'])  && $_SESSION['s_user_type'] == "a-manager")
+                                        echo '<a class="dropdown-item" href="dashboard.php"> Dashboard </a>';
+                                ?>
+								<a class="dropdown-item" href="view-profile.php"> View  Profile </a>
+								<a class="dropdown-item" href="update-profile.php"> Update  Profile </a>
+								<a class="dropdown-item" href="change-password.php"> Change Password</a>
+								<hr>
+								<a class="dropdown-item" href="logout.php"> Log Out </a>
+							</div>
+						</span>
+                    <?php
+                }else{
+                    ?>
+                    <div class="login">
+                        <button onclick="window.location='./login.php'">Login</button>
+                    </div>
+                    <div class="register">
+                        <button onclick="window.location='./signup.php'">Register</button>
+                    </div>
+                    <?php
+                }
+            
+            ?>
             <div class="notifications">
                 <a href="notifications.php" id="notifications">
                     <span data-toggle="tooltip" data-placement="bottom" title class="fas fas fa-info-circle" 

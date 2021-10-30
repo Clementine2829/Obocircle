@@ -56,6 +56,10 @@
 								<input type="radio" name="sort_by" id="recommendations" value="recommendations" > 
 								<span>Recommendations</span>
 							</div>
+							<div>
+								<input type="radio" name="sort_by" id="price" value="price" > 
+								<span>Price</span>
+							</div>
 						</div>	
 						<div id="guest_ratings" class="sub_filter">
 							<p>

@@ -27,6 +27,24 @@
     border: 4px solid #007bff;
     outline: none;
 }
+#loggedin_dropedown{
+    float: right;
+    margin-left: 4%;
+    background-color: skyblue;
+    width: auto;
+    margin-top: 4%;
+}
+#dropdown_items{
+    text-align: center;
+    margin-right: 75%;     
+    background-color: rgb(245, 245, 245);
+}
+#dropdown_items a:hover{
+    background-color: lightgray;
+}
+#header_btns{
+    z-index: 0;
+}
 #user_account .notifications {
     float: right;
     margin-top: 4%;

@@ -39,14 +39,14 @@ function send_data(url,func=foo, loc, loading="", loading_text="", btn=""){
 	if(loading == "")
 		loading = '<div style="background-color: lightgray; padding:2%; width: 100%;">Loading, please wait...</div>';
 	if(loading_text == "") loading_text = "Submit";
-    if(btn != "") $(btn).prop("disabled", true);
+    if(btn != "") $(btn).prob("disabled", true);
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function(){
 		if (this.readyState > 0 || this.readyState < 4){
 			$(loc).html(loading);
 		}
 		if (this.readyState == 4 && this.status == 200) {
-            if(btn != "") $(btn).prop("disabled", false);
+            if(btn != "") $(btn).prob("disabled", false);
 			$(loc).html(loading_text);
 			func(this.responseText, loc);
 		}

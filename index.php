@@ -143,6 +143,9 @@
                             <br>
                             <strong><i>--Clementine @ UJ--</i></strong>
 					    </p>
+                        <div class="image">
+                            <img src="./images/users/123/img1.jpg" alt="Clementine" style="width: 100%; height:  100%;">
+                        </div>
 					</div>					
 					<div class="carousel-item ">
 					    <p><i>
@@ -150,6 +153,9 @@
                             <br> 
                             <strong><i>--Edison Mkhabela - Eddi's Printing--</i></strong>
 					    </p>
+                        <div class="image">
+                            <img src="./images/users/123/img1.jpg" alt="Clementine" style="width: 100%; height:  100%;">
+                        </div>
 					</div>
 					<div class="carousel-item ">
 					    <p><i>
@@ -157,6 +163,9 @@
                             <br>
                             <strong><i>--Eric  Hlongwayo @ GreenSite Project--</i></strong> 
 					    </p>
+                        <div class="image">
+                            <img src="./images/users/123/img1.jpg" alt="Clementine" style="width: 100%; height:  100%;">
+                        </div>
 					</div>
 				</div>
 			</div>
