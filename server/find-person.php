@@ -41,5 +41,10 @@
     </div>
 </div>
 <div class="action">
+    <?php
+    
+        
+    ?>
+    <p style="color: blue;">Clementine is already a manager to this acccommodation</p>
     <button id="add_as_manager" onclick="add_as_manager_fn('123456')">Add Them as manager</button>
 </div>

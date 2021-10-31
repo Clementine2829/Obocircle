@@ -10,6 +10,10 @@ $(document).ready(function(){
     $("#add_new_manager").click(function(){add_new_manager();})
     
     
+    $("#stats_applications").click(function(){statistics_applications();})
+    $("#stats_accommodation").click(function(){statistics_accommodation();})
+    
+    
 })
 function load_main_page(){
     let url = "./management-accommodations/main-page.php";
@@ -32,9 +36,18 @@ function load_view_applications(){
     send_data(url, displayer, loc);
 }
 
-
 function add_new_manager(){
     let url = "./management-accommodations/add-manager.php";
+    let loc = "#displayer";
+    send_data(url, displayer, loc);
+}
+function statistics_applications(){
+    let url = "./management-accommodations/stats-applications.php?accommodation=123";
+    let loc = "#displayer";
+    send_data(url, displayer, loc);
+}
+function statistics_accommodation(){
+    let url = "./management-accommodations/stats-accommodations.php?accommodation=123";
     let loc = "#displayer";
     send_data(url, displayer, loc);
 }

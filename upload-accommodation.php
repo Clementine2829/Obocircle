@@ -38,7 +38,7 @@
 					And that I own/manage this accommodation or have been granted permission by the owner/manager
 					to post it on this webiste<br>
 				</span> 
-				For more information, please visit our <a href="#">T&C</a>.
+				For more information, please visit our <a href="./terms_of_use.html">T&C</a>.
 			</span>
 			<p id="success_msg" ></p>
 			<input type="button" id="submit" value="Submit" onclick="upload()">

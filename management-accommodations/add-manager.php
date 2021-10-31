@@ -54,6 +54,7 @@
 <script type="text/javascript">
     function find_manager(){
         let ref = get_ref();
+        $("#results_manager_info").html("");
         if(ref != ""){
             let url = "./server/find-person.php?action=management&ref=" + ref;
             let loc = "#results_manager_info";
@@ -83,6 +84,10 @@
         }
     }
     function alert_action(data, loc){
-        alert(data);
+//        if(data == "success"){
+            let div = "<br><h5 style='color: blue'>Clementine has been successfully added as a manager to this accommodation</h5>"
+            $("#results_manager_info").html(div);
+  //      }
+        //alert(data);
     }
 </script>
