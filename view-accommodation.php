@@ -102,6 +102,10 @@
             $("#header_btns").css({"display": "inline-block"})
         }
         
+        function get_current_location(){
+            return "-26.177510, 27.979777";
+        }
+        
     </script>
 
 </body>      

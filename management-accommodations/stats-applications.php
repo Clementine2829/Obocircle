@@ -101,7 +101,7 @@
 			theme:"light2",
 			animationEnabled: true,
 			title:{
-				text: "Job applications for the current and the previous year"
+				text: "Applications for the current and the previous year"
 			},
 			axisY :{
 				title: "Number of applications",
@@ -128,4 +128,4 @@
 		chart.render();
 	</script>
 
-	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+	<div id="chartContainer" style="height: 300px; width: 100%; margin-top: 4%;"></div>
