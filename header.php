@@ -39,8 +39,6 @@
 		</div>
 		<div class="col-sm-6" id="user_account">
             <?php
-                $_SESSION['s_id'] = "123";
-                $_SESSION["s_first_name"] = "Clementine";
                 if(isset($_SESSION['s_id'])){
                     ?>
 						<span class="dropdown" id="loggedin_dropedown">

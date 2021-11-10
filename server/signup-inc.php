@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$db_login = new DB_login_updates();
 			$connection = $db_login->connect_db("obo_users");
 			if ($connection->query($insert_in_table)) {
-				$success_msg = "Account created successfully.";
+				$success_msg = "Account created successfully. Click <a href='login.php'>here</a> to login";
 
 				$users_ex = "INSERT INTO users_extended (user_ex_id, user_id) VALUES(\"$user_ex\", \"$id\")";
 				if ($connection->query($users_ex)){
@@ -197,7 +197,20 @@ Copyright © " . date("Y") . " Obocircle.com | All rights reserved
 					require 'send-email.php';
 				
                 }
-
+                $notification_id = password_hash($this_date, PASSWORD_DEFAULT);
+                $notification_id = substr($notification_id,7,10);
+                while(!preg_match("/^[a-zA-Z0-9]*$/", $id)) {
+                    $notification_id = password_hash($notification_id, PASSWORD_DEFAULT);
+                    $notification_id = substr($notification_id,7,10);
+                }
+                $notification = "Your account has not been activated yet. Please click <a href='activate-account.php'>here</a> 
+                                to activate your account now";
+                $this_date = substr($this_date, 0, 16);
+                $sql_notification = "INSERT INTO notifications(notification_id, user_id, n_message, n_date)
+								VALUES(\"$notification_id\", \"$id\", \"$notification\", \"$this_date\")";
+				if ($connection->query($sql_notification)){
+				    //do nothing
+                }else echo "Error" . $connectino->error;
 				$firstname = $middlename = $lastname = $date_of_birth = $email = "";
 				$password = $password2  = $cell_1 = $ref_code = "" ;
 			} else $err_msg .= "Internal error occured while registering your account. Please try again ";

@@ -117,7 +117,7 @@
     create table users_extended(
         user_ex_id varchar (20) not null, 
         user_id varchar (45) not null, 
-        activate boolean not null default 0,
+        profile_status boolean not null default 0,
         user_type varchar (15) not null default 'general_user',
 		primary key (user_ex_id, user_id),
 		foreign key (user_id) references users (id) ON DELETE CASCADE
@@ -153,7 +153,7 @@
     create table display_picture(
         dp_id varchar(10) not null,
         user_id varchar(45) not null,
-        dp varchar (20) not null,
+        image varchar (20) not null,
         primary key(dp_id, user_id),
         foreign key (user_id) references users(id) on delete cascade
     );
@@ -168,5 +168,17 @@
     create table refs (
         ref_code char (6) not null, 
         email varchar (60) not null
+    );
+
+    create table notifications(
+        notification_id varchar(10) not null,
+        user_id varchar(45) not null,
+        n_message varchar (200) not null,
+        n_action varchar (200) not null,
+        n_status char (1) not null default "0",
+        n_date varchar (15) not null, 
+        primary key (notification_id, user_id), 
+        foreign key (user_id) references users (id) on delete cascade
     )
+
 ?>

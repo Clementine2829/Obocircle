@@ -3,36 +3,40 @@
     <!--end header-->
 
     <?php
-/*
-        if(!isset($_SESSION['file'])) $_SESSION['file'] = "";		
-		if (isset($_SESSION["s_first_name"]) && isset($_SESSION["s_email"])) {
+        require './server/validate_data.php';
+        //check if they are logged in, if so let them know and give them an option to logout or redirect otherwise
+		if (isset($_SESSION["s_id"])) {
+			if(isset($_SESSION['redir']) && isset($_SESSION['redir']) != ""){
+				echo "<span id='link'>" . $_SESSION["redir"] . "</span>";
+			}else echo "<span id='link'>home.php</span>";
 			?>
 			<script type="text/javascript">
-				window.location = "my-details.php";
+				let con = confirm("You are currently logged in, would you like to logout");
+				window.location = ((con == true) ? "logout.php" : $("#link").html());
 			</script>
 			<?php
 		}
-*/
+
         $errorMsg = "Invalid username or password";
 		$errorMsgNamePass = $username = $password = "";
-/*
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$usernameLower = strtolower($_POST["username"]);
 			if (empty($usernameLower) || empty($_POST["password"])) {
 				$errorMsgNamePass = $errorMsg;	
 			} else {
-				$username = test_input($usernameLower); 
+				$username = check_inputs($usernameLower); 
 				if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
 					$errorMsgNamePass = $errorMsg;	
 					$username = NULL;
 				}
-				$password = test_input($_POST["password"]);
+				$password = check_inputs($_POST["password"]);
 				if (!preg_match("/^[a-zA-Z\s0-9\.\!\@\#\$\%\^\&\*\s]*$/", $password)){
 					$errorMsgNamePass = $errorMsg;	
 					$password = NULL;
 				}
 			}
-			require("includes/user.inc.php");
+			require("./includes/user.inc.php");
 			$user = new User($username, $password);
 			if($user->get_user()) {
 				if(isset($_SESSION['reder']) && isset($_SESSION['reder']) != ""){
@@ -51,12 +55,6 @@
 				}
 			}else $errorMsgNamePass = $errorMsg;
 		}
-		function test_input($data){
-			$data = trim($data);
-			$data = stripcslashes($data);
-			$data = htmlspecialchars($data);
-			return $data;
-		}*/
 	?>
 	<link rel="stylesheet" type="text/css" href="./css/style-login.css">
 	<br><br>
