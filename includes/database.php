@@ -1,196 +1,172 @@
-<?php create database teamaces;
-	create table users(
-		id VARCHAR(30) NOT NULL PRIMARY KEY,
-		first_name VARCHAR(50) NOT NULL,
-		last_name VARCHAR(50) NOT NULL,
-		email VARCHAR(150) NOT NULL,
-		password VARCHAR(150) NOT NULL,
-		address VARCHAR(225),
-		user_type VARCHAR(10) NOT NULL,
-		profile_status INT NOT NULL DEFAULT '1',
-		date_reg VARCHAR(20) NOT NULL,
-		extended_user_info VARCHAR (10)
+<?php create database new_accommodations;
+	create table accommodations(
+		id VARCHAR(40) NOT NULL PRIMARY KEY,
+		manager VARCHAR(45) NOT NULL,
+		display VARCHAR(1) NOT NULL,
+		nsfas BOOLEAN NOT NULL DEFAULT 0, 
+		about TEXT NOT NULL,
+		date_posted VARCHAR(20) NOT NULL
 	);
-	create table user_info_extended(
-		user_info_id VARCHAR(10) NOT NULL PRIMARY KEY, 
-		user_id VARCHAR(30) NOT NULL,
-		phone VARCHAR(10) NOT NULL, 
-		gender VARCHAR(30) NOT NULL,
-		date_of_birth VARCHAR(30) NOT NULL,
-		nationality VARCHAR(30) NOT NULL,
-		race VARCHAR(30) NOT NULL,
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE		
+    create table rooms(
+		room_id VARCHAR(35) NOT NULL,
+		accommo_id VARCHAR (40) UNIQUE NOT NULL,
+		single_sharing BOOLEAN NOT NULL DEFAULT 0, 
+		double_sharing BOOLEAN NOT NULL DEFAULT 0, 
+		multi_sharing BOOLEAN NOT NULL DEFAULT 0, 
+        PRIMARY KEY (room_id, accommo_id),
+		FOREIGN KEY (accommo_id) REFERENCES accommodations(id) ON DELETE CASCADE  
 	);
-	create table verify(
-		veri_id VARCHAR(30) NOT NULL, 
-		user_id VARCHAR(30) NOT NULL, 
-		veri_link VARCHAR(50) NOT NULL,
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE	
-	);
-	create table highschool_education(
-		edu_id INT NOT NULL AUTO_INCREMENT,
-		user_id VARCHAR(30) NOT NULL, 
-		school_name VARCHAR(100) NOT NULL, 
-		grade_passed VARCHAR(10) NOT NULL, 
-		duration VARCHAR(70) NOT NULL, 
-		PRIMARY KEY(edu_id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
-	);
-	create table tertiary_education(
-		edu_id INT NOT NULL AUTO_INCREMENT,
-		user_id VARCHAR(30) NOT NULL, 
-		qualification_name VARCHAR(100) NOT NULL, 
-		tertiary_name VARCHAR(100) NOT NULL, 
-		duration VARCHAR(70) NOT NULL, 
-		PRIMARY KEY(edu_id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
-	);
-	create table job_experience(
-		exp_id INT NOT NULL AUTO_INCREMENT,
-		user_id VARCHAR(30) NOT NULL, 
-		job_title VARCHAR(100) NOT NULL, 
-		organization_name VARCHAR(100) NOT NULL, 
-		duration VARCHAR(50) NOT NULL, 
-		PRIMARY KEY(exp_id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
-	);
-	create table about_myself(
-		id INT NOT NULL AUTO_INCREMENT,
-		user_id VARCHAR(30) NOT NULL, 
-		about VARCHAR(225) NOT NULL, 
-		expertise VARCHAR(225) NOT NULL, 
-		skills VARCHAR(225) NOT NULL, 
-		PRIMARY KEY(id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
-	);
-	create table user_references(
-		ref_id INT NOT NULL AUTO_INCREMENT,
-		user_id VARCHAR(30) NOT NULL, 
-		ref_name VARCHAR(50) NOT NULL, 
-		contact VARCHAR(15) NOT NULL, 
-		organization VARCHAR(70) NOT NULL, 
-		PRIMARY KEY(ref_id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
-	);
-	CREATE TABLE documents(
-		doc_id   VARCHAR(10) NOT NULL PRIMARY KEY,
-		doc_name VARCHAR(30) NOT NULL, 
-		doc_loc VARCHAR(150) NOT NULL 
-	);
-	CREATE TABLE user_documents(
-		user_id VARCHAR(30) NOT NULL, 
-		doc_id  VARCHAR(10) NOT NULL, 
-		PRIMARY KEY(user_id, doc_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,   
-		FOREIGN KEY(doc_id) REFERENCES documents(doc_id) ON DELETE CASCADE   
-	);
-	CREATE TABLE find_employee(
-		employer_id VARCHAR(30) NOT NULL, 
-		employee_id VARCHAR(30) NOT NULL, 
-		PRIMARY KEY(employer_id, employee_id), 
-		FOREIGN KEY(employee_id) REFERENCES users(id) ON DELETE CASCADE,   
-		FOREIGN KEY(employee_id) REFERENCES users(id) ON DELETE CASCADE   
+	CREATE TABLE single_s ( 
+		single_id VARCHAR (20) NOT NULL,
+		room_id VARCHAR (35) UNIQUE NOT NULL,
+		cash VARCHAR (10) NOT NULL,
+		bursary VARCHAR (10) NOT NULL,
+        PRIMARY KEY (single_id, room_id),
+		FOREIGN KEY (room_id) REFERENCES rooms (room_id) ON DELETE CASCADE
 	);
 
-	CREATE TABLE profile_pictures(
-		image_id  INT NOT NULL AUTO_INCREMENT,
-		user_id VARCHAR(30) NOT NULL, 
-		image VARCHAR(30) NOT NULL, 
-		PRIMARY KEY(image_id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
+	CREATE TABLE double_s ( 
+		double_id VARCHAR (20) NOT NULL,
+		room_id VARCHAR (35) UNIQUE NOT NULL,
+		cash VARCHAR (10) NOT NULL,
+		bursary VARCHAR (10) NOT NULL,
+        PRIMARY KEY (double_id, room_id),
+		FOREIGN KEY (room_id) REFERENCES rooms (room_id) ON DELETE CASCADE
+	);
+	CREATE TABLE multi_s ( 
+		multi_id VARCHAR (20) NOT NULL,
+		room_id VARCHAR (35) UNIQUE NOT NULL,
+		cash VARCHAR (10) NOT NULL,
+		bursary VARCHAR (10) NOT NULL,
+        PRIMARY KEY (multi_id, room_id),
+		FOREIGN KEY (room_id) REFERENCES rooms (room_id) ON DELETE CASCADE
 	);
 
-	create table company(
-		id VARCHAR (20) NOT NULL,
-		manager_id VARCHAR(30) NOT NULL, 
-		company_name VARCHAR(50) NOT NULL, 
-		company_phone VARCHAR(15) NOT NULL, 
-		location VARCHAR(150) NOT NULL, 
-		website VARCHAR(150) NOT NULL, 
-		logo VARCHAR(150) NOT NULL, 
-		PRIMARY KEY(id, manager_id), 
-		FOREIGN KEY(manager_id) REFERENCES users(id) ON DELETE CASCADE   
+    CREATE TABLE address ( 
+		address_id VARCHAR (30) NOT NULL,
+		accommo_id VARCHAR (40) UNIQUE NOT NULL,
+		main_address VARCHAR (150) NOT NULL,
+        PRIMARY KEY (address_id, accommo_id),
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);
-
-	CREATE TABLE job_categories(
-		id  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		category VARCHAR(50) NOT NULL
+    CREATE TABLE websites ( 
+		website_id VARCHAR (10) NOT NULL,
+		accommo_id VARCHAR (40) UNIQUE NOT NULL,
+		website VARCHAR (100) NOT NULL,
+		PRIMARY KEY (website_id, accommo_id),
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);
-	create table jobs(
-		job_id VARCHAR(20) NOT NULL PRIMARY KEY,
-		company_id VARCHAR(20),
-		job_title VARCHAR(50) NOT NULL,
-		remote_work INT NOT NULL,
-		location VARCHAR(150) NOT NULL,
-		job_type VARCHAR(10) NOT NULL,
-		work_type VARCHAR(10) NOT NULL,
-		salary_min VARCHAR(10),
-		salary_max VARCHAR(10),
-		closing_date VARCHAR(20),
-		job_summary VARCHAR(225) NOT NULL,
-		requirements VARCHAR(225),
-		duties VARCHAR(225),
-		job_ref VARCHAR(10) NOT NULL,
-		job_status int NOT NULL DEFAULT 1,
-		category int,
-		date_posted VARCHAR(20) NOT NULL,
-		FOREIGN KEY(company_id) REFERENCES company(id) ON DELETE SET NULL,   
-		FOREIGN KEY(category) REFERENCES job_categories(id) ON DELETE SET NULL   
+    CREATE TABLE images ( 
+		image_id VARCHAR (15) NOT NULL PRIMARY KEY,
+		image VARCHAR (15) UNIQUE NOT NULL
 	);
-
-	CREATE TABLE job_applications(
-		user_id VARCHAR(30) NOT NULL, 
-		job_id VARCHAR(30) NOT NULL, 
-		date_applied VARCHAR(35) NOT NULL, 
-		job_status INT NOT NULL default 2, 
-		PRIMARY KEY(user_id, job_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,   
-		FOREIGN KEY(job_id) REFERENCES jobs(job_id) ON DELETE CASCADE   
+    CREATE TABLE accommodation_images (
+    	accommo_id VARCHAR (40) NOT NULL,
+		image_id VARCHAR (15) NOT NULL
 	);
-
-	CREATE TABLE interview(
-		interview_id VARCHAR(30) NOT NULL, 
-		job_id VARCHAR(30) NOT NULL, 
-		user_id VARCHAR(30) NOT NULL, 
-		interview_date VARCHAR(35) NOT NULL, 
-		interview_status INT NOT NULL default 1, 
-		PRIMARY KEY(interview_id, job_id), 
-		FOREIGN KEY(job_id) REFERENCES job_applications(job_id) ON DELETE CASCADE   
-	)
-	create table notifications(
-		id VARCHAR (10) NOT NULL,
-		user_id VARCHAR(30) NOT NULL, 
-		n_message VARCHAR(200) NOT NULL, 
-		n_action VARCHAR(100) NOT NULL, 
-		n_status CHAR(1) NOT NULL DEFAULT 2, 
-		n_date VARCHAR(50) NOT NULL, 
-		PRIMARY KEY(id, user_id), 
-		FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE   
+    
+	CREATE TABLE features ( 
+		f_id VARCHAR (30) PRIMARY KEY NOT NULL,
+		accommo_id VARCHAR (40) UNIQUE NOT NULL,
+		f1 varchar(1), 
+		f2 varchar(1), 
+		f3 varchar(1), 
+		f4 varchar(1), 
+		f5 varchar(1), 
+		f6 varchar(1), 
+		f7 varchar(1), 
+		f8 varchar(1), 
+		f9 varchar(1), 
+		f10 varchar(1), 
+		f11 varchar(1), 
+		f12 varchar(1), 
+		f13 varchar(1), 
+		f14 varchar(1), 
+		f15 varchar(1), 
+		f16 varchar(1), 
+		f17 varchar(1), 
+		f18 varchar(1), 
+		f19 varchar(1), 
+		f20 varchar(1), 
+		f21 varchar(1), 
+		f22 varchar(1), 
+		f23 varchar(1), 
+		f24 varchar(1), 
+		f25 varchar(1), 
+		f26 varchar(1), 
+		f27 varchar(1), 
+		f28 varchar(1), 
+		f29 varchar(1), 
+		f30 varchar(1), 
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);
-	create table subscribers(
-		id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		name VARCHAR (150),
-		email VARCHAR (150) NOT NULL, 
-		job_category INT,
-		FOREIGN KEY(job_category) REFERENCES job_categories(id) ON DELETE SET NULL  
-	);
+************************************************************************************************
+    create database obo_users;
+    create table users(
+        id varchar (45) not null primary key, 
+        first_name varchar(30) not null,
+        last_name varchar(30) not null,
+        gender char(1) not null, 
+        date_of_birth char(10) not null, 
+        phone char(10) not null, 
+        email varchar (50) not null unique,
+        password varchar (100) not null, 
+        ref_code char (6) unique not null, 
+        reg_date varchar (20) not null
+    );
+    create table users_extended(
+        user_ex_id varchar (20) not null, 
+        user_id varchar (45) not null, 
+        activate boolean not null default 0,
+        user_type varchar (15) not null default 'general_user',
+		primary key (user_ex_id, user_id),
+		foreign key (user_id) references users (id) ON DELETE CASCADE
+    );
+    create table general_users(
+        general_id varchar (10) not null, 
+        user_id varchar (20) not null,
+        uploads int default 0,
+		primary key (general_id, user_id),
+		foreign key (user_id) references users_extended (user_ex_id) ON DELETE CASCADE
+    );
+    create table premium_users (
+        premium_id varchar (10) not null, 
+        user_id varchar (20) not null,
+        uploads int default 0,
+		primary key (premium_id, user_id),
+		foreign key (user_id) references users_extended (user_ex_id) ON DELETE CASCADE
+    );
+    create table subscribers(
+        id int not null AUTO_INCREMENT primary key, 
+        email varchar (60) not null unique, 
+        sub_date timestamp
+    );        
+    
+    create table activate_account(
+        activate_id varchar(30) not null primary key,
+        user_id varchar(45) not null,
+        expire_date varchar(10) not null,
+        veri_link char(6) not null,   
+        foreign key (user_id) references users(id) on delete cascade
+    );
 
-	ALTER TABLE users ADD FOREIGN KEY (extended_user_info) REFERENCES user_info_extended (user_info_id) ON DELETE SET NULL;
-
-
-	create table stats_jobs(
-		stats_id VARCHAR(10) NOT NULL,
-		job_id VARCHAR NOT NULL
-		applications_approved
-		applications_declined
-
-	);
-	create table stats_company(
-		stats_id VARCHAR(10) NOT NULL,
-		company_id VARCHAR NOT NULL,
-		jobs_threshold int NOT NULL DEFAULT 20
-		
-
-	);
-
+    create table display_picture(
+        dp_id varchar(10) not null,
+        user_id varchar(45) not null,
+        dp varchar (20) not null,
+        primary key(dp_id, user_id),
+        foreign key (user_id) references users(id) on delete cascade
+    );
+    create table reset_pass(
+        reset_id varchar(35) not null,
+        user_id varchar(45) not null,
+        reset_link char (6) not null,
+        primary key(reset_id, user_id),
+        foreign key (user_id) references users(id) on delete cascade
+    );
+    
+    create table refs (
+        ref_code char (6) not null, 
+        email varchar (60) not null
+    )
 ?>

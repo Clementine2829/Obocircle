@@ -40,7 +40,7 @@
                         <label for="firstname">First name:</label>
                         <span class="err" id="err_f_name"> * <?php echo $err_firstname; ?></span>
                         <br>
-                        <input type="text" id="f_name" name="firstname" onblur="get_f_name()" placeholder="Enter your Name" value="<?php echo $firstname; ?>"> 
+                        <input type="text" id="f_name" name="firstname" onblur="get_f_name()" max="5" placeholder="Enter your Name" value="<?php echo $firstname; ?>"> 
                     </div>	
                     <div>
                         <label for="lastname">Last name:</label>
@@ -58,14 +58,15 @@
                         <label for="birthdate">Date of Birth:</label>
                         <span class="err" id="err_birthdate"> * <?php echo $err_birthdate; ?></span>
                         <br>
-                        <input type="date" id="birthdate" name="birthdate" min="1975-01-01" max="2002-01-01" 
+                        <?php $max_data = (date('Y') - 16) . "-" . date("m-d"); ?>
+                        <input type="date" id="birthdate" name="birthdate" min="1975-01-01" max="<?php echo $max_data; ?>" 
                                 onblur="get_birthdate()" value="<?php echo $birthdate; ?>">
                     </div>
                     <div>
                         <label for="cellphone1">Cell Number:</label>
                         <span class="err" id="err_cellphone1" > * <?php echo $err_cell_1; ?></span>
                         <br>
-                        <input type="number" id="cellphone1" onblur="get_phone()" placeholder="Enter your phone number" name="cellphone1" value="<?php echo $cell_1; ?>">
+                        <input type="number" id="cellphone1" onblur="get_phone()" max="5" placeholder="Enter your phone number" name="cellphone1" value="<?php echo $cell_1; ?>">
                     </div>
                 </div>
                 <div class='sub_container'>
@@ -81,7 +82,7 @@
                         </span>
                         <span class="err" id="err_email"> * <?php echo $err_email; ?></span>
                         <br>
-                        <input type="email" onblur="get_email()" id="email" name="email" placeholder="Enter your valid email address" value="<?php echo $email; ?>">
+                        <input type="email" onblur="get_signup_email()" id="email" name="email" placeholder="Enter your valid email address" value="<?php echo $email; ?>">
                     </div>		
 
                     <div>
@@ -139,6 +140,7 @@
     </div>
     <!--end footer-->   
     <!--script-->
+	<script src="js/validate_email.js" type="text/javascript"></script>
 	<script src="js/footer.js" type="text/javascript"></script>
 	<script src="js/signup.js" type="text/javascript"></script>
 </body>      

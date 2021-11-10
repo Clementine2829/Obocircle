@@ -1,26 +1,16 @@
-https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
-
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-function initMap(): void {
-  const map = new google.maps.Map(
-    document.getElementById("map") as HTMLElement,
-    {
-      center: { lat: 40.749933, lng: -73.98633 },
-      zoom: 13,
-      mapTypeControl: false,
-    }
-  );
-  const card = document.getElementById("pac-card") as HTMLElement;
-  const input = document.getElementById("pac-input") as HTMLInputElement;
-  const biasInputElement = document.getElementById(
-    "use-location-bias"
-  ) as HTMLInputElement;
-  const strictBoundsInputElement = document.getElementById(
-    "use-strict-bounds"
-  ) as HTMLInputElement;
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 40.749933, lng: -73.98633 },
+    zoom: 13,
+    mapTypeControl: false,
+  });
+  const card = document.getElementById("pac-card");
+  const input = document.getElementById("pac-input");
+  const biasInputElement = document.getElementById("use-location-bias");
+  const strictBoundsInputElement = document.getElementById("use-strict-bounds");
   const options = {
     fields: ["formatted_address", "geometry", "name"],
     strictBounds: false,
@@ -37,9 +27,7 @@ function initMap(): void {
   autocomplete.bindTo("bounds", map);
 
   const infowindow = new google.maps.InfoWindow();
-  const infowindowContent = document.getElementById(
-    "infowindow-content"
-  ) as HTMLElement;
+  const infowindowContent = document.getElementById("infowindow-content");
 
   infowindow.setContent(infowindowContent);
 
@@ -71,7 +59,6 @@ function initMap(): void {
 
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
-
     infowindowContent.children["place-name"].textContent = place.name;
     infowindowContent.children["place-address"].textContent =
       place.formatted_address;
@@ -81,7 +68,7 @@ function initMap(): void {
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
   function setupClickListener(id, types) {
-    const radioButton = document.getElementById(id) as HTMLInputElement;
+    const radioButton = document.getElementById(id);
 
     radioButton.addEventListener("click", () => {
       autocomplete.setTypes(types);
@@ -95,7 +82,6 @@ function initMap(): void {
   setupClickListener("changetype-geocode", ["geocode"]);
   setupClickListener("changetype-cities", ["(cities)"]);
   setupClickListener("changetype-regions", ["(regions)"]);
-
   biasInputElement.addEventListener("change", () => {
     if (biasInputElement.checked) {
       autocomplete.bindTo("bounds", map);
@@ -111,12 +97,10 @@ function initMap(): void {
 
     input.value = "";
   });
-
   strictBoundsInputElement.addEventListener("change", () => {
     autocomplete.setOptions({
       strictBounds: strictBoundsInputElement.checked,
     });
-
     if (strictBoundsInputElement.checked) {
       biasInputElement.checked = strictBoundsInputElement.checked;
       autocomplete.bindTo("bounds", map);

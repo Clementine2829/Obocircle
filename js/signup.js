@@ -5,7 +5,7 @@ $(document).ready(function(){
 		let l_name = get_l_name();
 		let gender = get_gender();
 		let birthdate = get_birthdate();
-		let email = get_email();
+		let email = get_signup_email();
 		let p1 = get_password();
 		let p2 = get_password2();
 		let phone = get_phone();
@@ -62,13 +62,13 @@ function get_birthdate(){
 	txt = validate_text(name, txt, err_msg, pattern);
 	return (txt == "") ? "" : txt; 
 }
-function get_email(){
+function get_signup_email(){
     let email = $("#email");
     let err = $("#err_email");
     let ms1 = "Enter Email address";
     let ms2 = "Unsupported email domain";
     let pattern = /^[a-zA-Z0-9\.]+\@+(gmail.com|icloud.com|outlook.com|yandex.mail|yahoo.com)+$/g;
-    return get_email(email, err, ms1, ms2, patten);
+    return get_email(email, err, ms1, ms2, pattern);
 }
 function get_password(){
 	let txt = $('#password1');
