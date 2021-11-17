@@ -224,7 +224,7 @@
                             "&checkbox2=" + checkbox2 +  
                             "&checkbox3=" + checkbox3 +
                             "&declare=" + declare ;
-                alert(data); return;
+                //alert(data); return;
                 
                 document.getElementById("success_msg").style.color = "blue";
                 var xhttp = new XMLHttpRequest();
@@ -252,6 +252,7 @@
             $("#success_msg").html("");
         }
         function response(){
+            document.getElementById('submit').remove();
             $("#success_msg").html("<b style='color: blue'>Posted successfully. <br> \
                 <span style='color:green'>Redirecting in <span id='sec'>3</span> sec...</span></b>");
             setInterval(function(){
@@ -260,7 +261,7 @@
                 else if(x == 2) $('#sec').html(1);
                 else if(x == 1) $('#sec').html(0);
             }, 1000);
-            setInterval(function(){window.location = "./dashboad.php"}, 3000);
+            setInterval(function(){window.location = "./dashboard.php"}, 3000);
         }
 	</script>
     <script type="text/javascript">

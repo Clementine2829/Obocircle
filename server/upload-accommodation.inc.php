@@ -73,9 +73,10 @@
             if ($name != "" && ($address != "" || ($address1 != "" && $town != "" && $code != "")) && $declare != 0 &&
                 ($checkbox1 == 1 || $checkbox2 == 1 || $checkbox3 == 1)){
 
-        echo "Returned here "; return;
+        //echo "Returned here "; return;
                 $id = rand_text($name, 40);
                 $rooms = rand_text($name, 35);
+                $addr = rand_text($name, 30);
                 //rooms
                 $single = rand_text($name, 20);
                 $double = rand_text($name, 20);
@@ -85,7 +86,7 @@
                 $connection = $db_login->connect_db("accommodations");
 
                 $name = mysqli_real_escape_string($connection, $name);
-                if(address == ""){
+                if($address == ""){
                     $address = mysqli_real_escape_string($connection, $address);
                 }else{
                     $address1 = mysqli_real_escape_string($connection, $address1);
@@ -99,131 +100,41 @@
                 $username =	$_SESSION['s_id'];
                 $insert_main_table = "INSERT INTO accommodations (id, name, manager, about, date_posted)
                                         VALUES ('$id', '$name','$username', '$about', '$declare')";	
-                if (!$connection->query($insert_main_table)) {
-        			echo "Error: " . $connection->error;
-        //            echo "<br>Error uploading your accommodation. Please try again";			
+                if ($connection->query($insert_main_table)) echo "success";
+                else echo "Error uploading this accommoddation online. please try again";
+                
+                $my_address = "";
+                if($address != ""){
+                    $my_address = $address;
                 }else{
-                    $connect = $db_login->connect_db("obo_users");
-                    $sql_update_client =  "UPDATE veri_clients SET upload_a = upload_a + 1 
-                                            WHERE client = \"$username\"";
-                    if (!$connect->query($sql_update_client)) echo "Error occured";
-                    $_SESSION['s_upload_a']++;   
+                    if($address2 == "" && $address3 == "")
+                        $my_address = $address1 . '<br>' . $town;
+                    else if($address2 == "" )
+                        $my_address = $address1 . '<br>' . $address3 . '<br>' . $town;
+                    else if($address3 == "" )
+                        $my_address = $address1 . '<br>' . $address2 . '<br>' . $town;		
+                    else $my_address = $address1 . '<br>' . $address2 . '<br>' . $address3 . '<br>' . $town;
                 }
-                unset($username);
-
-                $insert_user_rating_table = "INSERT INTO user_ratings (rating_id, accommo_id)
-                                                VALUES ('$user_ratings', '$id')";
-                if (!$connection->query($insert_user_rating_table)) 
-                    echo "<br>Error setting up your accommodation. Please try again";			
-        //			echo "Error: " . $connection->error;
                 $my_address = "";
-                if($address2 == "" && $address3 == "")
-                    $my_address = $address1 . '<br>' . $town;
-                else if($address2 == "" )
-                    $my_address = $address1 . '<br>' . $address3 . '<br>' . $town;
-                else if($address3 == "" )
-                    $my_address = $address1 . '<br>' . $address2 . '<br>' . $town;		
-                else $my_address = $address1 . '<br>' . $address2 . '<br>' . $address3 . '<br>' . $town;
-
-        //	echo "<br>" . $my_address;
-        //return;
-                $insert_address_table = "INSERT INTO address (address_id, main_address, code, accommo_id) 
-                                         VALUES ('$address', '$my_address', '$code', '$id')";
+                $insert_rooms_table = "INSERT INTO rooms (room_id, accommo_id, single_sharing, double_sharing, multi_sharing)
+                                       VALUES ('$rooms', '$id', '$checkbox1', '$checkbox2', '$checkbox3')";
+                if (!$connection->query($insert_rooms_table)) 
+                    echo "<br>Error setting up your accommodation. Please try again";			
+                $insert_address_table = "INSERT INTO address
+                                       VALUES ('$addr', '$id', '$address')";
                 if (!$connection->query($insert_address_table)) 
-                    echo "<br>Error setting up your accommodation. Please try again";			
-        //			echo "Error: " . $connection->error;
-                $my_address = "";
-                $insert_rooms_table = "INSERT INTO rooms (room_id, s_a, d_a, m_a, accommo_id)
-                                       VALUES ('$rooms', '$checkbox1', '$checkbox2', '$checkbox3', '$id')";
-                if (!$connection->query($insert_rooms_table)) 
-                    echo "<br>Error setting up your accommodation. Please try again";			
-        //			echo "Error: " . $connection->error;
+                    echo "<br>Error setting up your accommodation. Please try again<br> address error";			
 
-                $insert_single_table = "INSERT INTO single (single_id, cash, bursary, room_id) 
-                                        VALUES ('$single', NULL, NULL, '$rooms')";
-                if (!$connection->query($insert_single_table)) 
-                    echo "<br>Error setting up your accommodation. Please try again";			
-        //			echo "Error: " . $connection->error;
-
-                $insert_double_table = "INSERT INTO two_sharing (two_sharing_id, cash, bursary, room_id) 
-                                        VALUES ('$double', NULL, NULL, '$rooms')";
-                if (!$connection->query($insert_double_table)) 
-                    echo "<br>Error setting up your accommodation. Please try again";			
-        //			echo "Error: " . $connection->error;
-
-                $insert_three_table = "INSERT INTO three_sharing (three_sharing_id, cash, bursary, room_id) 
-                    VALUES ('$three', NULL, NULL, '$rooms')";
-                if (!$connection->query($insert_three_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $update_rooms_table = "UPDATE rooms 
-                                        SET single = '$single', 
-                                            two_s = '$double', 
-                                            three_s = '$three' 
-                                        WHERE room_id = '$rooms'";
-                if (!$connection->query($update_rooms_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";
-
-                $insert_average_user_rating_table = "INSERT INTO average_user_rating 
-                                            (ave_rating_id, ave_location, ave_services, ave_rooms, accommo_id)
-                                             VALUES ('$average_user_rating',  NULL, NULL, NULL, '$id')";
-                if (!$connection->query($insert_average_user_rating_table))
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $insert_location_table = "INSERT INTO location (loc_id, rating_id)
-                                             VALUES ('$location', '$average_user_rating')";
-                if (!$connection->query($insert_location_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $insert_services_table = "INSERT INTO services (service_id, rating_id)
-                                             VALUES ('$services', '$average_user_rating')";
-                if (!$connection->query($insert_services_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $insert_rooms_table = "INSERT INTO rating_rooms (ave_room_id, rating_id)
-                                             VALUES ('$rating_rooms', '$average_user_rating')";
-                if (!$connection->query($insert_rooms_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $insert_features_table = " INSERT INTO features (f_id, accommo_id) 		
-                                        VALUES ('$include_features', '$id')";
-                if (!$connection->query($insert_features_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $update_rooms_table = "UPDATE rooms 
-                                        SET single = '$single', two_s = '$double', three_s = '$three' 
-                                    WHERE room_id  = '$rooms'";
-                if (!$connection->query($update_rooms_table)) 
-                    echo "Error: " . $connection->error;
-        //			echo "<br>Error setting up your accommodation. Please try again";			
-
-                $update_accommo_table = "UPDATE accommodation 
-                                        SET star_rating = '$user_ratings', 
-                                            address = '$address', 
-                                            rooms = '$rooms', 
-                                            user_ratings = '$average_user_rating', 
-                                            inc_features = '$include_features', 
-                                            display = '0' 
-                                        WHERE id = '$id'";
-                if (!$connection->query($update_accommo_table)) 
-        //			echo "Error: " . $connection->error;
-                    echo "<br>Error setting up your accommodation. Please try again";			
-
-                $update_average_table = "UPDATE average_user_rating 
-                                        SET ave_location = '$location', 
-                                        ave_services = '$services', 
-                                        ave_rooms = '$rating_rooms' 
-                                        WHERE ave_rating_id = '$average_user_rating'";
-                if (!$connection->query($update_average_table)) 
-        //			echo "Error: " . $connection->error;
-                    echo "<br>Error setting up your accommodation. Please try again";
+                $notification = "Your accommodation has been uploaded successfully.<br>Now waiting for the manager to overview it and set it to display for the public to view. In the meantine, please complete it fully by clicking <a href='./dashboard.php'>here</a>";
+                $this_date = substr($declare, 0, 16);
+                $notification_id = rand_text($name, 10);
+                $sql_notification = "INSERT INTO notifications(notification_id, user_id, n_message, n_date)
+								VALUES(\"$notification_id\", \"$username\", \"$notification\", \"$this_date\")";
+                $con = $db_login->connect_db("obo_users");
+				if ($con->query($sql_notification)){
+				    //do nothing
+                }                
+                $con->close();
                 $connection->close();
             }
     }else{

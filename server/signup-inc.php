@@ -210,7 +210,7 @@ Copyright © " . date("Y") . " Obocircle.com | All rights reserved
 								VALUES(\"$notification_id\", \"$id\", \"$notification\", \"$this_date\")";
 				if ($connection->query($sql_notification)){
 				    //do nothing
-                }else echo "Error" . $connectino->error;
+                };
 				$firstname = $middlename = $lastname = $date_of_birth = $email = "";
 				$password = $password2  = $cell_1 = $ref_code = "" ;
 			} else $err_msg .= "Internal error occured while registering your account. Please try again ";
