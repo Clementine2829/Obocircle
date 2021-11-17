@@ -52,7 +52,7 @@
 							</button>
 							<div class="dropdown-menu" id="dropdown_items" >
                                 <?php
-                                    if(isset($_SESSION['s_user_type'])  && $_SESSION['s_user_type'] == "a-manager")
+                                    if(isset($_SESSION['s_user_type'])  && $_SESSION['s_user_type'] == "premium_user")
                                         echo '<a class="dropdown-item" href="dashboard.php"> Dashboard </a>';
                                 ?>
 								<a class="dropdown-item" href="view-profile.php"> View  Profile </a>
@@ -77,7 +77,7 @@
             ?>
             <div class="notifications">
                 <a href="notifications.php" id="notifications">
-                    <span data-toggle="tooltip" data-placement="bottom" title class="fas fas fa-info-circle" 
+                    <span data-toggle="tooltip" data-placement="left" title class="fas fas fa-info-circle" 
                         data-original-title="Click the icon to view your notifications"></span>
                     <span id="cart">0</span>
                 </a>		

@@ -32,7 +32,7 @@ form .sub_container label{
 }
 input[type=text], input[type=password], input[type=date],
 input[type=number],input[type=email], select{
-	border: 1.5px solid lightblue;
+	border: 2px solid lightblue;
 	padding: 2px 7px;
 	border-radius: 7px;
 	margin: auto;

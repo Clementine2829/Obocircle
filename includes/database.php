@@ -1,8 +1,9 @@
 <?php create database new_accommodations;
 	create table accommodations(
 		id VARCHAR(40) NOT NULL PRIMARY KEY,
+		name VARCHAR(65) NOT NULL,
 		manager VARCHAR(45) NOT NULL,
-		display VARCHAR(1) NOT NULL,
+		display VARCHAR(1) NOT NULL DEFAULT 0,
 		nsfas BOOLEAN NOT NULL DEFAULT 0, 
 		about TEXT NOT NULL,
 		date_posted VARCHAR(20) NOT NULL
@@ -117,6 +118,7 @@
     create table users_extended(
         user_ex_id varchar (20) not null, 
         user_id varchar (45) not null, 
+        address varchar (200) not null, 
         profile_status boolean not null default 0,
         user_type varchar (15) not null default 'general_user',
 		primary key (user_ex_id, user_id),

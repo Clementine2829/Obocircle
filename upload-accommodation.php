@@ -1,56 +1,81 @@
     <!--header-->
     <?php require_once('./header.php'); ?>
     <!--end header-->
+    <?php
+        $_SESSION['redir'] = './upload-accommodation.php';
 
-	<link rel="stylesheet" type="text/css" href="./css/style-upload-accommodation.css">
-    <div class="heading">
-        <h5>Use the form below to post your new accommodation</h5>
-    </div>
-    <div id="form">
-		<form method="post" id="uploads">
-			<label for="" >Accomodation Name: </label><br>
-			<input type="text" id="name" onblur="accomodation_name()" placeholder="E.g. House  Africa"> 
-			<span class="err" id="err_name"> *</span> <br>
-			<br>
-			<label for="">Physical Address:</label><br>
-            <input type="radio" name="address_type" value="google" checked> Use Google maps
-            <input type="radio" name="address_type" value="google"> Enter address manually<br> 
-            <div id="pac-container">
-                <input id="pac-input" type="text" placeholder="Enter a location" />
+        if(!isset($_SESSION['s_id'])){
+            echo "<style type='text/css'>#access_denied{margin: 5% 9%;}</style>";
+            require_once "offile.html";  
+        }else if(!isset($_SESSION['s_user_type']) || 
+                 (isset($_SESSION['s_user_type']) && !preg_match('/(premium_user|manager)/', $_SESSION['s_user_type']))){
+            echo "<style type='text/css'>#access_denied{margin: 5% 9%;}</style>";
+            require_once "access_denied.html";               
+        }else{
+            ?>
+            <link rel="stylesheet" type="text/css" href="./css/style-upload-accommodation.css">
+            <div class="heading">
+                <h5>Use the form below to post your new accommodation</h5>
             </div>
-			<input type="text" id="line1" onblur="validate_address1()" placeholder="Address Line 1">
-			<span class="err" id="err_line1"> *</span> <br>
-			<input type="text" id="line2" onblur="validate_address2()" placeholder="Address Line 2">
-			<span class="err" id="err_line2"> </span> <br>
-			<input type="text" id="town" onblur="validate_town()" placeholder="Town/City">
-			<span class="err" id="err_town"> *</span> <br>
-			<input type="number" id="code" onblur="validate_code()" placeholder="Address code">
-			<span class="err" id="err_code"> *</span> <br>
-			<br>
-			<label for="" >Types of Rooms Available:</label>
-			<span class="err" id="err_rooms"> *</span> <br>
-			<input type="checkbox" id="single" checked> Single rooms<br>
-			<input type="checkbox" id="two" checked> Double sharing<br>
-			<input type="checkbox" id="three" > Multiple Sharing<br>
-			<br>
-			<label for="" >Short Summary of this Accommodation</label>
-			<span class="err" id="err_summary"> *</span> <br>
-			<textarea id="about_accommo" onblur="validate_message()" ></textarea><br>
-			<span>
-				<input type="checkbox" id="declare">
-				<span id="declare_info">
-					I declare that this information provided is legit. 
-					And that I own/manage this accommodation or have been granted permission by the owner/manager
-					to post it on this webiste<br>
-				</span> 
-				For more information, please visit our <a href="./terms_of_use.html">T&C</a>.
-			</span>
-			<p id="success_msg" ></p>
-			<input type="button" id="submit" value="Submit" onclick="upload()">
-			<input type="button" id="re_btn" style="background-color: red;"
-					value="My accommodation" onclick="window.location='dashboard.php'">
-		</form>
-	</div>
+            <div id="form">
+                <form method="post" id="uploads">
+                    <label for="" >Accomodation Name: </label><br>
+                    <input type="text" id="name" onblur="accomodation_name()" placeholder="E.g. House  Africa"> 
+                    <span class="err" id="err_name"> *</span> <br>
+                    <br>
+                    <label for="">Physical Address:</label><br>
+                    <input type="radio" name="address_type" onchange="switch_location()" value="google" checked> Use Google maps
+                    <input type="radio" name="address_type" onchange="switch_location()" value="manual"> Enter address manually<br> 
+                    <div id="maps1">
+                        <div id="pac-container">
+                            <input id="pac-input" type="text" placeholder="Enter a location" /> 
+                            <span id="err_google_address" class="err"> * </span> 
+                        </div>
+                        <div id="map"></div>
+                        <div id="infowindow-content">
+                            <span id="place-name" class="title"></span><br />
+                            <span id="place-address"></span>
+                        </div>                    
+                    </div>
+                    <div id="maps2">                    
+                        <input type="text" id="line1" onblur="validate_address1()" placeholder="Address Line 1">
+                        <span class="err" id="err_line1"> *</span> <br>
+                        <input type="text" id="line2" onblur="validate_address2()" placeholder="Address Line 2">
+                        <span lass="err" id="err_line2"> </span> <br>
+                        <input type="text" id="town" onblur="validate_town()" placeholder="Town/City">
+                        <span class="err" id="err_town"> *</span> <br>
+                        <input type="number" id="code" onblur="validate_code()" placeholder="Address code">
+                        <span class="err" id="err_code"> *</span> <br>
+                        <br>
+                    </div>   
+                    
+                    <label for="" >Types of Rooms Available:</label>
+                    <span class="err" id="err_rooms"> *</span> <br>
+                    <input type="checkbox" id="single" checked> Single rooms<br>
+                    <input type="checkbox" id="two" checked> Double sharing<br>
+                    <input type="checkbox" id="three" > Multiple Sharing<br>
+                    <br>
+                    <label for="" >Short Summary of this Accommodation</label>
+                    <span class="err" id="err_summary"> *</span> <br>
+                    <textarea id="about_accommo" onblur="validate_message()" ></textarea><br>
+                    <span>
+                        <input type="checkbox" id="declare">
+                        <span id="declare_info">
+                            I declare that this information provided is legit. 
+                            And that I own/manage this accommodation or have been granted permission by the owner/manager
+                            to post it on this webiste<br>
+                        </span> 
+                        For more information, please visit our <a href="./terms_of_use.html">T&C</a>.
+                    </span>
+                    <p id="success_msg" ></p>
+                    <input type="button" id="submit" value="Submit" onclick="upload()">
+                    <input type="button" id="re_btn" style="background-color: red;"
+                            value="My accommodation" onclick="window.location='dashboard.php'">
+                </form>
+            </div>
+            <?php
+        }
+    ?>
 
     <!--footer-->
     <div class="row">
@@ -63,8 +88,21 @@
 	<script src="js/validate_email.js" type="text/javascript"></script>
 	<script src="js/footer.js" type="text/javascript"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&libraries=places"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&libraries=places&callback=initMap"></script>
 	<script type="text/javascript">
+        
+        function switch_location(){
+            let loc = $("input[type=radio]:checked").val();
+            
+            if(loc == "manual"){
+                $("#maps1").css({"display": "none"})
+                $("#maps2").css({"display": "inline-block"})
+            }else{
+                $("#maps1").css({"display": "inline-block"})
+                $("#maps2").css({"display": "none"})
+            }
+        }
+        
         function accomodation_name(){
             var txt = $('#name').val();
             var err_msg = $('#err_name');
@@ -143,7 +181,9 @@
             var town = validate_town();
             var code = validate_code();
             var about = validate_message();
-
+            var loc = $("input[type=radio]:checked").val();
+            var address = $("#pac-input").val();
+            
             var checkbox1 = document.getElementById('single').checked;
             var checkbox2 = document.getElementById('two').checked;
             var checkbox3 = document.getElementById('three').checked;
@@ -158,12 +198,19 @@
             checkbox1 = checkBox(checkbox1);
             checkbox2 = checkBox(checkbox2);
             checkbox3 = checkBox(checkbox3);
-            if (name == "" ||
-                address1 == "" ||
-                town == "" ||
-                code == "" ||
-                about == "") 
+            $("#err_google_address").html(" * ");
+            if(loc == "manual" && (name == "" || address1 == "" || town == "" || code == "" || about == "")){
+                address = "";
                 return;
+            }else if((loc == "google" && address == "") && (name == "" || about == "")){
+                address1 = ""; 
+                address2 = ""; 
+                town = "";
+                code = "";
+                $("#err_google_address").html("Google maps required");
+                return;
+            } 
+            
             var confirm_this = confirm('Are you sure all the supplied infomation is Correct?\n' +
                                         'Because you cannot change them going forward!');
             if (confirm_this){
@@ -177,9 +224,10 @@
                             "&checkbox2=" + checkbox2 +  
                             "&checkbox3=" + checkbox3 +
                             "&declare=" + declare ;
-                var xhttp;
+                alert(data); return;
+                
                 document.getElementById("success_msg").style.color = "blue";
-                xhttp = new XMLHttpRequest();
+                var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function(){
                     if (this.readyState > 0 || this.readyState < 4){
                         document.getElementById('submit').disabled = "true";
@@ -197,7 +245,7 @@
                         }
                     }
                 }
-                xhttp.open("POST", "upload-accommodation.inc.php?" + data, true);
+                xhttp.open("POST", "./server/upload-accommodation.inc.php?" + data, true);
                 xhttp.send();
             }
             data = "";
@@ -226,17 +274,17 @@ function initMap() {
     zoom: 13,
     mapTypeControl: false,
   });
-  const card = document.getElementById("pac-card");
+  //const card = document.getElementById("pac-card");
   const input = document.getElementById("pac-input");
-  const biasInputElement = document.getElementById("use-location-bias");
-  const strictBoundsInputElement = document.getElementById("use-strict-bounds");
+  //const biasInputElement = document.getElementById("use-location-bias");
+  //const strictBoundsInputElement = document.getElementById("use-strict-bounds");
   const options = {
     fields: ["formatted_address", "geometry", "name"],
     strictBounds: false,
     types: ["establishment"],
   };
 
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
 
   const autocomplete = new google.maps.places.Autocomplete(input, options);
 
@@ -294,7 +342,8 @@ function initMap() {
       input.value = "";
     });
   }
-
+  //setupClickListener("changetype-all", []);
+/*
   biasInputElement.addEventListener("change", () => {
     if (biasInputElement.checked) {
       autocomplete.bindTo("bounds", map);
@@ -320,7 +369,7 @@ function initMap() {
     }
 
     input.value = "";
-  });
+  });*/
 }
         
     </script>

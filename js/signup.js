@@ -68,7 +68,13 @@ function get_signup_email(){
     let ms1 = "Enter Email address";
     let ms2 = "Unsupported email domain";
     let pattern = /^[a-zA-Z0-9\.]+\@+(gmail.com|icloud.com|outlook.com|yandex.mail|yahoo.com)+$/g;
-    return get_email(email, err, ms1, ms2, pattern);
+    email = get_email(email, err, ms1, ms2, pattern);
+    if(email == ""){
+        $("#email").css({'border':'1px solid red'});
+    }else{
+        $("#email").css({'border':'2px solid lightblue'});
+    }
+    return email;
 }
 function get_password(){
 	let txt = $('#password1');
@@ -160,5 +166,5 @@ function validate_text(name, txt, err_msg, pattern, len = ""){
 		return val;
 	}
 }
-function suc_box(x){x.css({'border':'1.5px solid lightblue'})}
+function suc_box(x){x.css({'border':'2px solid lightblue'})}
 function err_box(x){x.css({'border':'1px solid red'})}

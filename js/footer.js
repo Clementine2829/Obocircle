@@ -1,6 +1,6 @@
 $(document).ready(function () {
     footer();
-/*	let cart = $("#cart").html();
+	let cart = $("#cart").html();
     load_cart();
     setTimeout(function(){
 		if(cart == 0){	
@@ -10,7 +10,7 @@ $(document).ready(function () {
 		}
 		console.log("running again\n");
     }, 50000);
-*/});
+});
 function load_cart(){
 	let loc = "#cart";
 	let url = "./server/notifications.inc.php?action=cart";
