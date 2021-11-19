@@ -200,10 +200,10 @@
             </tr>
             <tr>
                 <td><span class="fas fa-users"></span> Multi-sharing:</td>
-                <td>R:<input type="number" id="three_c" value="<?php echo $multi_cash; ?>" placeholder="0.00"></td>
-                <td>R:<input type="number" id="three_b" value="<?php echo $multi_bursary; ?>" placeholder="0.00" ></td>
+                <td>R:<input type="number" id="multi_c" value="<?php echo $multi_cash; ?>" placeholder="0.00"></td>
+                <td>R:<input type="number" id="multi_b" value="<?php echo $multi_bursary; ?>" placeholder="0.00" ></td>
                 <td>
-                    <select id="three_a">
+                    <select id="multi_a">
                         <?php
                             echo '<option value="1" ' . (($m_sharing == 1) ? "selected" : "") . '>Available</option>';
                             echo '<option value="0" ' . (($m_sharing == 0) ? "selected" : "") . '>Full</option>';
@@ -240,29 +240,29 @@
         let single_b = $('#single_b').val();
         let double_c = $('#double_c').val();
         let double_b = $('#double_b').val();
-        let three_c = $('#three_c').val();
-        let three_b = $('#three_b').val();
+        let multi_c = $('#multi_c').val();
+        let multi_b = $('#multi_b').val();
         
         if(telephone != ""){
             
         }
         let con;
-        let payload = $('#my_room').html();
-        let pattern = /^[a-zA-Z0-9]*$/;
+        let payload = $('#payload').val();
+        let pattern = /^[a-zA-Z0-9]+$/;
         if(!payload.match(pattern) || payload == "") return;
         if(single_c == "" || single_b == "" ||
             double_c == "" || double_b == "" ||
-            three_c == "" || three_b == "" ||
-            single_a == "" || double_a == "" || three_a == "" || tell == "" ||  website == "")
+            multi_c == "" || multi_b == "" ||
+            single_a == "" || double_a == "" || multi_a == "" || tell == "" ||  website == "")
             con = confirm("Some fields were left empty. Confirm to proceed with changes.");
         else con = confirm("Confirm to proceed with changes."); 
         if(con){   
             data = "payload=" + payload + "&single_c=" + single_c + "&single_b=" + single_b +
                     "&double_c=" + double_c + "&double_b=" + double_b +
-                    "&three_c=" + three_c + "&three_b=" + three_b +
+                    "&multi_c=" + multi_c + "&multi_b=" + multi_b +
                     "&single_a=" + single_a + "&double_a=" + double_a + 
-                    "&three_a=" + three_a + "&nsfas=" + nsfas + "&tell=" + tell + "&website=" + website;
-            let url = "./server/management.inc.php?action=update_main&" + data;
+                    "&multi_a=" + multi_a + "&nsfas=" + nsfas + "&tell=" + tell + "&website=" + website;
+            let url = "./management-accommodations/server/management.inc.php?action=update_main&" + data;
             let loc = "#err_update_main_page";
             let btn = "#update_main_page";
             send_data(url, displayer, loc, " ", " ", btn);   

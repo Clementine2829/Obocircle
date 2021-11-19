@@ -245,7 +245,7 @@
                         }
                     }
                 }
-                xhttp.open("POST", "./server/upload-accommodation.inc.php?" + data, true);
+                xhttp.open("POST", "./management-accommodations/server/upload-accommodation.inc.php?" + data, true);
                 xhttp.send();
             }
             data = "";
