@@ -47,6 +47,7 @@
 		address_id VARCHAR (30) NOT NULL,
 		accommo_id VARCHAR (40) UNIQUE NOT NULL,
 		main_address VARCHAR (150) NOT NULL,
+		contact CHAR (10),
         PRIMARY KEY (address_id, accommo_id),
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);

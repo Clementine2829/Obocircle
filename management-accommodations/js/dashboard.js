@@ -1,6 +1,12 @@
 $(document).ready(function(){
+    document.getElementsByClassName('col-md-1')[0].remove();
+    document.getElementsByClassName('col-md-1')[0].remove();
+    document.getElementsByClassName('col-sm-4')[0].className = "col-sm-5";
+    document.getElementsByClassName('col-sm-6')[0].className = "col-sm-7";
+    
     load_main_page();
     
+    $("#main_page").click(function(){load_main_page();})
     $("#main_page").click(function(){load_main_page();})
     $("#upload_images").click(function(){load_upload_images();})
     $("#add_features").click(function(){load_add_features();})
@@ -15,39 +21,36 @@ $(document).ready(function(){
     
     
 })
-function load_main_page(){
-    let url = "./management-accommodations/main-page.php?payload=" + $("#payload").val();
+function new_accommodation(){
+    special_displayer("select-accommodation.php");
+/*    let url = "./management-accommodations/upload-images.php?payload=" + $("#payload").val();
     let loc = "#displayer";
-    send_data(url, displayer, loc);
+    send_data(url, displayer, loc);*/
+}
+function load_main_page(){
+    special_displayer("main-page.php");
 }
 function load_upload_images(){
-    let url = "./management-accommodations/upload-images.php?payload=" + $("#payload").val();
-    let loc = "#displayer";
-    send_data(url, displayer, loc);
+    special_displayer("upload-images.php");
 }
 function load_add_features(){
-    let url = "./management-accommodations/add-features.php?payload=" + $("#payload").val();
-    let loc = "#displayer";
-    send_data(url, displayer, loc);
+    special_displayer("add-features.php");
 }
 function load_view_applications(){
-    let url = "./management-accommodations/view-applications.php?payload=" + $("#payload").val();
-    let loc = "#displayer";
-    send_data(url, displayer, loc);
+    special_displayer("view-applications.php");
 }
 
 function add_new_manager(){
-    let url = "./management-accommodations/add-manager.php?payload=" + $("#payload").val();
-    let loc = "#displayer";
-    send_data(url, displayer, loc);
+    special_displayer("add-manager.php");
 }
 function statistics_applications(){
-    let url = "./management-accommodations/stats-applications.php??payload=" + $("#payload").val();
-    let loc = "#displayer";
-    send_data(url, displayer, loc);
+    special_displayer("stats-applications.php");
 }
 function statistics_accommodation(){
-    let url = "./management-accommodations/stats-accommodations.php??payload=" + $("#payload").val();
+    special_displayer("stats-accommodations.php");
+}
+function special_displayer(url){
+    url = "./management-accommodations/" + url + "?payload=" + $("#payload").val();
     let loc = "#displayer";
     send_data(url, displayer, loc);
 }

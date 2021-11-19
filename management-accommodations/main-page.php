@@ -2,8 +2,43 @@
     $accommodation = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
 
     if($accommodation == ""){
-        require_once './select-accommodation.php';
-        return;
+        if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
+            if($_SESSION['s_user_type'] != "premium_user"){
+                require_once '../access_denied.html';
+                return;
+            }
+            $user_id = $_SESSION['s_id'];
+            $sql = "SELECT id, name
+                    FROM accommodations
+                    WHERE manager=\"$user_id\" LIMIT 15";
+
+            require("../includes/conn.inc.php");
+            $sql_results = new SQL_results();
+            $results = $sql_results->results_accommodations($sql);
+            $div = "";
+            if($results->num_rows > 1){
+				while($row = $results->fetch_assoc()){
+                    $div .= '<br><li><a href="./dashboard.php?payload='. $row['id'] . '">'. $row['name'] . '</a></li>';
+                }
+                ?>
+                    <div id="select_accommodations">
+                        <br>
+                        <h5>Select an accommodation to manage below</h5>
+                        <ul>
+                            <?php echo $div; ?>
+                        </ul>
+                    </div>
+                <?php
+                return;
+            }else if($results->num_rows < 1){
+                echo '<p style="color: red"><strong><br>No accommodation found</strong><br>
+                        If you belive this is an errro, please contact us at support@obocircle.com</p>';
+                return;
+            }
+        }else{
+            require_once '../offline.html';
+            return;
+        }
     }else{
         if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
             if($_SESSION['s_user_type'] != "premium_user"){
@@ -15,25 +50,111 @@
             return;
         }
     }
+
+    /*********************************** body *************************************/
+    
+    $user_id = $_SESSION['s_id'];
+    $sql = "SELECT accommodations.name, accommodations.nsfas,
+                    address.main_address, address.contact, 
+                    rooms.room_id,rooms.single_sharing,rooms.double_sharing,rooms.multi_sharing
+            FROM ((accommodations
+                INNER JOIN address ON accommodations.id = address.accommo_id)
+                INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
+            WHERE accommodations.id=\"$accommodation\" AND accommodations.manager=\"$user_id\" LIMIT 1";
+
+    //echo "SQL: " . $sql;
+    require("../includes/conn.inc.php");
+    $sql_results = new SQL_results();
+    $results = $sql_results->results_accommodations($sql);
+    $name = $nsfas = $address = $room_id = $s_sharing = $d_sharing = $m_sharing = $website = $phone = "";
+    $single_cash = $single_bursary = "";
+    $double_cash = $double_bursary = "";
+    $multi_cash = $multi_bursary = "";
+
+    if($results->num_rows > 0){
+        $data = $results->fetch_assoc();
+        $name = $data['name'];
+        $nsfas = $data['nsfas'];
+        $address = $data['main_address'];
+        $phone = $data['contact'];
+        $room_id = $data['room_id'];
+        $s_sharing = $data['single_sharing'];
+        $d_sharing = $data['double_sharing'];
+        $m_sharing = $data['multi_sharing'];
+    
+        /****** get website*/ 
+        $sql = "SELECT website
+                FROM websites
+                WHERE accommo_id=\"$accommodation\" LIMIT 1";
+        //echo "SQL: " . $sql;
+        $results = $sql_results->results_accommodations($sql);
+        if($results->num_rows > 0){
+            $data = $results->fetch_assoc();
+            $website = $data['website'];
+        }
+
+        /****** get single room*/ 
+        $sql = "SELECT cash, bursary
+                FROM single_s
+                WHERE room_id=\"$room_id\" LIMIT 1";
+        //echo "SQL: " . $sql;
+        $results = $sql_results->results_accommodations($sql);
+        if($results->num_rows > 0){
+            $data = $results->fetch_assoc();
+            $single_cash = price_format($data['cash']);
+            $single_bursary = price_format($data['bursary']);
+        }
+        /****** get double room*/ 
+        $sql = "SELECT cash, bursary
+                FROM double_s
+                WHERE room_id=\"$room_id\" LIMIT 1";
+        //echo "SQL: " . $sql;
+        $results = $sql_results->results_accommodations($sql);
+        if($results->num_rows > 0){
+            $data = $results->fetch_assoc();
+            $double_cash = price_format($data['cash']);
+            $double_bursary = price_format($data['bursary']);
+        }
+        /****** get single room*/ 
+        $sql = "SELECT cash, bursary
+                FROM multi_s
+                WHERE room_id=\"$room_id\" LIMIT 1";
+        //echo "SQL: " . $sql;
+        $results = $sql_results->results_accommodations($sql);
+        if($results->num_rows > 0){
+            $data = $results->fetch_assoc();
+            $multi_cash = price_format($data['cash']);
+            $multi_bursary = price_format($data['bursary']);
+        }
+    }else{
+        echo '<p style="color: red"><strong><br>No accommodation found</strong><br>
+                If you belive this is an errro, please contact us at support@obocircle.com</p>';
+        return;
+    }
+	function price_format($x){
+		return number_format( sprintf( "%.2f", ($x)), 2, '.', '' );
+	}
 ?>
 <link rel="stylesheet" type="text/css" href="./management-accommodations/css/style-main-page.css">
 <div id="main_page">
 <div class="sub">
-    <h4>Web Gate Residence</h4>
+    <h4><?php echo $name; ?></h4>
     <div class="address">
-        <p>
-            105 Smith Ave<br>
-            Dobsonville<br>
-            Soweto<br>
-            Johannebsurg 2525  
-        </p>
+        <?php
+            //check if is google maps addres or not
+            $address = ($address != "") ? str_replace(",", "<br>", $address) : $address;             
+            echo "<p>" . $address . "</p>";
+        ?>
+
     </div>
 </div>
 <div class="sub">
     <label for="nsfas" style="background-color: orange;padding: 3px;margin: 4px 4px 4px auto;">NSFAS ACCREDIED ??</label>
     <select id="nsfas"> 
-        <option value="1">Yes</option>
-        <option value="0">No</option>
+        <?php
+            echo '<option value="1" ' . (($nsfas == 1) ? "selected" : "") . '>Yes</option>';
+            echo '<option value="0">No</option>';
+        ?>
     </select>
     <table>
         <optgroup>
@@ -51,37 +172,43 @@
             </tr>
             <tr>
                 <td><span class="fas fa-user"></span> Single:</td>
-                <td>R:<input type="number" id="single_c" value="6550.25" placeholder="0.00"></td>
-                <td>R:<input type="number" id="single_b" value="7500.95" placeholder="0.00"></td>
+                <td>R:<input type="number" id="single_c" value="<?php echo $single_cash; ?>" placeholder="0.00"></td>
+                <td>R:<input type="number" id="single_b" value="<?php echo $single_bursary; ?>" placeholder="0.00"></td>
                 <td>
                     <select id="single_a">
-                        <option value="1">Available</option>
-                        <option value="0">Full</option>
-                        <option value="-1">N/A</option>
+                        <?php
+                            echo '<option value="1" ' . (($m_sharing == 1) ? "selected" : "") . '>Available</option>';
+                            echo '<option value="0" ' . (($m_sharing == 0) ? "selected" : "") . '>Full</option>';
+                            echo '<option value="-1" ' . (($m_sharing == -1) ? "selected" : "") . '>N/A</option>';
+                        ?>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td><span class="fas fa-user-friends"></span> Double:</td>
-                <td>R:<input type="number" id="double_c" value="4000.00" placeholder="0.00" ></td>
-                <td>R:<input type="number" id="double_b" value="5200.99" placeholder="0.00"></td>
+                <td>R:<input type="number" id="double_c" value="<?php echo $double_cash; ?>" placeholder="0.00" ></td>
+                <td>R:<input type="number" id="double_b" value="<?php echo $double_bursary; ?>" placeholder="0.00"></td>
                 <td>
                     <select id="double_a">	
-                        <option value="1">Available</option>
-                        <option value="0">Full</option>
-                        <option value="-1">N/A</option>
+                        <?php
+                            echo '<option value="1" ' . (($m_sharing == 1) ? "selected" : "") . '>Available</option>';
+                            echo '<option value="0" ' . (($m_sharing == 0) ? "selected" : "") . '>Full</option>';
+                            echo '<option value="-1" ' . (($m_sharing == -1) ? "selected" : "") . '>N/A</option>';
+                        ?>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td><span class="fas fa-users"></span> Multi-sharing:</td>
-                <td>R:<input type="number" id="three_c" value="3500.35" placeholder="0.00"></td>
-                <td>R:<input type="number" id="three_b" value="4000.25" placeholder="0.00" ></td>
+                <td>R:<input type="number" id="three_c" value="<?php echo $multi_cash; ?>" placeholder="0.00"></td>
+                <td>R:<input type="number" id="three_b" value="<?php echo $multi_bursary; ?>" placeholder="0.00" ></td>
                 <td>
                     <select id="three_a">
-                        <option value="1">Available</option>
-                        <option value="0">Full</option>
-                        <option value="-1">N/A</option>
+                        <?php
+                            echo '<option value="1" ' . (($m_sharing == 1) ? "selected" : "") . '>Available</option>';
+                            echo '<option value="0" ' . (($m_sharing == 0) ? "selected" : "") . '>Full</option>';
+                            echo '<option value="-1" ' . (($m_sharing == -1) ? "selected" : "") . '>N/A</option>';
+                        ?>
                     </select>
                 </td>
             </tr>
@@ -90,13 +217,13 @@
     <br>
     <label for="telephone">Telephone number</label>
     <span class="err" id="err_telephone"> * </span><br>
-    <input type="number" onblur="get_telephone()" id='telephone'>
+    <input type="number" onblur="get_telephone()" id='telephone' value="<?php echo $phone; ?>">
     <br>
     <label for="website">
         Website link(Optional) <span style="color: gray; font-style: italic">E.g. https://obocircle.com/</span>
     </label>
     <span class="err" id="err_website"></span><br>
-    <input type="text" id='website' placeholder="Your website URL"><br><br>
+    <input type="text" id='website' placeholder="Your website URL" value="<?php echo $website; ?>"><br><br>
     <span id="err_update_main_page" class="err"></span>
     <input type="button" id="update_main_page" value="Update Changes">
 </div>

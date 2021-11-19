@@ -1,5 +1,5 @@
-
 <?php 
+    if(session_start() == false) session_start();
     if($_SERVER['REQUEST_METHOD'] != "POST") {
         echo "<h5 style='color: red'><br>Unknown request<br></h5>";
         return;
@@ -17,7 +17,7 @@
 			$div = "";
             if($results->num_rows > 0){
 				while($row = $results->fetch_assoc()){
-                    $div .= '<li><a href="./dashboard.php?payload='. $row['id'] . '">'. $row['name'] . '</a></li>';
+                    $div .= '<br><li><a href="./dashboard.php?payload='. $row['id'] . '">'. $row['name'] . '</a></li>';
                 }
                 ?>
                     <div id="select_accommodations">

@@ -232,8 +232,6 @@
     </a><br><br><br><br><br><br>
 					</div>	</div>
 	<script type="text/javascript">
-
-	<script type="text/javascript">
 		function delete_me (x, y, z) {
 			let con = confirm("Are you sure you want to delete this file?\nThis file will be deleted permanently.");
 			if(con){

@@ -6,6 +6,10 @@
     margin-left: 1%;
     font-style: italic;
 }
+#main_page .sub label{
+    margin-bottom: 0px;
+    margin-top: 1.5%;
+}
 #main_page .sub table,
 #main_page .sub table tr{
     border-collapse: collapse;
