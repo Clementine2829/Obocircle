@@ -1,3 +1,21 @@
+<?php session_start();
+    $accommodation = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+
+    if($accommodation == ""){
+        require_once './select-accommodation.php';
+        return;
+    }else{
+        if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
+            if($_SESSION['s_user_type'] != "premium_user"){
+                require_once '../access_denied.html';
+                return;
+            }
+        }else{
+            require_once '../offline.html';
+            return;
+        }
+    }
+?>
 <link rel="stylesheet" type="text/css" href="./management-accommodations/css/style-main-page.css">
 <div id="main_page">
 <div class="sub">

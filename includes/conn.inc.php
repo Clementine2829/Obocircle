@@ -37,7 +37,7 @@
 			return $db_login->connect_db("localhost", "clementine@obocircle", "8wwmnmAjVdCbRer8", $db, $sql);
 		}
 		public function results_accommodations($sql){
-			$db_connection = $this->connection("obo_users", $sql);
+			$db_connection = $this->connection("accommodations", $sql);
 			return $db_connection;
 		}
 		public function results_profile($sql){

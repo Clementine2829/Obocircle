@@ -1,10 +1,15 @@
     <!--header-->
     <?php require_once('./header.php'); ?>
+
     <!--end header-->
     <link rel="stylesheet" type="text/css" href="./management-accommodations/css/style-dashboad.css">
 	<div class="row">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-11" id="main_container_div">
+            <?php
+                $accommodation = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+                echo '<input type="hidden" id="payload" value="'. $accommodation . '">';
+            ?>
             <div>
 				<span style="font-size: 15px; color: gray; float: right; padding-right: 8px" id="page_reload"></span>
 				<br>

@@ -97,6 +97,8 @@
             </div>
             <div id="display_results">
                 <div class="accommodations">
+                    <div class="accommodation_map" id="accommodation_map" style="width: 100%; height: 200px; margin-bottom: 1%">  
+                    </div>                    
                     <div class="accommodation">
                         <div class="images">
                             <!--<div id="accommodation1" class="carousel slide" data-ride="carousel" data-interval="false">//auto-slide off-->
@@ -166,7 +168,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="accommodation">
                         <div class="images">
                             <div id="accommodation2" class="carousel slide" data-ride="carousel">
@@ -254,6 +255,7 @@
 	<script src="js/validate_email.js" type="text/javascript"></script>
 	<script src="js/footer.js" type="text/javascript"></script>
 	<script src="js/search.js" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=google_maps"></script>
     <script type="text/javascript">        
         function view_accommodation(accommodation){
             window.location = "view-accommodation.php?accommodation=" + accommodation;
@@ -274,6 +276,20 @@
     <script type="text/javascript">
 
     	
+  function google_maps(){
+    var my_latlng = {lat: -26.199070, lng: 28.058319};
+
+    var map = new google.maps.Map(document.getElementById('accommodation_map'), {
+        zoom: 8, 
+        center:my_latlng
+    })
+
+    var marker = new google.maps.Marker({
+        position: my_latlng, 
+        map: map,
+        title: 'Truman House' 
+    });
+  }
   function this_map(){
     var my_latlng = {lat: -26.199070, lng: 28.058319};
 
@@ -290,7 +306,6 @@
   }
 
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=this_map"></script>
 
 </body>      
 </html>
