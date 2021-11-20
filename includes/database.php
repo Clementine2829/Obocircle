@@ -60,7 +60,7 @@
 	);
     CREATE TABLE images ( 
 		image_id VARCHAR (15) NOT NULL PRIMARY KEY,
-		image VARCHAR (15) UNIQUE NOT NULL
+		image VARCHAR (30) UNIQUE NOT NULL
 	);
     CREATE TABLE accommodation_images (
     	accommo_id VARCHAR (40) NOT NULL,
