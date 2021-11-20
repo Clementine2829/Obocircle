@@ -172,8 +172,8 @@
             </tr>
             <tr>
                 <td><span class="fas fa-user"></span> Single:</td>
-                <td>R:<input type="number" id="single_c" value="<?php echo $single_cash; ?>" placeholder="0.00"></td>
-                <td>R:<input type="number" id="single_b" value="<?php echo $single_bursary; ?>" placeholder="0.00"></td>
+                <td>R:<input type="number" id="single_c" value="<?php echo $single_cash; ?>" onblur="format_amouts('#single_c')" placeholder="0.00"></td>
+                <td>R:<input type="number" id="single_b" value="<?php echo $single_bursary; ?>" onblur="format_amouts('#single_b')" placeholder="0.00"></td>
                 <td>
                     <select id="single_a">
                         <?php
@@ -186,8 +186,8 @@
             </tr>
             <tr>
                 <td><span class="fas fa-user-friends"></span> Double:</td>
-                <td>R:<input type="number" id="double_c" value="<?php echo $double_cash; ?>" placeholder="0.00" ></td>
-                <td>R:<input type="number" id="double_b" value="<?php echo $double_bursary; ?>" placeholder="0.00"></td>
+                <td>R:<input type="number" id="double_c" value="<?php echo $double_cash; ?>" onblur="format_amouts('#double_c')" placeholder="0.00" ></td>
+                <td>R:<input type="number" id="double_b" value="<?php echo $double_bursary; ?>" onblur="format_amouts('#double_b')" placeholder="0.00"></td>
                 <td>
                     <select id="double_a">	
                         <?php
@@ -200,8 +200,8 @@
             </tr>
             <tr>
                 <td><span class="fas fa-users"></span> Multi-sharing:</td>
-                <td>R:<input type="number" id="multi_c" value="<?php echo $multi_cash; ?>" placeholder="0.00"></td>
-                <td>R:<input type="number" id="multi_b" value="<?php echo $multi_bursary; ?>" placeholder="0.00" ></td>
+                <td>R:<input type="number" id="multi_c" value="<?php echo $multi_cash; ?>" onblur="format_amouts('#multi_c')" placeholder="0.00"></td>
+                <td>R:<input type="number" id="multi_b" value="<?php echo $multi_bursary; ?>" onblur="format_amouts('#multi_b')" placeholder="0.00" ></td>
                 <td>
                     <select id="multi_a">
                         <?php
@@ -236,16 +236,17 @@
         let website = get_website();
 
         let nsfas = $('#nsfas').val();
-        let single_c = $('#single_c').val();
+        let single_c = format_amouts('#single_c');
         let single_b = $('#single_b').val();
         let double_c = $('#double_c').val();
         let double_b = $('#double_b').val();
         let multi_c = $('#multi_c').val();
         let multi_b = $('#multi_b').val();
         
-        if(telephone != ""){
-            
-        }
+        let single_a = $('#single_a').val();
+        let double_a = $('#double_a').val();
+        let multi_a = $('#multi_a').val();
+
         let con;
         let payload = $('#payload').val();
         let pattern = /^[a-zA-Z0-9]+$/;
@@ -253,7 +254,7 @@
         if(single_c == "" || single_b == "" ||
             double_c == "" || double_b == "" ||
             multi_c == "" || multi_b == "" ||
-            single_a == "" || double_a == "" || multi_a == "" || tell == "" ||  website == "")
+            single_a == "" || double_a == "" || multi_a == "" || telephone == "" ||  website == "")
             con = confirm("Some fields were left empty. Confirm to proceed with changes.");
         else con = confirm("Confirm to proceed with changes."); 
         if(con){   
@@ -261,22 +262,33 @@
                     "&double_c=" + double_c + "&double_b=" + double_b +
                     "&multi_c=" + multi_c + "&multi_b=" + multi_b +
                     "&single_a=" + single_a + "&double_a=" + double_a + 
-                    "&multi_a=" + multi_a + "&nsfas=" + nsfas + "&tell=" + tell + "&website=" + website;
+                    "&multi_a=" + multi_a + "&nsfas=" + nsfas + "&phone=" + telephone + "&website=" + website;
             let url = "./management-accommodations/server/management.inc.php?action=update_main&" + data;
             let loc = "#err_update_main_page";
             let btn = "#update_main_page";
+            //alert(url); return;
             send_data(url, displayer, loc, " ", " ", btn);   
         }
+    }
+    function format_amouts(amount){
+        if(amount != ""){
+            input_val = amount; 
+            amount = Number($(amount).val()).toFixed(2);
+            let zero_amount = 0;
+            amount = (amount > 0) ? amount : zero_amount.toFixed(2);
+            if(input_val != "") $(input_val).val(amount);
+        }
+        return (amount != 0.00) ? amount : "";
     }
     function get_telephone(){
         let tell = $('#telephone').val();
         if(tell != ""){
-            let pattern = /\d{10}/;
-            if(!tell.match(pattern) || tell.length != 10){
-                $('#err_telephone').html("Invalid phone number");
+            let pattern = /^[0-9]+$/;
+            if(tell.match(pattern) && tell.length == 10){
+                $('#err_telephone').html(" * ");
                 return tell;
             }else{
-                $('#err_telephone').html(" * ");
+                $('#err_telephone').html("Invalid phone number");
             }
         }else $('#err_telephone').html(" * ");                                
         return "";
@@ -284,7 +296,7 @@
     function get_website(){
         let website = $('#website').val();
         if(website != ""){
-//                                  let pattern = "/(http|https)+(://)+(wwww)?+[a-zA-Z0-9\-\.]/";
+            //let pattern = "/(http|https)+(://)+(wwww)?+[a-zA-Z0-9\-\.]/";
             let pattern = "/^[a-zA-Z0-9\-\.\:\/]+$/";
             if(!website.match(pattern)){
                 $('#err_website').html("Invalid website format, refer to the e.g given above");
