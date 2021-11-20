@@ -1,6 +1,8 @@
     <!--header-->
-    <?php require_once('./header.php'); ?>
-
+    <?php 
+        require_once('./header.php'); 
+        $_SESSION['prevent_reload'] = "" // to be used in image uploads  
+    ?>
     <!--end header-->
     <link rel="stylesheet" type="text/css" href="./management-accommodations/css/style-dashboad.css">
     <style type="text/css">

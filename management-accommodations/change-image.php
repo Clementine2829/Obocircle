@@ -36,6 +36,7 @@
                     require_once './offline.html';
                     return;
                 }
+                
                 $payload = $image_no = $src = $image = "";
                 $success_msg = $err_img = "";
                 $foot_div = "<br><br><br><br>
@@ -72,6 +73,10 @@
                                     accommodation.
                                     </span>
                             </p>" . $foot_div;
+                if($_SESSION['prevent_reload'] == "yes"){
+                    echo $err_link;
+                    return;
+                }
 
                 if(isset($_REQUEST['payload']) && $_REQUEST['payload'] != "" &&
                     preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload']))
@@ -164,8 +169,7 @@
                     echo "<br><br>";
                     if($uploadOk == 0) echo "<span style='color:red'><b>Error: </b>" . $err_img . "</span>";
                 }
-                if($success_msg != "") echo '<div style="margin-left:3%;">' . $success_msg . '</div>';
-
+                
 /*		new  image
 		->playload
 		->image_no = none
@@ -223,7 +227,16 @@
 		    	style="width:220px; size:7px; margin-bottom:1%;"><br>
 			<input type="submit" value="Upload Image">
 		</form>';
-
+        if($success_msg != ""){
+            echo '<div style="margin-top:0%;">' . $success_msg . '</div>';
+            ?>
+                <script type="text/javascript">
+                    document.getElementsByTagName('form')[0].remove();
+                </script>
+            <?php
+        }   
+        $_SESSION['prevent_reload'] = "yes";        
+        $payload = $image_no = $src = $image = "";
 		$connection->close();
 	}else{
 		echo $err_link;
