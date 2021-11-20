@@ -7,7 +7,6 @@ $(document).ready(function(){
     load_main_page();
     
     $("#main_page").click(function(){load_main_page();})
-    $("#main_page").click(function(){load_main_page();})
     $("#upload_images").click(function(){load_upload_images();})
     $("#add_features").click(function(){load_add_features();})
     $("#applications").click(function(){load_view_applications();})

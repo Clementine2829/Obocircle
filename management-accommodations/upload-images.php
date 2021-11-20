@@ -21,99 +21,73 @@
     }
 </style>
 <?php session_start(); 
-/*	if(!isset($_SESSION['s_first_name']) || !isset($_SESSION['s_id']) || 
-		!isset($_SESSION['s_activated']) || !isset($_SESSION['s_pac'])){
-		require 'offline.php';
-		return;
-	}else if(isset($_SESSION['s_activated']) && !$_SESSION['s_activated'] ){
-		require 'not-activated.php';
-		return;
-	}else if(isset($_SESSION['s_pac'])){
-		if(!isset($_SESSION['s_upload_a']) || !isset($_SESSION['s_upload_a']) || 
-			!isset($_SESSION['s_upload_a']) || !isset($_SESSION['s_upload_a'])){
-			$offline = "Your account seems to have had problems when logging in.";
-			require 'offline.php';
-			return;
-		}
-		if($_SESSION['s_pac'] == "bas"){
-			$type = "accommodation";
-			$err_reason = "You are on a Basic package account.";
-			require 'account-denied.php';
-			return;
-		}else if($_SESSION['s_pac'] == "sta"){
-			$type = "accommodation";
-			$err_reason = "You are on a Standard package account.";
-			require 'account-denied.php';
-			return;
-		}else if($_SESSION['s_pac'] == "cus"){
-			if($_SESSION['s_c_upload_a'] < 0){
-				$err_reason = "";
-				$type = "accommodation";
-				require 'account-denied.php';
-				return;
-			}
-		}
-	}else{	
-		require 'unknown-error.php';
-		return;
-	}
-	require("includes/conn.inc.php");
+	
+    if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
+        if($_SESSION['s_user_type'] != "premium_user"){
+            echo "<br><br><br>";
+            require_once './access_denied.html';
+            return;
+        }
+    }else{
+        echo "<br><br><br>";
+        require_once './offline.html';
+        return;
+    }
+    
+	require("../includes/conn.inc.php");
 	$db_login = new DB_login_updates();
-	$connection = $db_login->connect_db("accommodation");
+	$connection = $db_login->connect_db("accommodations");
 	$payload = $sql = $name = "";
 	$manager_id = $_SESSION['s_id'];
 
 	if(isset($_REQUEST['payload']) && $_REQUEST['payload'] != "" &&
 		preg_match('/^[a-zA-Z0-9]*$/', $_REQUEST['payload'])){
 		$payload = $_REQUEST['payload'];
-		$sql = "SELECT accommo_id, image_id, image FROM images WHERE accommo_id = \"$payload\" LIMIT 13";
+		$sql = "SELECT accommodation_images.accommo_id, accommodation_images.image_id, images.image 
+                FROM (images
+                    INNER JOIN accommodation_images ON images.image_id = accommodation_images.image_id) 
+                WHERE accommo_id = \"$payload\" LIMIT 15";
 	}else{
-		echo "<style type='text/css'>
-				#error_access{
-					margin-left: 8%;
-					font-size: 17px;
-					margin-top: 5%;
-					color: red;
-				}
-			</style>
-			<p id='error_access'><b> Oops!</b> <br>It seems like no images/accommodation 
-				linked to you at the moment. <br>
-				If you posted one, reload the page else contact us at 
-				<b style='color:blue;'>info@obocircle.com</b> if the error persist
-				<br><br>
-				<span style='color:black'>
-					Otherwise click <a href='upload-accommodation.php'>here</a> to upload new 
-					accommodation.
-					</span>
-			</p>	
-			<div id='the_footer'></div>
-			<script type=\"text/javascript\" src=\"footer.js\"></script>
-			</body>
-			</html>";
+		$foot_div = "<br><br><br><br>
+                            </div>
+                        <div class='col-sm-1'></div>
+                    </div>
+                    <!--footer-->
+                    <div class='row'>
+                        <div class='col-sm-12'>
+                            <div id='the_footer'></div>
+                        </div>
+                    </div>          
+                    <!--script-->
+                    <script src='js/footer.js' type='text/javascript'></script>
+                </body>      
+                </html>";
+            
+                $err_link =  "<style type='text/css'>
+                                #error_access{
+                                    margin-left: 8%;
+                                    font-size: 17px;
+                                    margin-top: 6%;
+                                    color: red;
+                                }
+                            </style>
+                            <p id='error_access'><b> Oops!</b> <br>It seems like the link provided is broken or no accommodations linked 
+                                to you at the moment. <br>
+                                Make sure you are using the link provide on the dashboard page<br>
+                                If you believe that this is an error, please contact using this email address 
+                                <span style='color:blue;'>support@obocircle.com</span>
+                                <br><br>
+                                <span style='color:black'>
+                                    Otherwise click <a href='upload-accommodation.php'>here</a> to upload new 
+                                    accommodation.
+                                    </span>
+                            </p>" . $foot_div;
+            echo $err_link;
 			return;
 	}
 
-	if(isset($_REQUEST['a_name']) && $_REQUEST['a_name'] != "" &&
-		preg_match('/^[a-zA-Z0-9\'\,\@\s]*$/', $_REQUEST['a_name']))
-		$name = $_REQUEST['a_name'];
-	else{
-		$sql_name = "SELECT id, name FROM accommodation 
-						WHERE /*display = 1 AND*//* id = \"$payload\" ORDER BY name LIMIT 5";
-		$results = $connection->query($sql_name);
-		if ($results->num_rows > 1) {
-			while ($row = $results->fetch_assoc())
-				if(preg_match('/^[a-zA-Z0-9]*$/', $row['id']) && 
-					preg_match('/^[a-zA-Z0-9\,\.\@\'\s]*$/', $row['name'])){
-					echo "<button onclick='window.location=\"uploads.php?payload=" . 
-							$payload . "&a_name=" . $row['name'] . "\"'> " . $row['name'] . "</button>";
-					return;
-				}
 
-		}else if ($results->num_rows > 0) 
-			while ($row = $results->fetch_assoc())
-				$name = $row['name'];
-	}
-	$message = "";
+    $message = "";
 	$results = $connection->query($sql);
 	$my_array = array();
 	if ($results->num_rows > 0) {
@@ -138,18 +112,18 @@
 				for this accommodation 	
 			</p>";
 	}
+    $sql = "SELECT name FROM accommodations WHERE id = \"$payload\" LIMIT 1";
+
+    $sql_results = new SQL_results();
+    $result = $sql_results->results_accommodations($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $name = $row['name'];    
+    }
+
 	?>
-	<br>
-	<div id="btns" >
-		<button onclick="window.location='profile.php?payload=<?php echo $payload; ?>'">Default page</button>
-		<button onclick="window.location='uploads.php?payload=<?php echo $payload; ?>'">Upload Images</button>
-		<button onclick="window.location='finish-up.php?payload=<?php echo $payload; ?>'">Finish up</button>
-		<button onclick="window.location='applicants.php?payload=<?php echo $payload; ?>'"
-			style="background-color: red; color: white; border: 1px solid red; border-left: 3px solid blue">
-			Applicants</button>
-	</div>
-	<br>
-	<div id="form">
+
+        <div id="form">
 		<?php
 			echo '<br><span style="font-size:20px"; ><b>' . $name. '</b></span><br><br>';
 			echo $message;
@@ -172,7 +146,7 @@
 					$i++;	
 				}
 			}
-			if(sizeof($my_array) > 13){
+			if(sizeof($my_array) > 15){
 				echo "<br>
 					<a href='#' style='border:2px solid red; padding: 5px 10px 10px 10px; 
 						background-color:red; color: white; border-radius: 10px;
@@ -181,20 +155,20 @@
 						existing images from now on</a>";
 				return;
 			}
-			if(sizeof($my_array) < 13){
+			if(sizeof($my_array) < 15){
 				echo '<div style="margin-top:2%">
 						<a href="change-image.php?payload=' . $payload . '&image_no=&src=' .
 						$name . '&image=empty"
 						style="border:2px solid green; padding: 5px 10px 10px 10px; 
-						background-color:green; color: white; border-radius: 10px;">
+						background-color:green; color: white; border-radius: 10px;" target="_blank">
 						Upload new Image
 						</a><br><br><br><br><br><br>
 					</div>';
 			}
-		$connection->close()
-	</div>
-*/	?>
-
+		$connection->close();
+	echo '</div>';
+	?>
+<!--
 <div id="form">
 		<br><span style="font-size:20px"; ><b>West Gate Residence</b></span><br><br><div class="my_images", id="0">
         <img src="./images/accommodation/Lithuba residence/res1.jpg" alt="West Gate Residence">
@@ -230,7 +204,7 @@
        style="border:2px solid green; padding: 5px 10px 10px 10px; background-color:green; color: white; border-radius: 10px;">
     Upload new Image
     </a><br><br><br><br><br><br>
-					</div>	</div>
+					</div>	</div>-->
 	<script type="text/javascript">
 		function delete_me (x, y, z) {
 			let con = confirm("Are you sure you want to delete this file?\nThis file will be deleted permanently.");

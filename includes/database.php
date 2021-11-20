@@ -64,7 +64,10 @@
 	);
     CREATE TABLE accommodation_images (
     	accommo_id VARCHAR (40) NOT NULL,
-		image_id VARCHAR (15) NOT NULL
+		image_id VARCHAR (15) NOT NULL,
+		PRIMARY KEY (accommo_id, image_id),
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE,
+		FOREIGN KEY (image_id) REFERENCES images (image_id) ON DELETE CASCADE
 	);
     
 	CREATE TABLE features ( 

@@ -156,7 +156,7 @@
                                                 VALUES(\"$payload\", \"$image_id\")";
                                 if ($connection->query($update_table) === TRUE){
                                     //do nothing 
-                                }
+                                }else echo $connection->error;
                             }
                             
                             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $new_name);
