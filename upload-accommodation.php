@@ -6,11 +6,11 @@
 
         if(!isset($_SESSION['s_id'])){
             echo "<style type='text/css'>#access_denied{margin: 5% 9%;}</style>";
-            require_once "offile.html";  
+            require_once "./offline.html";  
         }else if(!isset($_SESSION['s_user_type']) || 
                  (isset($_SESSION['s_user_type']) && !preg_match('/(premium_user|manager)/', $_SESSION['s_user_type']))){
             echo "<style type='text/css'>#access_denied{margin: 5% 9%;}</style>";
-            require_once "access_denied.html";               
+            require_once "./access_denied.html";               
         }else{
             ?>
             <link rel="stylesheet" type="text/css" href="./css/style-upload-accommodation.css">

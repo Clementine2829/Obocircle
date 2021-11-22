@@ -73,10 +73,10 @@
                                     accommodation.
                                     </span>
                             </p>" . $foot_div;
-                if($_SESSION['prevent_reload'] == "yes"){
+                /*if($_SESSION['prevent_reload'] == "yes"){
                     echo $err_link;
                     return;
-                }
+                }*/
 
                 if(isset($_REQUEST['payload']) && $_REQUEST['payload'] != "" &&
                     preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload']))
@@ -105,7 +105,7 @@
 
                 require("includes/conn.inc.php");
                 $db_login = new DB_login_updates();
-                $connection = $db_login->connect_db("accommodationS");
+                $connection = $db_login->connect_db("accommodations");
                 $manager_id = $_SESSION['s_id'];
 
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -200,7 +200,7 @@
 			change image
 		else echo error
 */
-	if($image == "empty" || $image == "" || preg_match('/[^0-9]/', $image_no)){
+	if($image == "empty" || $image == "" && ($image_no == "")){
 		echo'<form style="padding:3%; padding-bottom:0%;" action="change-image.php?payload=' . $payload . 
 					'&image_no=' . $image_no .'&src=' . $src . '" 
 					method="post" enctype="multipart/form-data">
@@ -211,10 +211,10 @@
 		</body>
 		</html>' . $foot_div;
 		return;
-	}else if($image != "" && (preg_match('/\d{1,4}/', $image_no) || $image_no == "")){
+	}else if($image != "" && (preg_match('/^[a-zA-Z0-9]+$/', $image_no) || $image_no == "")){
 		?>
 		<div id="image" >
-			<?php echo '<img src="images/accommodation/'. $src . '/' . $image .'" alt="' . $src . '" 
+			<?php echo '<br><br><br><img src="images/accommodation/'. $src . '/' . $image .'" alt="' . $src . '" 
 						style="width:450px; height:250px">'; ?>
 		</div>
 		<?php
@@ -235,7 +235,7 @@
                 </script>
             <?php
         }   
-        $_SESSION['prevent_reload'] = "yes";        
+        //$_SESSION['prevent_reload'] = "yes";        
         $payload = $image_no = $src = $image = "";
 		$connection->close();
 	}else{

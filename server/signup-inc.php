@@ -211,10 +211,12 @@ Copyright © " . date("Y") . " Obocircle.com | All rights reserved
 				if ($connection->query($sql_notification)){
 				    //do nothing
                 };
+                
 				$firstname = $middlename = $lastname = $date_of_birth = $email = "";
 				$password = $password2  = $cell_1 = $ref_code = "" ;
 			} else $err_msg .= "Internal error occured while registering your account. Please try again ";
-		}
+            $connection->close();
+        }
 	}
 }
 

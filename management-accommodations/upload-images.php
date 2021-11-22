@@ -125,7 +125,7 @@
 
         <div id="form">
 		<?php
-			echo '<br><span style="font-size:20px"; ><b>' . $name. '</b></span><br><br>';
+			echo '<br><span style="font-size:20px"; ><b id="file_name">' . $name. '</b></span><br><br>';
 			echo $message;
 			$i = 1;
 			if(sizeof($my_array) > 0 && sizeof($my_array) < 14){
@@ -139,7 +139,7 @@
 							$my_array[$i]['image'] . '">
 							Change Image</a> | 
 							<a href="#" style="color: red" 
-							onclick="delete_me(\'' . $payload . '\',\''. $my_array[$i]['image'] 
+							onclick="delete_me(\'' . $my_array[$i]['image_id'] . '\',\'' . $payload . '\',\''. $my_array[$i]['image'] 
 								. '\',\'' . $i . '\')">delete</a>
 						 </div>';
 					$image = "";
@@ -168,58 +168,24 @@
 		$connection->close();
 	echo '</div>';
 	?>
-<!--
-<div id="form">
-		<br><span style="font-size:20px"; ><b>West Gate Residence</b></span><br><br><div class="my_images", id="0">
-        <img src="./images/accommodation/Lithuba residence/res1.jpg" alt="West Gate Residence">
-        <br>
-        <a href="./change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=14&src=West Gate Residence&image=GGCmU7x7ae200409011916.jpg" target="_blank">
-        Change Image</a> | 
-        <a href="#" style="color: red" 
-        onclick="delete_me('KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w','GGCmU7x7ae200409011916.jpg','0')">delete</a>
-     </div><div class="my_images", id="1">
-        <img src="./images/accommodation/Lithuba residence/res2.jpg" alt="West Gate Residence">
-        <br>
-        <a href="./change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=15&src=West Gate Residence&image=5RVL1jykqZ200409012424.jpg" target="_blank">
-        Change Image</a> | 
-        <a href="#" style="color: red" 
-        onclick="delete_me('KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w','5RVL1jykqZ200409012424.jpg','1')">delete</a>
-     </div><div class="my_images", id="2">
-        <img src="./images/accommodation/Lithuba residence/res3.jpg" alt="West Gate Residence">
-        <br>
-        <a href="./change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=16&src=West Gate Residence&image=k09p6pfCsf200409012438.jpg" target="_blank">
-        Change Image</a> | 
-        <a href="#" style="color: red" 
-        onclick="delete_me('KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w','k09p6pfCsf200409012438.jpg','2')">delete</a>
-     </div><div class="my_images", id="3">
-        <img src="./images/accommodation/Lithuba residence/res4.jpg" alt="West Gate Residence">
-        <br>
-        <a href="./change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=63&src=West Gate Residence&image=LveqIYoI6g201023101444.jpg" target="_blank">
-        Change Image</a> | 
-        <a href="#" style="color: red" 
-        onclick="delete_me('KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w','LveqIYoI6g201023101444.jpg','3')">delete</a>
-     </div><div style="margin-top:2%">
-    <a href="change-image.php?payload=KCwybFhwuD9ate6s4pqiJusaAosdGiHUxJSGb71w&image_no=&src=West Gate Residence&image=empty" 
-       target="_blank" 
-       style="border:2px solid green; padding: 5px 10px 10px 10px; background-color:green; color: white; border-radius: 10px;">
-    Upload new Image
-    </a><br><br><br><br><br><br>
-					</div>	</div>-->
 	<script type="text/javascript">
-		function delete_me (x, y, z) {
+		function delete_me (w, x, y, z) {
 			let con = confirm("Are you sure you want to delete this file?\nThis file will be deleted permanently.");
 			if(con){
 				if(x.match(/^[a-zA-Z0-9]+$/) && y.match(/^[a-zA-Z0-9]+\.+(jpg|jpeg|png|gif)*$/)){
-					let data = "payload=" + x + "&image=" + y;
-					$.ajax({
+					let data = "payload=" + x + "&image=" + y + "&image_no=" + w + "&file=" + $("#file_name").html();
+                    $.ajax({
 						type: 'POST', 
-						url: 'delete-image.php',
+						url: './management-accommodations/delete-image.php',
 						data: data, 
 						success: function(response){
 							if(response == "Image deleted successfully")
 								document.getElementById(z).style.display = "none";
 							alert(response);
-						}
+						},
+                        error: function(err){
+                            alert("Delete failed, internal error");
+                        }
 					});
 				}else alert("Error occured while deleting this image")
 			}

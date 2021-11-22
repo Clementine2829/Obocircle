@@ -136,7 +136,7 @@
                 //do nothing
             }
         }
-            
+		$connection->close();   
     }else{
         echo "</p style='color: red'><br>Unknown request<br></p>";
     }
