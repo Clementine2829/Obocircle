@@ -101,7 +101,7 @@
                 $insert_main_table = "INSERT INTO accommodations (id, name, manager, about, date_posted)
                                         VALUES ('$id', '$name','$username', '$about', '$declare')";	
                 if ($connection->query($insert_main_table)) echo "success";
-                else echo "Error uploading this accommoddation online. please try again";
+                else echo "Error uploading this accommoddation. please try again";
                 
                 $my_address = "";
                 if($address != ""){

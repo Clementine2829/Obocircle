@@ -2,7 +2,10 @@
 	session_start(); 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!isset($_REQUEST['payload']) || $_REQUEST['payload'] == "" ||
-            !preg_match('/^[a-zA-Z0-9]*$/', $_REQUEST['payload'])) return;
+            !preg_match('/^[a-zA-Z0-9]*$/', $_REQUEST['payload'])) {
+            echo "Hello";
+            return;
+        }
 
 		if(!isset($_REQUEST["handicapped"]) && !isset($_REQUEST["washing_line"]) && 
 		!isset($_REQUEST["security"]) && !isset($_REQUEST["cctv"]) && 
@@ -12,14 +15,17 @@
 		!isset($_REQUEST["games_room"]) && !isset($_REQUEST["first_aid"]) && 
 		!isset($_REQUEST["playstation"]) && !isset($_REQUEST["beds"]) && 
 		!isset($_REQUEST["cinema"]) && !isset($_REQUEST["pool"]) && 
-		!isset($_REQUEST["soccer"]) && !isset($_REQUEST["furnished"]) && 
 		!isset($_REQUEST["netball"]) && !isset($_REQUEST["wifi"]) &&
 		!isset($_REQUEST["soccer"]) && !isset($_REQUEST["furnished"]) && 
 		!isset($_REQUEST["transport"]) && !isset($_REQUEST["laundry"]) && 
 		!isset($_REQUEST["computer"]) && !isset($_REQUEST["electricity"]) && 
 		!isset($_REQUEST["gym"]) && !isset($_REQUEST["kitchen"]) && 
 		!isset($_REQUEST["parking"]) && !isset($_REQUEST["bathroom"]) && 
-		!isset($_REQUEST["room"]) && !isset($_REQUEST["tv"])) return;
+		!isset($_REQUEST["room"]) && !isset($_REQUEST["tv"])){
+            echo "hi";
+            return;
+            
+        } 
 
 		$f4 = checked($_REQUEST['security']);
 		$f5 = checked($_REQUEST['cctv']);
@@ -70,11 +76,11 @@
 		if (preg_match('/[12]+/', $_REQUEST['parking'])) $f27 = $_REQUEST['parking']; 
 		else $f27 = 0;
 
-		$location = check_inputs($_REQUEST["geoloc"]);
+		$location = "";//check_inputs($_REQUEST["geoloc"]);
 		if(!preg_match('/^[0-9\.]+\,+[0-9\.]+$/', $location)) $location = "";
 		$payload = check_inputs($_REQUEST["payload"]);
 
-		require("../includes/conn.inc.php");
+		require("../../includes/conn.inc.php");
 		$db_login = new DB_login_updates();
 		$connection = $db_login->connect_db("accommodations");
 
@@ -89,7 +95,7 @@
             }
             $sql = "INSERT INTO features(f_id, accommo_id)
                     VALUES (\"$f_id\", \"$payload\")";    
-			if ($connection->query($insert_in_table)) {
+			if ($connection->query($sql)) {
                 //Alls is good   
             }
         } 
@@ -129,6 +135,7 @@
 
 		if ($connection->query($sql_f) != TRUE)
 			echo "<br>Error updating accommodation features.";
+        else echo "<span style='color: blue'>Features updated successfully<span>";
 		/*$sql_address = "INSERT INTO geo_loc(accommo_id, geo_loc) VALUES(\"$payload\", \"$location\")";
 		if ($connection->query($sql_address) != TRUE)
 			echo "<br>Error updating the location";*/

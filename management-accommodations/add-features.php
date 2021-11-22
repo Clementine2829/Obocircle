@@ -227,7 +227,7 @@
         var kitchen = selectx($('#kitchen'));
         var bathroom = selectx($('#bathroom'));
         var tv = selectx($('#tv'));
-        let payload = $('#payload').html();
+        let payload = $('#payload').val();
 
         if(!wifi || !transport || !computer || !laundry || !electricity || !gym || !parking ||
             !room || !kitchen || !bathroom || !tv) {
@@ -244,10 +244,10 @@
                     "&laundry=" + laundry + "&electricity=" + electricity + "&gym=" + gym + 
                     "&parking=" + parking + "&room=" + room + "&kitchen=" + kitchen + "&bathroom=" + 
                     bathroom + "&tv=" + tv + "&furnished=" + furnished; 
-        let url = "../server/add-features.inc.php?" + data;
+        let url = "./management-accommodations/server/add-features.inc.php?" + data;
         let loc = "#err_add_features";
         let btn = "#add_features_submit";
-        send_data(url, displayer, loc, " ", " ", btn);
+        send_data(url, displayer, loc, "", "", btn);
     }
     function check_temp(name_val, err_msg, patten){
         if(!name_val == ""){
