@@ -199,7 +199,7 @@ Copyright © " . date("Y") . " Obocircle.com | All rights reserved
                 }
                 $notification_id = password_hash($this_date, PASSWORD_DEFAULT);
                 $notification_id = substr($notification_id,7,10);
-                while(!preg_match("/^[a-zA-Z0-9]*$/", $id)) {
+                while(!preg_match("/^[a-zA-Z0-9]*$/", $notification_id)) {
                     $notification_id = password_hash($notification_id, PASSWORD_DEFAULT);
                     $notification_id = substr($notification_id,7,10);
                 }

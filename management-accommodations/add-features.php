@@ -22,6 +22,12 @@
     .container select{
         width: 75%;
     }
+    #add_features_submit {
+        border: 1px solid lightblue;
+        border-radius: 10px;
+        padding: 3px 15px;
+        background-color: lightblue;
+    }
 </style>
 <div id="main_container" >
     <div id="form">
@@ -238,7 +244,7 @@
                     "&laundry=" + laundry + "&electricity=" + electricity + "&gym=" + gym + 
                     "&parking=" + parking + "&room=" + room + "&kitchen=" + kitchen + "&bathroom=" + 
                     bathroom + "&tv=" + tv + "&furnished=" + furnished; 
-        let url = "./server/management.inc.php?action=add-features.inc.php&" + data;
+        let url = "../server/add-features.inc.php?" + data;
         let loc = "#err_add_features";
         let btn = "#add_features_submit";
         send_data(url, displayer, loc, " ", " ", btn);
@@ -246,7 +252,7 @@
     function check_temp(name_val, err_msg, patten){
         if(!name_val == ""){
             if(!name_val.match(patten)){
-                err_msg.html("Use of some charecters invalid");
+                err_msg.html("Invalid use of special characters");
                 return "";
             }else{ 
                 err_msg.html("");
@@ -257,12 +263,12 @@
         return "";
     }
     function chkd(x) {
-        if(x.is(':checked')) return 1;
-        else return "";
+        return (x.is(':checked')) ? 1 : "";
     }
     function selectx(x) {
         if(x.val() == "" || x.val().length != 1 || x.val() == "select") {
-            x.css({'border' : '1px solid red'}); return "";
+            x.css({'border' : '1px solid red'}); 
+            return "";
         }else {
             x.css({'border' : '1px solid rgb(150, 150, 150)'}); 
             return x.val();
