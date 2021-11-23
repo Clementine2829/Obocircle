@@ -1,5 +1,7 @@
 <?php
-
+	function price_format($x){
+		return number_format( sprintf( "%.2f", ($x)), 2, '.', '' );
+	}
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $accommodation = (isset($_REQUEST['accommodation']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['accommodation'])) ? $_REQUEST['accommodation'] : "";
         if($accommodation == ""){
@@ -53,9 +55,12 @@
                                                  "single_available" =>$row['single_sharing'],
                                                  "double_available" =>$row['double_sharing'],
                                                  "multi_available" =>$row['multi_sharing'],
-                                                 "single_sharing_amount" =>"Amount N/A",
-                                                 "double_sharing_amount" =>"Amount N/A",
-                                                 "muti_sharing_amount" =>"Amount N/A"),
+                                                 "single_sharing_amount_c" =>"0.00",
+                                                 "single_sharing_amount_b" =>"0.00",
+                                                 "double_sharing_amount_c" =>"0.00",
+                                                 "double_sharing_amount_b" =>"0.00",
+                                                 "multi_sharing_amount_c" =>"0.00",
+                                                 "multi_sharing_amount_b" =>"0.00"),
 								"manager" => $row['manager'],
 								"stars" => 0,
 								"map_coordinates" => "32.0.252.3, -6.36.005",
@@ -64,6 +69,35 @@
 								"location" => $row['main_address'],
 								"about" => $row['about']);
                 
+                /************************** Load amounts *************************/
+                $room_id = $accommodation['room']['id'];
+                $sql = "SELECT cash, bursary 
+                        FROM single_s
+                        WHERE room_id = \"$room_id\" LIMIT 1";
+                $results = $sql_results->results_accommodations($sql);
+                if ($results->num_rows > 0) {
+                    $row = $results->fetch_assoc();
+                    $accommodation['room']['single_sharing_amount_c'] = $row['cash'];
+                    $accommodation['room']['single_sharing_amount_b'] = $row['bursary'];
+                }
+                $sql = "SELECT cash, bursary 
+                        FROM double_s
+                        WHERE room_id = \"$room_id\" LIMIT 1";
+                $results = $sql_results->results_accommodations($sql);
+                if ($results->num_rows > 0) {
+                    $row = $results->fetch_assoc();
+                    $accommodation['room']['double_sharing_amount_c'] = $row['cash'];
+                    $accommodation['room']['double_sharing_amount_b'] = $row['bursary'];
+                }
+                $sql = "SELECT cash, bursary 
+                        FROM multi_s
+                        WHERE room_id = \"$room_id\" LIMIT 1";
+                $results = $sql_results->results_accommodations($sql);
+                if ($results->num_rows > 0) {
+                    $row = $results->fetch_assoc();
+                    $accommodation['room']['multi_sharing_amount_c'] = $row['cash'];
+                    $accommodation['room']['multi_sharing_amount_b'] = $row['bursary'];
+                }                
             }
         }
             
@@ -153,8 +187,8 @@
                                     } 
                                 }
                                 $accommodation["location"] = substr($accommodation["location"], 0, (strlen($accommodation["location"]) - 4));
+                                print_r($accommodation);
                             ?>
-                            
                             <p class="address">
                                 <strong>
                                     <?php echo $accommodation['location']; ?>
@@ -174,6 +208,17 @@
                                         <col span="1">
                                     </colgroup>
                                     <tbody>
+                                        <?php
+                                            $single_c = price_format($accommodation['room']['single_sharing_amount_c']); 
+                                            $single_b = price_format($accommodation['room']['single_sharing_amount_b']); 
+                                            $double_c = price_format($accommodation['room']['double_sharing_amount_c']); 
+                                            $double_b = price_format($accommodation['room']['double_sharing_amount_b']); 
+                                            $multi_c = price_format($accommodation['room']['multi_sharing_amount_c']); 
+                                            $multi_b = price_format($accommodation['room']['multi_sharing_amount_b']);
+                                            $single_s = $accommodation['room']['single_available'];
+                                            $double_s = $accommodation['room']['double_available']; 
+                                            $multi_s = $accommodation['room']['multi_available'];
+                                        ?>
                                         <tr>
                                             <th>Room Type</th>
                                             <th>Cash</th>
@@ -182,21 +227,39 @@
                                         </tr>
                                         <tr>
                                             <td><span class="fas fa-user"></span> Single Room</td>
-                                            <td>R4,350.25</td>
-                                            <td>R3,990.00</td>
-                                            <td><span style="color: red">Full</span></td>
+                                            <td><?php echo $single_c; ?></td>
+                                            <td><?php echo $single_b; ?></td>
+                                            <?php
+                                                if($single_s == 1)
+                                                    echo '<td><span style="color: blue">Available</span></td>';
+                                                else if($single_s == 0)
+                                                    echo '<td><span style="color: red">Full</span></td>';
+                                                else echo '<td><span style="color: orange">N/A</span></td>';
+                                            ?>
                                         </tr>
                                         <tr>
                                             <td><span class="fas fa-user-friends"></span> Double Shaing</td>
-                                            <td>R3,510.99</td>
-                                            <td>R3,990.50</td>
-                                            <td><span style="color: blue">Available</span></td>
+                                            <td><?php echo $double_c; ?></td>
+                                            <td><?php echo $double_b; ?></td>
+                                            <?php
+                                                if($double_s == 1)
+                                                    echo '<td><span style="color: blue">Available</span></td>';
+                                                else if($double_s == 0)
+                                                    echo '<td><span style="color: red">Full</span></td>';
+                                                else echo '<td><span style="color: orange">N/A</span></td>';
+                                            ?>
                                         </tr>
                                         <tr>
                                             <td><span class="fas fa-users"></span> Multi-Sharing</td>
-                                            <td>R0.00</td>
-                                            <td>R0.00</td>
-                                            <td><span style="color: orange">N/A</span></td>
+                                            <td><?php echo $multi_c; ?></td>
+                                            <td><?php echo $multi_b; ?></td>
+                                            <?php
+                                                if($multi_s == 1)
+                                                    echo '<td><span style="color: blue">Available</span></td>';
+                                                else if($multi_s == 0)
+                                                    echo '<td><span style="color: red">Full</span></td>';
+                                                else echo '<td><span style="color: orange">N/A</span></td>';
+                                            ?>
                                         </tr>
                                     </tbody>
                                 </table>
