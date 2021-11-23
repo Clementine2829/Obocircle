@@ -17,11 +17,18 @@
 #header_btns .header_btns:nth-child(1){
     float: left;
 }
+#header_btns .header_btns:nth-child(1) a{
+    text-decoration: none;
+}
+#header_btns .header_btns:nth-child(1) a:hover{
+    color: red;
+}
 #header_btns .header_btns:nth-child(2){
     float: right;
 }
 #header_btns .header_btns:nth-child(1) a{
     color: blue;
+    padding: 15px 7px;
 }
 #header_btns .header_btns:nth-child(2) button{
     border-radius: 15px;

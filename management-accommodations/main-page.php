@@ -1,6 +1,5 @@
 <?php session_start();
     $accommodation = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
-
     if($accommodation == ""){
         if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
             if($_SESSION['s_user_type'] != "premium_user"){
@@ -153,7 +152,7 @@
     <select id="nsfas"> 
         <?php
             echo '<option value="1" ' . (($nsfas == 1) ? "selected" : "") . '>Yes</option>';
-            echo '<option value="0">No</option>';
+            echo '<option value="0"' . (($nsfas == 0) ? "selected" : "") . '>No</option>';
         ?>
     </select>
     <table>
@@ -177,9 +176,9 @@
                 <td>
                     <select id="single_a">
                         <?php
-                            echo '<option value="1" ' . (($m_sharing == 1) ? "selected" : "") . '>Available</option>';
-                            echo '<option value="0" ' . (($m_sharing == 0) ? "selected" : "") . '>Full</option>';
-                            echo '<option value="-1" ' . (($m_sharing == -1) ? "selected" : "") . '>N/A</option>';
+                            echo '<option value="1" ' . (($s_sharing == 1) ? "selected" : "") . '>Available</option>';
+                            echo '<option value="0" ' . (($s_sharing == 0) ? "selected" : "") . '>Full</option>';
+                            echo '<option value="-1" ' . (($s_sharing == -1) ? "selected" : "") . '>N/A</option>';
                         ?>
                     </select>
                 </td>
@@ -191,9 +190,9 @@
                 <td>
                     <select id="double_a">	
                         <?php
-                            echo '<option value="1" ' . (($m_sharing == 1) ? "selected" : "") . '>Available</option>';
-                            echo '<option value="0" ' . (($m_sharing == 0) ? "selected" : "") . '>Full</option>';
-                            echo '<option value="-1" ' . (($m_sharing == -1) ? "selected" : "") . '>N/A</option>';
+                            echo '<option value="1" ' . (($d_sharing == 1) ? "selected" : "") . '>Available</option>';
+                            echo '<option value="0" ' . (($d_sharing == 0) ? "selected" : "") . '>Full</option>';
+                            echo '<option value="-1" ' . (($d_sharing == -1) ? "selected" : "") . '>N/A</option>';
                         ?>
                     </select>
                 </td>
@@ -237,11 +236,11 @@
 
         let nsfas = $('#nsfas').val();
         let single_c = format_amouts('#single_c');
-        let single_b = $('#single_b').val();
-        let double_c = $('#double_c').val();
-        let double_b = $('#double_b').val();
-        let multi_c = $('#multi_c').val();
-        let multi_b = $('#multi_b').val();
+        let single_b = format_amouts('#single_b');
+        let double_c = format_amouts('#double_c');
+        let double_b = format_amouts('#double_b');
+        let multi_c = format_amouts('#multi_c');
+        let multi_b = format_amouts('#multi_b');
         
         let single_a = $('#single_a').val();
         let double_a = $('#double_a').val();
@@ -266,7 +265,7 @@
             let url = "./management-accommodations/server/management.inc.php?action=update_main&" + data;
             let loc = "#err_update_main_page";
             let btn = "#update_main_page";
-            //alert(url); return;
+            //console.log(url); return;
             send_data(url, displayer, loc, " ", " ", btn);   
         }
     }

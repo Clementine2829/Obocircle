@@ -1,41 +1,163 @@
 <?php
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $accommodation = (isset($_REQUEST['accommodation']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['accommodation'])) ? $_REQUEST['accommodation'] : "";
+        if($accommodation == ""){
+            ?>
+            <div style="color: red; margin: 4% 2%;">
+                <h4>Oops..!!</h4>
+                <p>It seems like the link is broken or has been changes <br>
+                Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
+                If the error persist, we'll have a look at it on our side soon</p>
+            </div>                
+            <?php
+            return;
+        }
+        
         if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'overview'){
+            
+            $sql = "SELECT accommodations.*, rooms.*, address.main_address 
+                FROM ((accommodations
+                    INNER JOIN address ON accommodations.id = address.accommo_id)
+                    INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
+                WHERE display = 1 AND accommodations.id =\"$accommodation\" LIMIT 1";
+        require("../includes/conn.inc.php");
+		$sql_results = new SQL_results();
+		$results = $sql_results->results_accommodations($sql);
+		$accommodation = array();
+		if ($results->num_rows > 0) {
+			while ($row = $results->fetch_assoc()) {
+				if(false/*!preg_match('/^[a-zA-Z0-9]+$/', $row['id']) ||
+					!preg_match('/^[a-zA-Z0-9\@\'\(\)\.\s]+$/', $row['name']) ||
+					!preg_match('(0|1)', $row['nsfas']) ||
+					!preg_match('/^[a-zA-Z0-9]+$/', $row['room_id']) ||
+					!preg_match('/^[a-zA-Z0-9]+$/', $row['manager']) ||
+					!preg_match('/^[a-zA-Z0-9\'\.\<\>]+$/', $row['main_address']) ||
+					!preg_match('/^[a-zA-Z0-9\,\.\?\'\@\+\-\/\(\)\&\s]*$/', $row['about'])*/) {
+                    ?>
+                    <div style="color: red; margin: 4% 2%;">
+                        <h4>Oops..!!</h4>
+                        <p>It seems like the link is broken or has been changes <br>
+                        Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
+                        If the error persist, we'll have a look at it on our side soon</p>
+                    </div> 
+                    <?php
+                    return;
+                };
+                
+                $accommodation = array("id" => $row['id'],
+								"name" => $row['name'], 
+								"images" => "", 
+								"nsfas" => $row['nsfas'], 
+								"room" => array("id" =>$row['room_id'],
+                                                 "single_available" =>$row['single_sharing'],
+                                                 "double_available" =>$row['double_sharing'],
+                                                 "multi_available" =>$row['multi_sharing'],
+                                                 "single_sharing_amount" =>"Amount N/A",
+                                                 "double_sharing_amount" =>"Amount N/A",
+                                                 "muti_sharing_amount" =>"Amount N/A"),
+								"manager" => $row['manager'],
+								"stars" => 0,
+								"map_coordinates" => "32.0.252.3, -6.36.005",
+								"ratings" => 0,
+								"reviews" => 0,
+								"location" => $row['main_address'],
+								"about" => $row['about']);
+                
+            }
+        }
+            
             ?>
             <div id="accommodation">
                 <div id="overview_container">
                     <div class="sub_container">
                         <div class="image">
-                            <img src="./images/accommodation/African House/res1.jpg" alt="Africa House" style="width: 100%; height: 100%;">
+                            <?php
+                                $payload = $accommodation["id"];
+                                $sql = "SELECT image 
+                                        FROM (images
+                                            INNER JOIN accommodation_images  ON images.image_id = accommodation_images.image_id) 
+                                        WHERE accommodation_images.accommo_id = \"$payload\" LIMIT 1";
+                                $results = $sql_results->results_accommodations($sql);
+                                if ($results->num_rows > 0) {
+                                    $row = $results->fetch_assoc();
+                                    $accommodation["image"] = $accommodation["name"] . "/" . $row['image'];   
+                                }
+
+                            ?>
+                            <img src="./images/accommodation/<?php echo $accommodation["image"];?>" 
+                                 alt="<?php echo $accommodation["name"]; ?>" style="width: 100%; height: 100%;">
                             <div onclick="images()">
                                 <span class="fas fa-images"></span> More Images
                             </div>
                         </div>
                         <div class="info">
-                            <h4>African House</h4>
+                            <h4><?php echo $accommodation["name"]; ?></h4>
                             <span class="stars">
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star"></span>
-                                <span class="fas fa-star"></span>
+                                <?php 
+                                    $stars = $accommodation["stars"];
+                                    for($j = 1; $j < 6; $j++){
+                                        echo '<span class="fas fa-star ' . (($stars >= $j) ? "checked" : "") . '"></span>';
+                                    }
+                                ?>
                             </span><br>
-                            <p class="ratings" style="padding: 3px 12px;
-                                                      margin-right: 2%;
-                                                      border-radius: 10px;
-                                                      background-color: blue;
-                                                      text-align: center;
-                                                      color: white;
-                                                      display: inline;">
-                                6.9 </p>
-                            <small>12 Reviews</small>
-                            <p class="nsfas"><span><del>NSFAS Accredited</del></span></p>
+                            
+                            <?php 
+                                $ratings = $accommodation["ratings"];
+                                if($ratings > 0){
+                                    echo '<p class="ratings" style="padding: 1% 3%;
+                                                  margin-right: 2%;
+                                                  border-radius: 10px;
+                                                  background-color: blue;
+                                                  text-align: center;
+                                                  color: white;
+                                                  display: inline;">
+                                            ' . $ratings . ' </p>';
+                                    $reviews = $accommodation["reviews"];
+                                    $reviews = (reviews == 1) ? " 1 Review" : ' ' . $reviews . " Reviews";
+                                    echo '<small>' . $reviews . '</small>';
+                                }else{
+                                    echo '<p class="rating" style=" padding: 1% 3%;
+                                                  border-radius: 10px;
+                                                  margin-right: 2%;
+                                                  background-color: lightgray;
+                                                  text-align: center;
+                                                  color: white;
+                                                  display: inline;">
+                                            / </p>';
+                                    echo '<small> 0 Reviews</small>';
+                                }
+
+                                $nsfas = $accommodation["nsfas"];
+                                if($nsfas == 1)
+                                    echo '<p class="nsfas"><span>NSFAS Accredited</span></p>';                            
+                                else echo '<p class="nsfas"><span style="background-color: pink"><del>NSFAS Accredited</del></span></p>';
+                                $location = ($accommodation["location"]) ? $accommodation["location"] : "Location N/A";
+                                $accommodation["location"] = str_replace(", ", "<br>", $location);  
+                                $temp_loc = explode("<br>", $accommodation["location"]);
+            
+                                $accommodation["location"] = "";
+                                $counter = 0;
+                                for($i = 0; $i < 4; $i++){
+                                    if(isset($temp_loc[$i])){
+                                        if($temp_loc[$i] == "") continue;
+                                        else {
+                                            $counter++;
+                                            if($counter == 3){
+                                                $accommodation["location"] .= $temp_loc[$i] . " ";
+                                            }else{
+                                                $accommodation["location"] .= $temp_loc[$i] . "<br>"; 
+                                            }
+                                            if($counter == 3 && $i == 3) $accommodation["location"] .= "<br>";
+                                        }
+                                    } 
+                                }
+                                $accommodation["location"] = substr($accommodation["location"], 0, (strlen($accommodation["location"]) - 4));
+                            ?>
+                            
                             <p class="address">
                                 <strong>
-                                    23 Main road<br>
-                                    Braam<br>
-                                    Johannesburg 2525
+                                    <?php echo $accommodation['location']; ?>
                                     <span data-toggle="tooltip" data-placement="left" title class="fas fas fa-info-circle" 
                                         data-original-title="To get GPS direction, click on the 'Direction' button at the top"></span>
                                 </strong>

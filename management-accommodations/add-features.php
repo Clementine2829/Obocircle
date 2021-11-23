@@ -1,3 +1,58 @@
+<?php session_start();
+    $accommodation = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+    if($accommodation == ""){
+        if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
+            if($_SESSION['s_user_type'] != "premium_user"){
+                require_once '../access_denied.html';
+                return;
+            }
+            $user_id = $_SESSION['s_id'];
+            $sql = "SELECT id, name
+                    FROM accommodations
+                    WHERE manager=\"$user_id\" LIMIT 15";
+
+            require("../includes/conn.inc.php");
+            $sql_results = new SQL_results();
+            $results = $sql_results->results_accommodations($sql);
+            $div = "";
+            if($results->num_rows > 1){
+				while($row = $results->fetch_assoc()){
+                    $div .= '<br><li><a href="./dashboard.php?payload='. $row['id'] . '">'. $row['name'] . '</a></li>';
+                }
+                ?>
+                    <div id="select_accommodations">
+                        <br>
+                        <h5>Select an accommodation to manage below</h5>
+                        <ul>
+                            <?php echo $div; ?>
+                        </ul>
+                    </div>
+                <?php
+                return;
+            }else if($results->num_rows < 1){
+                echo '<p style="color: red"><strong><br>No accommodation found</strong><br>
+                        If you belive this is an errro, please contact us at support@obocircle.com</p>';
+                return;
+            }
+        }else{
+            require_once '../offline.html';
+            return;
+        }
+    }else{
+        if(isset($_SESSION['s_id']) && isset($_SESSION['s_user_type'])){
+            if($_SESSION['s_user_type'] != "premium_user"){
+                require_once '../access_denied.html';
+                return;
+            }
+        }else{
+            require_once '../offline.html';
+            return;
+        }
+    }
+
+
+?>
+
 <style type="text/css">
     #main_container{margin: auto 5%;}
     table input[type=number]{width: 100px;}

@@ -4,7 +4,7 @@
 */
 	$accomo_id = $name = "";
 	$next_page = 0;
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_REQUEST['next_page']) && preg_match('/\d{1,}/', $_REQUEST['next_page'])) 
 			$next_page = $_REQUEST['next_page'] * 10 - 10;
 		$sql = "SELECT accommodations.*, rooms.*, address.main_address 
@@ -30,18 +30,19 @@
 								"name" => $row['name'], 
 								"images" => "", 
 								"nsfas" => $row['nsfas'], 
-								"rooms" => array("id" =>$row['room_id'],
+								"room" => array("id" =>$row['room_id'],
                                                  "single_available" =>$row['single_sharing'],
                                                  "double_available" =>$row['double_sharing'],
                                                  "multi_available" =>$row['multi_sharing'],
-                                                 "single_sharing_amount" =>0,
-                                                 "double_sharing_amount" =>0,
-                                                 "muti_sharing_amount" =>0),
+                                                 "single_sharing_amount" =>"Amount N/A",
+                                                 "double_sharing_amount" =>"Amount N/A",
+                                                 "muti_sharing_amount" =>"Amount N/A"),
 								"manager" => $row['manager'],
 								"stars" => 0,
+								"map_coordinates" => "32.0.252.3, -6.36.005",
 								"ratings" => 0,
 								"reviews" => 0,
-								"locations" => $row['main_address'],
+								"location" => $row['main_address'],
 								"about" => $row['about']);
 				array_push($accommodations, $temp_arr);
 			}
@@ -67,10 +68,10 @@
             ?>
                 <div class="accommodations">
                     <div class="accommodation_map" id="accommodation_map" style="width: 100%; height: 200px; margin-bottom: 1%">  
-                    </div>                    
+                    </div>                       
+                    <?php require_once 'featured-template.php'; ?>
                 </div>
             <?php
-            require_once 'featured-template.php';
         }else{
 			echo('<style type="text/css">
 					#Contents{
@@ -84,7 +85,7 @@
 				<p id="Contents">Accommodations not available at the moment. Try again later</p>');
 				return;
 		}
-	}else {
+/*	}else {
         echo "Invalid request";
         return;		
-	}
+	}*/

@@ -7,7 +7,7 @@
             $sql = "SELECT images.image
                     FROM (images
                         INNER JOIN accommodation_images ON images.image_id = accommodation_images.image_id)
-                    WHERE accommodation_images.accommo_id = \"$accommo_id\" LIMIT 15";
+                    WHERE accommodation_images.accommo_id = \"$accommo_id\" LIMIT 7";
             
             $results = $sql_results->results_accommodations($sql);
             $images = "";
@@ -21,7 +21,6 @@
             }else continue; //if no images, do not show
             
             $accommodations[$accommodation]["images"] = explode(",", $images);
-            //print_r($accommodations);
             ?>
             <div class="accommodation">
                 <div class="images">
@@ -31,8 +30,8 @@
                       <ul class="carousel-indicators">
                             <?php
                                 for($i = 0; $i < sizeof($accommodations[$accommodation]["images"]); $i++){
-                                    if($i == 0) echo '<li data-target="#accommodation1" data-slide-to="' . $i . '" class="active"></li>';
-                                    else echo '<li data-target="#accommodation1" data-slide-to="' . $i . '"></li>';
+                                    if($i == 0) echo '<li data-target="#accommodation' . ($main_counter + 1) . '" data-slide-to="' . $i . '" class="active"></li>';
+                                    else echo '<li data-target="#accommodation' . ($main_counter + 1) . '" data-slide-to="' . $i . '" class=""></li>';
                                 }
                             ?>
                       </ul>
@@ -51,10 +50,10 @@
                       </div>
 
                       <!-- Left and right controls -->
-                      <a class="carousel-control-prev" href="#accommodation<?php echo $main_counter; ?>" data-slide="prev">
+                      <a class="carousel-control-prev" href="#accommodation<?php echo ($main_counter + 1); ?>" data-slide="prev">
                         <span class="carousel-control-prev-icon"></span>
                       </a>
-                      <a class="carousel-control-next" href="#accommodation1<?php echo $main_counter; ?>" data-slide="next">
+                      <a class="carousel-control-next" href="#accommodation1<?php echo ($main_counter + 1); ?>" data-slide="next">
                         <span class="carousel-control-next-icon"></span>
                       </a>
                     </div>
@@ -65,11 +64,12 @@
                 <div class="details">
                     <h4><?php echo $accommodations[$accommodation]["name"]; ?></h4>
                     <span class="stars">
-                        <span class="fas fa-star checked"></span>
-                        <span class="fas fa-star checked"></span>
-                        <span class="fas fa-star checked"></span>
-                        <span class="fas fa-star"></span>
-                        <span class="fas fa-star"></span>
+                        <?php 
+                            $stars = $accommodations[$accommodation]["stars"];
+                            for($j = 1; $j < 6; $j++){
+                                echo '<span class="fas fa-star ' . (($stars >= $j) ? "checked" : "") . '"></span>';
+                            }
+                        ?>
                     </span><br>
                     <?php 
                         $ratings = $accommodations[$accommodation]["ratings"];
@@ -102,9 +102,9 @@
                             echo '<p class="nsfas"><span>NSFAS Accredited</span></p>';                            
                         else echo '<p class="nsfas"><span style="background-color: pink"><del>NSFAS Accredited</del></span></p>';
                     
-                        $location = "Location N/A";
+                        $location = ($accommodations[$accommodation]["location"]) ? $accommodations[$accommodation]["location"] : "Location N/A";
                         $temp_loc = (preg_match("/(<br>)/", $location)) ? explode("<br>", $location) : explode(",", $location);
-                        if(isset($temp[2])) $location = $temp_loc[2];
+                        if(isset($temp_loc[2])) $location = $temp_loc[2];
                     ?>
                     <p class="location"><span class="fas fa-map-marker-alt"></span> <strong><?php echo $location; ?></strong></p>
                 </div>
@@ -115,29 +115,50 @@
                     </button>
                     <div>
                         <?php
-                            if($accommodations[$accommodation]['rooms']['double_available'] == 1){
+                            $room_id = $accommodations[$accommodation]['room']["id"];
+                            $sql = "SELECT bursary, cash FROM single_s WHERE room_id = \"$room_id\" LIMIT 1";
+            
+                            $results = $sql_results->results_accommodations($sql);
+                            if ($results->num_rows > 0) {
+                                $row = $results->fetch_assoc();
+                                $accommodations[$accommodation]['room']["single_sharing_amount"] = ($row['bursary'] != "") ? "R" . $row['bursary'] : "R" . $row['cash'];
+                            }
+                            $sql = "SELECT bursary, cash FROM double_s WHERE room_id = \"$room_id\" LIMIT 1";
+                            $results = $sql_results->results_accommodations($sql);
+                            if ($results->num_rows > 0) {
+                                $row = $results->fetch_assoc();
+                                $accommodations[$accommodation]['room']["double_sharing_amount"] = ($row['bursary'] != "") ? "R" . $row['bursary'] : "R" . $row['cash'];
+                            }
+                            $sql = "SELECT bursary, cash FROM multi_s WHERE room_id = \"$room_id\" LIMIT 1";
+                            $results = $sql_results->results_accommodations($sql);
+                            if ($results->num_rows > 0) {
+                                $row = $results->fetch_assoc();
+                                $accommodations[$accommodation]['room']["multi_sharing_amount"] = ($row['bursary'] != "") ? "R" . $row['bursary'] : "R" . $row['cash'];
+                            }
+                            
+                            if($accommodations[$accommodation]['room']['double_available'] == 1){
                                 ?>
                                     <span class="fas fa-user-friends"></span> 
                                     <span> Double Sharing</span><br>
                                     <span class="price">
-                                        R<?php echo $accommodations[$accommodation]['rooms']['double_sharing_amount']; ?>
+                                        <?php echo $accommodations[$accommodation]['room']['double_sharing_amount']; ?>
                                     </span>
                                 <?php
-                            }else if($accommodations[$accommodation['rooms']['multi_available']] != 1){
+                            }else if($accommodations[$accommodation]['room']['multi_available'] != 1){
                                 //default display even though it is not available     
                                 ?>
                                     <span class="fas fa-user"></span> 
                                     <span> Double Sharing</span><br>
                                     <span class="price">
-                                        R<?php echo $accommodations[$accommodation]['rooms']['single_sharing_amount']; ?>
+                                        <?php echo $accommodations[$accommodation]['room']['single_sharing_amount']; ?>
                                     </span>
                                 <?php
-                            }else if($accommodations[$accommodation['rooms']['multi_available']] == 1){
+                            }else if($accommodations[$accommodation]['room']['multi_available'] == 1){
                                 ?>
                                     <span class="fas fa-users"></span> 
                                     <span> Double Sharing</span><br>
                                     <span class="price">
-                                        R<?php echo $accommodations[$accommodation['rooms']['single_sharing_amount']]; ?>
+                                        <?php echo $accommodations[$accommodation]['room']['single_sharing_amount']; ?>
                                     </span>
                                 <?php
                             }
@@ -146,7 +167,7 @@
                 </div>
             </div>
             <?php
+            $main_counter++;
         } 
-        $main_counter++;
     }
 ?>

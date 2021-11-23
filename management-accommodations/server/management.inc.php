@@ -86,11 +86,9 @@
         $sql = "SELECT room_id 
                 FROM rooms 
                 WHERE accommo_id = \"$payload\" LIMIT 1";
-        echo $sql;
         $result = $sql_results->results_accommodations($sql);
         if ($result->num_rows > 0) {
             $data = $result->fetch_assoc();
-            print_r($data);
             $room_id = $data['room_id'];
         }
         $sql = "SELECT single_id 
@@ -99,27 +97,25 @@
         $result = $sql_results->results_accommodations($sql);
         if ($result->num_rows > 0) {
             $sql_update = "UPDATE single_s
-                            SET cash = \"$single_c\" AND bursary = \"$single_b\"
-                            WHERE room_id = \"$payload\"";
+                            SET cash = \"$single_c\", bursary = \"$single_b\"
+                            WHERE room_id = \"$room_id\"";
             if ($connection->query($sql_update)){
                 //do nothing
             }
             $sql_update = "UPDATE double_s
-                            SET cash = \"$double_c\" AND bursary = \"$double_b\"
-                            WHERE room_id = \"$payload\"";
+                            SET cash = \"$double_c\", bursary = \"$double_b\"
+                            WHERE room_id = \"$room_id\"";
             if ($connection->query($sql_update)){
                 //do nothing
             }
             $sql_update = "UPDATE multi_s
-                            SET cash = \"$multi_c\" AND bursary = \"$multi_b\"
-                            WHERE room_id = \"$payload\"";
+                            SET cash = \"$multi_c\", bursary = \"$multi_b\"
+                            WHERE room_id = \"$room_id\"";
             if ($connection->query($sql_update)){
                 //do nothing
             }
-            echo "num 1" ;
         }else{
             $single_id = $double_id = $multi_id = rand_text($payload, 20);
-            echo "num 2" ;
             $sql_update = "INSERT INTO single_s
                     VALUES (\"$single_id\", \"$room_id\", \"$single_c\", \"$single_b\")";
             if ($connection->query($sql_update)){

@@ -13,11 +13,11 @@
 	function reviews(){ temp_fun_ext("reviews", 5); }
     function temp_fun_ext(action, num){
         let accommodation = $("#accommodation").val();
-        var url = "./server/view-accommodation.inc.php?accommoation=" + accommodation + "&action=" + action;
+        var url = "./server/view-accommodation.inc.php?accommodation=" + accommodation + "&action=" + action;
         temp_fan(url, "", loading=false);
 
-        $("#header_container a").css({'border-bottom':'none'})
-        $("#header_container a:nth-child(" + num + ")").css({'border-bottom':'2px solid red'})
+        $("#header_btns .header_btns:nth-child(" + 1 + ") a").css({'border-bottom':'none'})
+        $("#header_btns .header_btns:nth-child(" + 1 + ") a:nth-child(" + num + ")").css({'border-bottom':'2px solid red'})
     }
 	function temp_fan(url, fun = "", loading = false){
 		var xhttp = new XMLHttpRequest();
