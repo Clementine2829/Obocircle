@@ -84,26 +84,18 @@
     
     CREATE TABLE RATE_LOCATION (
     	location_id VARCHAR (10) NOT NULL PRIMARY KEY,
-		rate_counter VARCHAR (3),
-		location_names TEXT,
 		location_values TEXT
 	);    
     CREATE TABLE RATE_SERVICES (
     	services_id VARCHAR (10) NOT NULL PRIMARY KEY,
-		rate_counter VARCHAR (3),
-		services_names TEXT,
 		services_values TEXT
 	);    
     CREATE TABLE RATE_ROOMS (
     	rooms_id VARCHAR (10) NOT NULL PRIMARY KEY,
-		rate_counter VARCHAR (3),
-		rooms_names TEXT,
 		rooms_values TEXT
 	);    
     CREATE TABLE RATE_STUFF (
     	stuff_id VARCHAR (10) NOT NULL PRIMARY KEY,
-		rate_counter VARCHAR (3),
-		stuff_names TEXT,
 		stuff_values TEXT
 	);
     CREATE TABLE AVERAGE_RATINGS (
@@ -112,6 +104,8 @@
     	services_id VARCHAR (10) NOT NULL,
     	rooms_id VARCHAR (10) NOT NULL,
     	stuff_id VARCHAR (10) NOT NULL,
+		rate_counter VARCHAR (3),
+		services_names TEXT,
 		PRIMARY KEY (accommo_id, location_id, services_id, rooms_id, stuff_id),
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE,
 		FOREIGN KEY (location_id) REFERENCES rate_location (location_id) ON DELETE CASCADE,

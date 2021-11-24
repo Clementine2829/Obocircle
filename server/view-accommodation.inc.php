@@ -677,21 +677,97 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'reviews'){
+            $name = $rate_counter = "";
+            $rate_description = " Not good";
+            $counter = $sum_stars = 0;
+            $sum_scale = " / ";
+            $sql = "SELECT name
+                    FROM accommodations 
+                    WHERE id = \"$accommodation\" LIMIT 1";
+                require("../includes/conn.inc.php");
+            $sql_results = new SQL_results();
+            $results = $sql_results->results_accommodations($sql);
+            if($results->num_rows > 0){
+                $row = $results->fetch_assoc();
+                $name = $row['name'];
+            }
+            $sql = "SELECT stars_values, scale_values, rate_counter
+                    FROM star_and_scale_rating 
+                    WHERE accommo_id = \"$accommodation\" LIMIT 1";
+            $results = $sql_results->results_accommodations($sql);
+            if($results->num_rows > 0){
+                $row = $results->fetch_assoc();
+                $stars = explode(",", $row['stars_values']);
+                $scale = explode(",", $row['scale_values']);
+                $counter = $row['rate_counter'];
+                $sum_scale = 0;
+                for($i = 0; $i < (sizeof($stars) - 1);$i++){
+                    $sum_stars = $sum_stars + $stars[$i];
+                    $sum_scale = $sum_scale + $scale[$i];
+                }
+                $sum_stars = ($sum_stars > 0) ? number_format(($sum_stars / $counter), 1) : $sum_stars;
+                $sum_scale = ($sum_scale > 0) ? number_format(($sum_scale / $counter), 1) : $sum_scale;
+                if($sum_stars > 5) $sum_stars = number_format(0.0, 1);
+                if($sum_scale > 10 || $sum_scale <= 0) $sum_scale = number_format(0.0, 1);
+                if($sum_scale > 0 && $sum_scale < 2) $rate_description = "Very Poor";
+                else if($sum_scale >= 2 && $sum_scale < 4) $rate_description = "Poor";
+                else if($sum_scale >= 4 && $sum_scale < 6) $rate_description = "Good";
+                else if($sum_scale >= 6 && $sum_scale < 8) $rate_description = "Very good";
+                else if($sum_scale >= 8 && $sum_scale <= 10) $rate_description = "Excelent";
+                else {
+                    $counter = 0;
+                }
+            }
+            
+            $sql = "SELECT average_ratings.rate_counter, 
+                            rate_location.location_values, 
+                            rate_services.services_values, 
+                            rate_rooms.rooms_values, 
+                            rate_stuff.stuff_values
+                    FROM ((((average_ratings
+                        INNER JOIN rate_location ON average_ratings.location_id = rate_location.location_id)
+                        INNER JOIN rate_services ON average_ratings.services_id = rate_services.services_id)
+                        INNER JOIN rate_rooms ON average_ratings.rooms_id = rate_rooms.rooms_id)
+                        INNER JOIN rate_stuff ON average_ratings.stuff_id = rate_stuff.stuff_id)
+                    WHERE accommo_id = \"$accommodation\" LIMIT 1";
+            $results = $sql_results->results_accommodations($sql);
+            if($results->num_rows > 0){
+                $row = $results->fetch_assoc();
+                print_r($row);
+            }
             ?>
             <div id="reviews">
-                <h4 class="name">African House</h4>
+                <h4 class="name"><?php echo $name; ?></h4>
                 <div class="ratings">
                     <h5>Guest overall ratings</h5>
                     <div class="ratings_container">
-                        <span class="rating_value"  style=" padding: 2px 6px;
-                                                      margin-right: 5px;
-                                                      border-radius: 40% 40% 0px 40%;
-                                                      background-color: blue;
-                                                      text-align: center;
-                                                      color: white;
-                                                      display: inline;"> 8.2 </span>
-                        <span><strong>Excellent</strong></span>
-                        <small> 55 reviews</small>
+                        <?php
+                            if($sum_scale > 0){
+                                ?>
+                                <span class="rating_value"  
+                                      style=" padding: 2px 6px;
+                                              margin-right: 5px;
+                                              border-radius: 40% 40% 0px 40%;
+                                              background-color: blue;
+                                              text-align: center;
+                                              color: white;
+                                              display: inline;"> <?php echo $sum_scale; ?> </span>
+                                <?php
+                            }else{
+                                ?>
+                                <span class="rating_value"  
+                                      style=" padding: 2px 6px;
+                                              margin-right: 5px;
+                                              border-radius: 40% 40% 0px 40%;
+                                              background-color: lightgray;
+                                              text-align: center;
+                                              color: white;
+                                              display: inline;"> <?php echo $sum_scale; ?> </span>
+                                <?php
+                            }        
+                        ?>
+                        <span><strong><?php echo $rate_description; ?></strong></span>
+                        <small> <?php echo $counter . (($counter != 1) ? " Reviews" : " Review"); ?> </small>
                         <div class="ratings_sub_container">
                             <br>
                             <div class="element">

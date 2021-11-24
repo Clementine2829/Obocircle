@@ -86,7 +86,7 @@
                             $reviews = (reviews == 1) ? " 1 Review" : ' ' . $reviews . " Reviews";
                             echo '<small>' . $reviews . '</small>';
                         }else{
-                            echo '<p class="rating" style=" padding: 1% 3%;
+                            echo '<p class="rating" style="padding: 1% 3%;
                                           border-radius: 10px;
                                           margin-right: 2%;
                                           background-color: lightgray;
@@ -148,7 +148,7 @@
                                 //default display even though it is not available     
                                 ?>
                                     <span class="fas fa-user"></span> 
-                                    <span> Double Sharing</span><br>
+                                    <span> Single Sharing</span><br>
                                     <span class="price">
                                         <?php echo $accommodations[$accommodation]['room']['single_sharing_amount']; ?>
                                     </span>
@@ -156,7 +156,7 @@
                             }else if($accommodations[$accommodation]['room']['multi_available'] == 1){
                                 ?>
                                     <span class="fas fa-users"></span> 
-                                    <span> Double Sharing</span><br>
+                                    <span> Multi Sharing</span><br>
                                     <span class="price">
                                         <?php echo $accommodations[$accommodation]['room']['single_sharing_amount']; ?>
                                     </span>
