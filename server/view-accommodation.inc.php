@@ -522,7 +522,7 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'about'){
-            $sql = "SELECT accommodations.name, 
+            $sql = "SELECT accommodations.name, accommodations.about, 
                             address.main_address, address.contact, address.email
                     FROM(accommodations
                          INNER JOIN address ON accommodations.id = address.accommo_id) 
@@ -535,6 +535,7 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                 $data = $results->fetch_assoc();
                 if(true){
                     $name = $data['name'];
+                    $about = $data['about'];
                     $phone = ($data['contact'] != "") ? $data['contact'] : "N/A";
                     $email = ($data['email'] != "") ? $data['email'] : "N/A";
                     $address = ($data['main_address'] != "") ? $data['main_address'] : "Address N/A";
@@ -619,39 +620,41 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                             <?php
                                 $manager = "";
                                 $sql = "SELECT manager FROM accommodations WHERE id = \"$accommodation\" LIMIT 1";
-                                $results = $sql_results->results_accommodations($sql_feautures);
+                                $results = $sql_results->results_accommodations($sql);
                                 if($results->num_rows > 0){
                                     $row = $results->fetch_assoc();
                                     $manager = $row['manager'];
                                 }
                                 if(preg_match('/^[a-zA-Z0-9]+$/', $manager)){
-                                    $sql = "SELECT  obo_users.first_name, obo_users.last_name,
+                                    $sql = "SELECT  users.first_name, users.last_name, users.reg_date,
                                                     display_picture.image
-                                            FROM (obo_users
-                                                INNER JOIN display_picture ON obo_users.id = display_picture.user_id)
-                                            WHERE obo_users.id = \"$manager\" AND users_extended.profile_status = \"1\" 
+                                            FROM ((users
+                                                INNER JOIN users_extended ON users.id = users_extended.user_id)
+                                                INNER JOIN display_picture ON users.id = display_picture.user_id)
+                                            WHERE users.id = \"$manager\" AND users_extended.profile_status = \"1\" 
                                             LIMIT 1";
-                                    $results = $sql_results->results_accommodations($sql_feautures);
+                                    $results = $sql_results->results_profile($sql);
                                     if($results->num_rows > 0){
                                         $row = $results->fetch_assoc();
-                                        $manager = $row['manager'];
+                                        $name = $row['first_name'] . " " . $row['last_name'];
+                                        $image = substr($manager, 5, 15) . "/" . $row['image'];
+                                        $date_joined = "Joined in " . substr(date("d M, Y", strtotime(substr($row['reg_date'], 0, 10))), 3);
+                                        ?>
+                                        <h5>Hosted by</h5>
+                                        <div class="info">
+                                            <div class="image">
+                                                <a href="#" target="_blank">
+                                                    <img src="./images/users/<?php echo $image; ?>" alt="<?php echo $name; ?>" style="width: 100%; height: 100%">
+                                                </a>
+                                            </div>
+                                            <div class="personal">
+                                                <p class="name"><strong><?php echo $name; ?></strong></p>
+                                                <p class="joined"><?php echo $date_joined; ?></p>
+                                                <p><span class="fas fa-shield-virus" style="color: red"></span> Account Verified</p>
+                                            </div>
+                                        </div>
+                                    <?php
                                     }
-                                    
-                                    ?>
-                                    <h5>Hosted by</h5>
-                                    <div class="info">
-                                        <div class="image">
-                                            <a href="#" target="_blank">
-                                                <img src="./images/users/123/img1.jpg" alt="Clement" style="width: 100%; height: 100%">
-                                            </a>
-                                        </div>
-                                        <div class="personal">
-                                            <p class="name"><strong>Clementine</strong></p>
-                                            <p class="joined">Joined in May, 2021</p>
-                                            <p><span class="fas fa-shield-virus" style="color: red"></span> Account Verified</p>
-                                        </div>
-                                    </div>
-                                <?php
                                 }
                             ?>
                         </div>
