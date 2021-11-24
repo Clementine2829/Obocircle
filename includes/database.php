@@ -71,6 +71,55 @@
 		FOREIGN KEY (image_id) REFERENCES images (image_id) ON DELETE CASCADE
 	);
     
+    
+    CREATE TABLE STAR_AND_SCALE_RATING (
+    	rate_id VARCHAR (20) NOT NULL,
+		accommo_id VARCHAR (40) NOT NULL,
+		stars_values TEXT,
+		scale_values TEXT,
+        rate_counter VARCHAR (3),
+		PRIMARY KEY (accommo_id, rate_id),
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
+	);
+    
+    CREATE TABLE RATE_LOCATION (
+    	location_id VARCHAR (10) NOT NULL PRIMARY KEY,
+		rate_counter VARCHAR (3),
+		location_names TEXT,
+		location_values TEXT
+	);    
+    CREATE TABLE RATE_SERVICES (
+    	services_id VARCHAR (10) NOT NULL PRIMARY KEY,
+		rate_counter VARCHAR (3),
+		services_names TEXT,
+		services_values TEXT
+	);    
+    CREATE TABLE RATE_ROOMS (
+    	rooms_id VARCHAR (10) NOT NULL PRIMARY KEY,
+		rate_counter VARCHAR (3),
+		rooms_names TEXT,
+		rooms_values TEXT
+	);    
+    CREATE TABLE RATE_STUFF (
+    	stuff_id VARCHAR (10) NOT NULL PRIMARY KEY,
+		rate_counter VARCHAR (3),
+		stuff_names TEXT,
+		stuff_values TEXT
+	);
+    CREATE TABLE AVERAGE_RATINGS (
+    	accommo_id VARCHAR (40) NOT NULL,
+    	location_id VARCHAR (10) NOT NULL,
+    	services_id VARCHAR (10) NOT NULL,
+    	rooms_id VARCHAR (10) NOT NULL,
+    	stuff_id VARCHAR (10) NOT NULL,
+		PRIMARY KEY (accommo_id, location_id, services_id, rooms_id, stuff_id),
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE,
+		FOREIGN KEY (location_id) REFERENCES rate_location (location_id) ON DELETE CASCADE,
+		FOREIGN KEY (services_id) REFERENCES rate_services (services_id) ON DELETE CASCADE,
+		FOREIGN KEY (rooms_id) REFERENCES rate_rooms (rooms_id) ON DELETE CASCADE,
+		FOREIGN KEY (stuff_id) REFERENCES rate_stuff (stuff_id) ON DELETE CASCADE
+	);
+    
 	CREATE TABLE features ( 
 		f_id VARCHAR (30) PRIMARY KEY NOT NULL,
 		accommo_id VARCHAR (40) UNIQUE NOT NULL,
