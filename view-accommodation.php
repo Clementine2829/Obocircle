@@ -75,6 +75,7 @@
 	<script src="./js/view-accommodation_main.js" type="text/javascript"></script>
 	<script src="./js/view-accommodation_ext.js" type="text/javascript"></script>
 	<script src="./js/send-accommodation-application.js" type="text/javascript"></script>
+	<script src="./js/slide-show.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         

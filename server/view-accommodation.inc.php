@@ -8,7 +8,7 @@
             ?>
             <div style="color: red; margin: 4% 2%;">
                 <h4>Oops..!!</h4>
-                <p>It seems like the link is broken or has been changes <br>
+                <p>It seems like the link is broken or has been changed <br>
                 Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
                 If the error persist, we'll have a look at it on our side soon</p>
             </div>                
@@ -23,84 +23,93 @@
                     INNER JOIN address ON accommodations.id = address.accommo_id)
                     INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
                 WHERE display = 1 AND accommodations.id =\"$accommodation\" LIMIT 1";
-        require("../includes/conn.inc.php");
-		$sql_results = new SQL_results();
-		$results = $sql_results->results_accommodations($sql);
-		$accommodation = array();
-		if ($results->num_rows > 0) {
-			while ($row = $results->fetch_assoc()) {
-				if(false/*!preg_match('/^[a-zA-Z0-9]+$/', $row['id']) ||
-					!preg_match('/^[a-zA-Z0-9\@\'\(\)\.\s]+$/', $row['name']) ||
-					!preg_match('(0|1)', $row['nsfas']) ||
-					!preg_match('/^[a-zA-Z0-9]+$/', $row['room_id']) ||
-					!preg_match('/^[a-zA-Z0-9]+$/', $row['manager']) ||
-					!preg_match('/^[a-zA-Z0-9\'\.\<\>]+$/', $row['main_address']) ||
-					!preg_match('/^[a-zA-Z0-9\,\.\?\'\@\+\-\/\(\)\&\s]*$/', $row['about'])*/) {
+                require("../includes/conn.inc.php");
+                $sql_results = new SQL_results();
+                $results = $sql_results->results_accommodations($sql);
+                $accommodation = array();
+                if ($results->num_rows > 0) {
+                    while ($row = $results->fetch_assoc()) {
+                        if(false/*!preg_match('/^[a-zA-Z0-9]+$/', $row['id']) ||
+                            !preg_match('/^[a-zA-Z0-9\@\'\(\)\.\s]+$/', $row['name']) ||
+                            !preg_match('(0|1)', $row['nsfas']) ||
+                            !preg_match('/^[a-zA-Z0-9]+$/', $row['room_id']) ||
+                            !preg_match('/^[a-zA-Z0-9]+$/', $row['manager']) ||
+                            !preg_match('/^[a-zA-Z0-9\'\.\<\>]+$/', $row['main_address']) ||
+                            !preg_match('/^[a-zA-Z0-9\,\.\?\'\@\+\-\/\(\)\&\s]*$/', $row['about'])*/) {
+                            ?>
+                            <div style="color: red; margin: 4% 2%;">
+                                <h4>Oops..!!</h4>
+                                <p>It seems like the link is broken or has been changed <br>
+                                Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
+                                If the error persist, we'll have a look at it on our side soon</p>
+                            </div> 
+                            <?php
+                            return;
+                        };
+
+                        $accommodation = array("id" => $row['id'],
+                                        "name" => $row['name'], 
+                                        "images" => "", 
+                                        "nsfas" => $row['nsfas'], 
+                                        "room" => array("id" =>$row['room_id'],
+                                                         "single_available" =>$row['single_sharing'],
+                                                         "double_available" =>$row['double_sharing'],
+                                                         "multi_available" =>$row['multi_sharing'],
+                                                         "single_sharing_amount_c" =>"0.00",
+                                                         "single_sharing_amount_b" =>"0.00",
+                                                         "double_sharing_amount_c" =>"0.00",
+                                                         "double_sharing_amount_b" =>"0.00",
+                                                         "multi_sharing_amount_c" =>"0.00",
+                                                         "multi_sharing_amount_b" =>"0.00"),
+                                        "manager" => $row['manager'],
+                                        "stars" => 0,
+                                        "map_coordinates" => "32.0.252.3, -6.36.005",
+                                        "ratings" => 0,
+                                        "reviews" => 0,
+                                        "location" => $row['main_address'],
+                                        "about" => $row['about']);
+
+                        /************************** Load amounts *************************/
+                        $room_id = $accommodation['room']['id'];
+                        $sql = "SELECT cash, bursary 
+                                FROM single_s
+                                WHERE room_id = \"$room_id\" LIMIT 1";
+                        $results = $sql_results->results_accommodations($sql);
+                        if ($results->num_rows > 0) {
+                            $row = $results->fetch_assoc();
+                            $accommodation['room']['single_sharing_amount_c'] = $row['cash'];
+                            $accommodation['room']['single_sharing_amount_b'] = $row['bursary'];
+                        }
+                        $sql = "SELECT cash, bursary 
+                                FROM double_s
+                                WHERE room_id = \"$room_id\" LIMIT 1";
+                        $results = $sql_results->results_accommodations($sql);
+                        if ($results->num_rows > 0) {
+                            $row = $results->fetch_assoc();
+                            $accommodation['room']['double_sharing_amount_c'] = $row['cash'];
+                            $accommodation['room']['double_sharing_amount_b'] = $row['bursary'];
+                        }
+                        $sql = "SELECT cash, bursary 
+                                FROM multi_s
+                                WHERE room_id = \"$room_id\" LIMIT 1";
+                        $results = $sql_results->results_accommodations($sql);
+                        if ($results->num_rows > 0) {
+                            $row = $results->fetch_assoc();
+                            $accommodation['room']['multi_sharing_amount_c'] = $row['cash'];
+                            $accommodation['room']['multi_sharing_amount_b'] = $row['bursary'];
+                        }                
+                    }
+                }else{
                     ?>
                     <div style="color: red; margin: 4% 2%;">
                         <h4>Oops..!!</h4>
-                        <p>It seems like the link is broken or has been changes <br>
+                        <p>It seems like the link is broken or has been changed <br>
                         Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
                         If the error persist, we'll have a look at it on our side soon</p>
-                    </div> 
+                    </div>                
                     <?php
                     return;
-                };
-                
-                $accommodation = array("id" => $row['id'],
-								"name" => $row['name'], 
-								"images" => "", 
-								"nsfas" => $row['nsfas'], 
-								"room" => array("id" =>$row['room_id'],
-                                                 "single_available" =>$row['single_sharing'],
-                                                 "double_available" =>$row['double_sharing'],
-                                                 "multi_available" =>$row['multi_sharing'],
-                                                 "single_sharing_amount_c" =>"0.00",
-                                                 "single_sharing_amount_b" =>"0.00",
-                                                 "double_sharing_amount_c" =>"0.00",
-                                                 "double_sharing_amount_b" =>"0.00",
-                                                 "multi_sharing_amount_c" =>"0.00",
-                                                 "multi_sharing_amount_b" =>"0.00"),
-								"manager" => $row['manager'],
-								"stars" => 0,
-								"map_coordinates" => "32.0.252.3, -6.36.005",
-								"ratings" => 0,
-								"reviews" => 0,
-								"location" => $row['main_address'],
-								"about" => $row['about']);
-                
-                /************************** Load amounts *************************/
-                $room_id = $accommodation['room']['id'];
-                $sql = "SELECT cash, bursary 
-                        FROM single_s
-                        WHERE room_id = \"$room_id\" LIMIT 1";
-                $results = $sql_results->results_accommodations($sql);
-                if ($results->num_rows > 0) {
-                    $row = $results->fetch_assoc();
-                    $accommodation['room']['single_sharing_amount_c'] = $row['cash'];
-                    $accommodation['room']['single_sharing_amount_b'] = $row['bursary'];
                 }
-                $sql = "SELECT cash, bursary 
-                        FROM double_s
-                        WHERE room_id = \"$room_id\" LIMIT 1";
-                $results = $sql_results->results_accommodations($sql);
-                if ($results->num_rows > 0) {
-                    $row = $results->fetch_assoc();
-                    $accommodation['room']['double_sharing_amount_c'] = $row['cash'];
-                    $accommodation['room']['double_sharing_amount_b'] = $row['bursary'];
-                }
-                $sql = "SELECT cash, bursary 
-                        FROM multi_s
-                        WHERE room_id = \"$room_id\" LIMIT 1";
-                $results = $sql_results->results_accommodations($sql);
-                if ($results->num_rows > 0) {
-                    $row = $results->fetch_assoc();
-                    $accommodation['room']['multi_sharing_amount_c'] = $row['cash'];
-                    $accommodation['room']['multi_sharing_amount_b'] = $row['bursary'];
-                }                
-            }
-        }
-            
             ?>
             <div id="accommodation">
                 <div id="overview_container">
@@ -121,7 +130,7 @@
                             ?>
                             <img src="./images/accommodation/<?php echo $accommodation["image"];?>" 
                                  alt="<?php echo $accommodation["name"]; ?>" style="width: 100%; height: 100%;">
-                            <div onclick="images()">
+                            <div onclick="photos()">
                                 <span class="fas fa-images"></span> More Images
                             </div>
                         </div>
@@ -187,7 +196,7 @@
                                     } 
                                 }
                                 $accommodation["location"] = substr($accommodation["location"], 0, (strlen($accommodation["location"]) - 4));
-                                print_r($accommodation);
+                                //print_r($accommodation);
                             ?>
                             <p class="address">
                                 <strong>
@@ -209,15 +218,21 @@
                                     </colgroup>
                                     <tbody>
                                         <?php
-                                            $single_c = price_format($accommodation['room']['single_sharing_amount_c']); 
-                                            $single_b = price_format($accommodation['room']['single_sharing_amount_b']); 
-                                            $double_c = price_format($accommodation['room']['double_sharing_amount_c']); 
-                                            $double_b = price_format($accommodation['room']['double_sharing_amount_b']); 
-                                            $multi_c = price_format($accommodation['room']['multi_sharing_amount_c']); 
-                                            $multi_b = price_format($accommodation['room']['multi_sharing_amount_b']);
+                                            $single_c = "R" . price_format($accommodation['room']['single_sharing_amount_c']); 
+                                            $single_b = "R" . price_format($accommodation['room']['single_sharing_amount_b']); 
+                                            $double_c = "R" . price_format($accommodation['room']['double_sharing_amount_c']); 
+                                            $double_b = "R" . price_format($accommodation['room']['double_sharing_amount_b']); 
+                                            $multi_c = "R" . price_format($accommodation['room']['multi_sharing_amount_c']); 
+                                            $multi_b = "R" . price_format($accommodation['room']['multi_sharing_amount_b']);
                                             $single_s = $accommodation['room']['single_available'];
                                             $double_s = $accommodation['room']['double_available']; 
                                             $multi_s = $accommodation['room']['multi_available'];
+                                            if($single_c == "R0.00") $single_c = "<del>" . $single_c . "</del>";
+                                            if($single_b == "R0.00") $single_b = "<del>" . $single_b . "</del>";
+                                            if($double_c == "R0.00") $double_c = "<del>" . $double_c . "</del>";
+                                            if($double_b == "R0.00") $double_b = "<del>" . $double_b . "</del>";
+                                            if($multi_c == "R0.00") $multi_c = "<del>" . $multi_c . "</del>";
+                                            if($multi_b == "R0.00") $multi_b = "<del>" . $multi_b . "</del>";
                                         ?>
                                         <tr>
                                             <th>Room Type</th>
@@ -268,26 +283,44 @@
                     </div>
                     <div class="sub_container">
                         <div class="features">
+                            <br>
                             <h5>Features</h5>
-                            <p>
-                                <span>| <span class="fas fa-bed"></span> 1/2/3+ person rooms </span> 
-                                <span>| Own/Inroom kitchen </span> 
-                                <span>| <span class="fas fa-bath"></span> Commune Sharing bathroom </span> 
-                                <span>| Security 24/7 </span>
-                                <span>| CCTV </span>
-                                <span>| <span class="fas fa-fingerprint"></span> Biometric Access Control </span> 
-                                <span>| Fully Furnished </span> 
-                                <span>| <span class="fas fa-chess"></span> Sports fields </span> 
-                                <span>| <span class="fas fa-child"></span> Recreational/ Entertainment Area </span> 
-                                <span>| <span class="fa fa-wifi"></span> Uncapped WiFi </span> 
-                                <span>| <span class="fas fa-dumbbell"></span> Free indoor gym </span> 
-                                <span><a href="#" onclick="about()">...more</a></span>
-                            </p>
+                            <?php
+                                $temp_id = $accommodation["id"];
+                                $sql_feautures = "SELECT * FROM features WHERE accommo_id = \"$temp_id\"";
+                                $results = $sql_results->results_accommodations($sql_feautures);
+                                require_once './accommodation-features.php';
+                                require_once './icons.php';
+                                if($results->num_rows > 0){
+                                    $features = [];
+                                    while($row = $results->fetch_assoc()){
+                                        $f = '';
+                                        for ($i = 1; $i < 31; $i++) {
+                                            $f = 'f' . $i;
+                                            $f = $row[$f];
+                                            array_push($features, $f);
+                                        }
+                                    }
+                                    $features = to_text($features); // pass array to fun
+                                    echo "<span> | ";
+                                        for ($i = 0; $i < 13; $i++) { 
+                                            if($features[$i] != 0 || $features[$i] != ""){
+                                                echo '<span class="' . $icons[$i] . '"></span>';
+                                                echo "<span> " . $features[$i] . " </span> | ";
+                                            }
+                                        }
+                                    echo "</span>";
+                                    echo ' <a href="#" onclick="about()">more...</a>';
+                                }else echo "<i style='color:red'>Features for this accommodation not available at the moment</i>";            
+                            ?>
                         </div>
                         <div class="about_us">
+                            <br>
                             <h5>About us</h5>
                             <p>
-                                If you looking for luxurious accommodations that offer the best services of all times i am talking about this accommodations, starting from transporta... <a href="#" onclick="about()">more</a>
+                                <?php
+                                    echo substr($accommodation["about"], 0, 150) . "... <a href='#' onclick='about()'> more</a>";
+                                ?>
                             </p>
                         </div>
                     </div>
@@ -297,7 +330,58 @@
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'images'){
             ?>
-                
+                <link rel="stylesheet" type="text/css" href="./css/style-slide-show.css">
+                <link rel="stylesheet" type="text/css" href="./css/style-accommodation-images.css">
+				<div id="image_container">
+					<div class="images">
+						<span tittle="Close Modal" id="close_slide" onclick="close_slide_show()" class="close">x</span>
+						<?php
+                            require("../includes/conn.inc.php");
+                            $sql_results = new SQL_results();
+                            $sql = "SELECT name FROM accommodations WHERE id =\"$accommodation\" LIMIT 1";
+							$results = $sql_results->results_accommodations($sql);
+							$accommodation_name = "";
+                            if ($results->num_rows > 0) {
+								$name = $results->fetch_assoc();
+                                $accommodation_name = $name['name'];
+                            }
+                            $sql = "SELECT image 
+                                    FROM (images
+                                        INNER JOIN accommodation_images ON images.image_id = accommodation_images.image_id)
+                                    WHERE accommodation_images.accommo_id = '$accommodation' LIMIT 15";
+							$results = $sql_results->results_accommodations($sql);
+							if ($results->num_rows > 0 && $results->num_rows < 16) {
+								$counter = 0;
+								$total = $results->num_rows;
+								while ($row = $results->fetch_assoc()) {
+									if(preg_match('/^[a-zA-Z0-9]+\.+(jpg|jpeg|png|gif)+$/', $row['image'])){
+										$counter++;
+										echo '<div class="image">';
+											$tmp_image = explode(".", $row['image']);
+											$ext = end($tmp_image);
+											echo '<div class="num fade" style="display:none">' .
+														$counter . '\\' . $total . '
+													</div>';
+											echo '<img src="images/accommodation/' . $accommodation_name . 
+												'/' . $row['image'] . '" alt="' . $accommodation_name . '"
+													onclick="slide_show_current(' . $counter . ')">
+												<a href="images/accommodation/' . $accommodation_name . 
+												'/' . $row['image'] . '" download="Obocircle.com_image.' . end($tmp_image) . '">
+													<span class="fas fa-download"></span>
+												</a><br>';
+										echo "</div>\n";
+									}
+								}
+							}else echo "<i style='color:red'>No images to display at the moment</i>";
+						?>
+						<a style="display:none" class="prev" onclick="plus_slide(-1)">
+							&#10094
+						</a>
+						<a style="display:none" class="next" onclick="plus_slide(1)">
+							&#10095
+						</a>																					
+					</div>
+				</div>                
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'direction'){
             ?>
@@ -438,121 +522,156 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'about'){
-            ?>
-    <!-- About -->
-       <div id="about">
-                <div class="name">
-                    <h3>Living @ Rissik</h3>
-                </div>
-                <div class="address">
-                    <h5>
-                        Tell: 011 232 4455<br>
-                        Email: student@afco.co.za
-                    </h5>
-                    <h5>Address</h5>
-                    <p>
-                        1515 End Street<br>
-                        Doornfontein<br>
-                        Johannesburg 4525
-                    </p>
-                    <div id="view_on_map">
+            $sql = "SELECT accommodations.name, 
+                            address.main_address, address.contact, address.email
+                    FROM(accommodations
+                         INNER JOIN address ON accommodations.id = address.accommo_id) 
+                    WHERE id = \"$accommodation\" LIMIT 1";
+            $name = $about = $address = $phone = $email = "";
+            require("../includes/conn.inc.php");
+            $sql_results = new SQL_results();
+            $results = $sql_results->results_accommodations($sql);
+            if ($results->num_rows > 0) {
+                $data = $results->fetch_assoc();
+                if(true){
+                    $name = $data['name'];
+                    $phone = ($data['contact'] != "") ? $data['contact'] : "N/A";
+                    $email = ($data['email'] != "") ? $data['email'] : "N/A";
+                    $address = ($data['main_address'] != "") ? $data['main_address'] : "Address N/A";
+                }
+            }
+            $phone = substr($phone, 0, 3) . ' ' . substr($phone, 3, 3) . ' ' . substr($phone, 6, 4);
+            $address = str_replace(", ", "<br>", $address);  
+            $temp_loc = explode("<br>", $address);
 
-                    </div>
-                </div>
-                <div class="features">
-                    <h5>Features</h5>
-                    <div>
-                        <span>
-                            <span></span> <span class="fas fa-bed"></span> 1/2/3+ person rooms 
-                        </span> 
-                        <span>
-                            <span>| </span> Own/Inroom kitchen 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-bath"></span> Commune Sharing bathroom 
-                        </span> 
-                        <span>
-                            <span>| </span> Security 24/7 
-                        </span>
-                        <span>
-                            <span>| </span> CCTV 
-                        </span>
-                        <span>
-                            <span>| </span> <span class="fas fa-fingerprint"></span> Biometric Access Control 
-                        </span> 
-                        <span>
-                            <span>| </span> Fully Furnished 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-chess"></span> Sports fields 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-child"></span> Recreational/ Entertainment Area 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fa fa-wifi"></span> Uncapped WiFi 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-dumbbell"></span> Free indoor gym 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-desktop"></span> Floor Sharing TV 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fab fa-playstation"></span> Playstation TV 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-shopping-cart"></span> Shops 
-                        </span> 
-                        <span>
-                            <span>| </span> Laundry Facilities  
-                        </span> 
-                        <span>
-                            <span>| </span> Washing Line 
-                        </span> 
-                        <span>
-                            <span>| </span> <span class="fas fa-parking"></span> Free Parking</
-                            span> 
-                    </div>
-                </div>
-                <div class="about_us">
-                    <h5>About us </h5>
-                    <p>
-                        This accommodation is new in Johannesburg, but it has been doing the most in most of the Pretoria area hence we thought it is best we bring the joy to home of everyone which is Jozi baby, hope to see you soon for reviews   
-                    </p>
-                </div>
-                <div class="manager">
-                    <h5>Hosted by</h5>
-                    <div class="info">
-                        <div class="image">
-                            <a href="#" target="_blank">
-                                <img src="./images/users/123/img1.jpg" alt="Clement" style="width: 100%; height: 100%">
-                            </a>
+            $address = "";
+            $counter = 0;
+            for($i = 0; $i < 4; $i++){
+                if(isset($temp_loc[$i])){
+                    if($temp_loc[$i] == "") continue;
+                    else {
+                        $counter++;
+                        if($counter == 3){
+                            $address .= $temp_loc[$i] . " ";
+                        }else{
+                            $address .= $temp_loc[$i] . "<br>"; 
+                        }
+                        if($counter == 3 && $i == 3) $address .= "<br>";
+                    }
+                } 
+            }
+            $address = substr($address, 0, (strlen($address) - 4));
+            
+            ?>
+            <!-- About -->
+               <div id="about">
+                        <div class="name">
+                            <h3><?php echo $name; ?></h3>
                         </div>
-                        <div class="personal">
-                            <p class="name"><strong>Clementine</strong></p>
-                            <p class="joined">Joined in May, 2021</p>
-                            <p><span class="fas fa-shield-virus" style="color: red"></span> Account Verified</p>
+                        <div class="address">
+                            <h5>
+                                Tell: <span style="font-size: 18px;"><?php echo $phone; ?></span><br>
+                                Email: <span style="font-size: 18px;"><?php echo $email; ?></span>
+                            </h5>
+                            <h5>Address</h5>
+                            <p><?php echo $address; ?></p>
+                            <div id="view_on_map">
+
+                            </div>
+                        </div>
+                        <div class="features">
+                            <h5>Features</h5>
+                            <div>
+                                <?php
+                                    $sql_feautures = "SELECT * FROM features WHERE accommo_id = \"$accommodation\"";
+                                    $results = $sql_results->results_accommodations($sql_feautures);
+                                    require_once './accommodation-features.php';
+                                    require_once './icons.php';
+                                    if($results->num_rows > 0){
+                                        $features = [];
+                                        while($row = $results->fetch_assoc()){
+                                            $f = '';
+                                            for ($i = 1; $i < 31; $i++) {
+                                                $f = 'f' . $i;
+                                                $f = $row[$f];
+                                                array_push($features, $f);
+                                            }
+                                        }
+                                        $features = to_text($features); // pass array to fun
+                                            for ($i = 0; $i < 30; $i++) { 
+                                                if($features[$i] != 0 || $features[$i] != ""){
+                                        echo "<span>";
+                                                    echo (($i == 0) ? " <span></span> " : " <span>| </span> " );
+                                                    echo (($icons[$i] != "") ? '<span class="' . $icons[$i] . '"></span>' : "");
+                                                    echo "<span> " . $features[$i] . " </span>";
+                                        echo "</span>";
+                                                }
+                                            }
+                                    }else echo "<i style='color:red'>Features for this accommodation not available at the moment</i>";
+                                ?>
+                            </div>
+                        </div>
+                        <div class="about_us">
+                            <h5>About us </h5>
+                            <p><?php echo $about; ?></p>
+                        </div>
+                        <div class="manager">
+                            <?php
+                                $manager = "";
+                                $sql = "SELECT manager FROM accommodations WHERE id = \"$accommodation\" LIMIT 1";
+                                $results = $sql_results->results_accommodations($sql_feautures);
+                                if($results->num_rows > 0){
+                                    $row = $results->fetch_assoc();
+                                    $manager = $row['manager'];
+                                }
+                                if(preg_match('/^[a-zA-Z0-9]+$/', $manager)){
+                                    $sql = "SELECT  obo_users.first_name, obo_users.last_name,
+                                                    display_picture.image
+                                            FROM (obo_users
+                                                INNER JOIN display_picture ON obo_users.id = display_picture.user_id)
+                                            WHERE obo_users.id = \"$manager\" AND users_extended.profile_status = \"1\" 
+                                            LIMIT 1";
+                                    $results = $sql_results->results_accommodations($sql_feautures);
+                                    if($results->num_rows > 0){
+                                        $row = $results->fetch_assoc();
+                                        $manager = $row['manager'];
+                                    }
+                                    
+                                    ?>
+                                    <h5>Hosted by</h5>
+                                    <div class="info">
+                                        <div class="image">
+                                            <a href="#" target="_blank">
+                                                <img src="./images/users/123/img1.jpg" alt="Clement" style="width: 100%; height: 100%">
+                                            </a>
+                                        </div>
+                                        <div class="personal">
+                                            <p class="name"><strong>Clementine</strong></p>
+                                            <p class="joined">Joined in May, 2021</p>
+                                            <p><span class="fas fa-shield-virus" style="color: red"></span> Account Verified</p>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                            ?>
                         </div>
                     </div>
-                </div>
-            </div>
-        <script type="text/javascript">
-        function my_map(){
-            var my_latlng = {lat: -26.199070, lng: 28.058319};
-            var map = new google.maps.Map(document.getElementById('view_on_map'), {
-                zoom: 16, 
-                center:my_latlng
-            })
-            var marker = new google.maps.Marker({
-                position: my_latlng, 
-                map: map,
-                title: 'Truman House' 
-            });
-          }
-	</script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=my_map"></script>
-          
+                <script type="text/javascript">
+                function my_map(){
+                    var my_latlng = {lat: -26.199070, lng: 28.058319};
+                    var map = new google.maps.Map(document.getElementById('view_on_map'), {
+                        zoom: 16, 
+                        center:my_latlng
+                    })
+                    var marker = new google.maps.Marker({
+                        position: my_latlng, 
+                        map: map,
+                        title: 'Truman House' 
+                    });
+                  }
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=my_map"></script>
+
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'reviews'){
             ?>
