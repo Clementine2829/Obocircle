@@ -684,7 +684,7 @@ function attachInstructionText(stepDisplay, marker, text, map) {
             $sql = "SELECT name
                     FROM accommodations 
                     WHERE id = \"$accommodation\" LIMIT 1";
-                require("../includes/conn.inc.php");
+            require("../includes/conn.inc.php");
             $sql_results = new SQL_results();
             $results = $sql_results->results_accommodations($sql);
             if($results->num_rows > 0){
@@ -830,53 +830,45 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                                 <p class="value"><?php echo $rate_stuff; ?></p>
                             </div>
                         </div>
+                        <div>
+                            <a href="#" onclick="rate_this_accommodation('<?php echo $accommodation; ?>')"><i>I want to rate this accommodation</i></a>
+                        </div>
+                        <div id="display_rating" style="display: none"></div>
                     </div>
                 </div>
-                <div class="faq">
-                    <h5>Frequently asked questions</h5>
-                    <div class="question">
-                        <p class="q">
-                            Can I move in in the middle of the month? 
-                            Can I move in in the middle of the month.
-                            <span class="fas fa-angle-left" style="float: right; margin-right: 5%;"></span>
-                        </p>
-                        <p class="answer">
-                            Yes, we allows student to move in at anytime of the month. 
-                            Yes, we allows student to move in at anytime of the month. 
-                        </p>
-                    </div>
-
-                    <div class="question">
-                        <p class="q">
-                            Can I move in in the middle of the month? 
-                            <span class="fas fa-angle-down" style="float: right; margin-right: 5%;"></span>
-                        </p>
-                        <p class="answer">
-                            Yes, we allows student to move in at anytime of the month. 
-                        </p>
-                    </div>
-
-                    <div class="question">
-                        <p class="q">
-                            Can I move in in the middle of the month? 
-                            <span class="fas fa-angle-down" style="float: right; margin-right: 5%;"></span>
-                        </p>
-                        <p class="answer">
-                            Yes, we allows student to move in at anytime of the month. 
-                        </p>
-                    </div>
-
-                    <div class="question">
-                        <p class="q">
-                            Can I move in in the middle of the month? 
-                            <span class="fas fa-angle-down" style="float: right; margin-right: 5%;"></span>
-                        </p>
-                        <p class="answer">
-                            Yes, we allows student to move in at anytime of the month. 
-                            Yes, we allows student to move in at anytime of the month. 
-                        </p>
-                    </div>
-                </div>
+                <?php
+                     $sql = "SELECT faqs.question, question_answers.answer
+                            FROM (faqs
+                                INNER JOIN question_answers ON faqs.question_id = question_answers.question_id) 
+                            WHERE question_answers.accommo_id = \"$accommodation\" LIMIT 7";
+                    $results = $sql_results->results_accommodations($sql);
+                    $questions_and_answers = [];
+                    if($results->num_rows > 0){
+                        while($row = $results->fetch_assoc()){
+                            $temp_arr = array("question"=>$row['question'],
+                                          "answer"=>$row['answer']);
+                            array_push($questions_and_answers, $temp_arr);
+                        }
+                    }
+                    if(sizeof($questions_and_answers) > 0){
+                        echo '<div class="faq">
+                                <h5>Frequently asked questions</h5>';                    
+                        $counter = 1;
+                        foreach($questions_and_answers as $q_a => $value){
+                            $counter++;
+                            ?>
+                                <div class="question">
+                                    <p class="q">
+                                        <?php echo $questions_and_answers[$q_a]['question']; ?>
+                                        <span class="fas fa-plus" onclick="view_answer(<?php echo $counter; ?>)"></span>
+                                    </p>
+                                    <p class="answer"><?php echo $questions_and_answers[$q_a]['answer']; ?></p>
+                                </div>                
+                            <?php
+                        }
+                        echo '</div>';
+                    }
+                ?>
                 <script type="text/javascript">
                     $(document).ready(function(){
                         for(let i = 1; i < 6; i++){   
@@ -886,7 +878,34 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                             else
                             $("#reviews .ratings .ratings_sub_container .element:nth-child(" + i + ") .bar .inner_bar").css({"color":"orange", "width": w + "%"})
                         }
+                        /*
+                        $("#u_ratings span").each(function(){
+                            $(this).click(function() {
+                                var $this = $(this);
+                                clicked = $("#u_ratings span").index($this) + 1;
+                                $this.prop("checked", true);
+                //				alert($("#u_ratings span").index($this) + 1);
+                                unchecked_n($("#u_ratings span").index($this) + 1);
+                                checked_n($("#u_ratings span").index($this) + 1);
+                            });
+                        });*/
                     })
+                    function rate_this_accommodation(payload){
+                        $("#display_rating").css({'display':'inline-block'})
+                        let url = "./rate-accommodation.php?payload=" + payload;
+                        let loc = "#display_rating";
+                        send_data(url, displayer, loc);
+                    }
+                    function close_rating(){
+                        $("#display_rating").css({'display':'none'})
+                    }
+                    function view_answer(num){
+                        $("#reviews .faq .question .answer").css({"display":"none"})
+                        $("#reviews .faq .question:nth-child(" + num + ") .answer").css({"display":"inline-block"})
+                        
+                        $("#reviews .faq .question .q span").attr("class","fas fa-plus");
+                        $("#reviews .faq .question:nth-child(" + num + ")  .q span").attr("class","fas fa-minus");
+                    }
                 </script>
            <?php
         }

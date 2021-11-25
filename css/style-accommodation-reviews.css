@@ -56,15 +56,27 @@
 }
 
 #reviews .faq{
-    width: 60%;
+    width:  56%;
     float: left;
     text-align: center;
     margin-top: 5%;
+    margin: auto 2%;
 }
 
 #reviews .faq .question .answer{
     display: none;
+    font-style: oblique;
 }
 #reviews .faq .question:nth-child(2) .answer{
     display: inline;
+}
+.faq .question{
+    border: 1px solid gray;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+.faq .question .q span{
+    float: right; 
+    margin: 1% 3%;
+    height: 100%;
 }

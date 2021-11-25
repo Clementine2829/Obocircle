@@ -1,4 +1,5 @@
-<?php create database new_accommodations;
+<?php 
+    create database new_accommodations;
 	create table accommodations(
 		id VARCHAR(40) NOT NULL PRIMARY KEY,
 		name VARCHAR(65) NOT NULL,
@@ -149,6 +150,20 @@
 		f30 varchar(1), 
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);
+
+    CREATE TABLE FAQs(
+        question_id VARCHAR (10) NOT NULL PRIMARY KEY,
+        question VARCHAR (150) NOT NULL
+    );
+    CREATE TABLE QUESTION_ANSWERS(
+        question_id VARCHAR (10) NOT NULL,
+        accommo_id VARCHAR (40) NOT NULL,
+        answer VARCHAR (150) NOT NULL,
+        PRIMARY KEY (question_id, accommo_id),
+		FOREIGN KEY (question_id) REFERENCES FAQs (question_id) ON DELETE CASCADE,
+		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
+    )
+
 ************************************************************************************************
     create database obo_users;
     create table users(
