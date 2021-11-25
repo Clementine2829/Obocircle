@@ -718,7 +718,7 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                     $counter = 0;
                 }
             }
-            
+            $rate_counter = $rate_location = $rate_services = $rate_rooms = $rate_stuff = 0;
             $sql = "SELECT average_ratings.rate_counter, 
                             rate_location.location_values, 
                             rate_services.services_values, 
@@ -733,7 +733,22 @@ function attachInstructionText(stepDisplay, marker, text, map) {
             $results = $sql_results->results_accommodations($sql);
             if($results->num_rows > 0){
                 $row = $results->fetch_assoc();
-                print_r($row);
+                //print_r($row);
+                $rate_counter = $row['rate_counter'];
+                $temp_location = explode(",", $row['location_values']);
+                $temp_service = explode(",", $row['services_values']);
+                $temp_rooms = explode(",", $row['rooms_values']);
+                $temp_stuff = explode(",", $row['stuff_values']);
+                for($i = 0; $i < $rate_counter; $i++){
+                    $rate_location = $rate_location + (($temp_location[$i] > 0 && $temp_location[$i] <= 5) ? $temp_location[$i] : 0);
+                    $rate_services = $rate_services + (($temp_service[$i] > 0 && $temp_service[$i] <= 5) ? $temp_service[$i] : 0);
+                    $rate_rooms = $rate_rooms + (($temp_rooms[$i] > 0 && $temp_rooms[$i] <= 5) ? $temp_rooms[$i] : 0);
+                    $rate_stuff = $rate_stuff + (($temp_stuff[$i] > 0 && $temp_stuff[$i] <= 5) ? $temp_stuff[$i] : 0);
+                }
+                $rate_location = ($counter > 0) ? number_format(($rate_location / $rate_counter), 1) : 0;
+                $rate_services = ($counter > 0) ? number_format(($rate_services / $rate_counter), 1) : 0;
+                $rate_rooms = ($counter > 0) ? number_format(($rate_rooms / $rate_counter), 1) : 0;
+                $rate_stuff = ($counter > 0) ? number_format(($rate_stuff / $rate_counter), 1) : 0;
             }
             ?>
             <div id="reviews">
@@ -777,9 +792,9 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                                         data-original-title="This includes this and that "></span>
                                 </label>
                                 <div class="bar">
-                                    <div class="inner_bar">50</div>
+                                    <div class="inner_bar"><?php echo number_format(($rate_location / 5 * 100)); ?></div>
                                 </div>
-                                <p class="value">4.3</p>
+                                <p class="value"><?php echo $rate_location; ?></p>
                             </div>
                             <div class="element">
                                 <label for="cleanliness">
@@ -788,9 +803,9 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                                         data-original-title="This includes this and that "></span>
                                 </label>
                                 <div class="bar">
-                                    <div class="inner_bar">50</div>
+                                    <div class="inner_bar"><?php echo number_format(($rate_services / 5 * 100)); ?></div>
                                 </div>
-                                <p class="value">4.3</p>
+                                <p class="value"><?php echo $rate_services; ?></p>
                             </div>
                             <div class="element">
                                 <label for="rooms">
@@ -799,9 +814,9 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                                         data-original-title="This includes this and that "></span>
                                 </label>
                                 <div class="bar">
-                                    <div class="inner_bar">50</div>
+                                    <div class="inner_bar"><?php echo number_format(($rate_rooms / 5 * 100)); ?></div>
                                 </div>
-                                <p class="value">4.3</p>
+                                <p class="value"><?php echo $rate_rooms; ?></p>
                             </div>
                             <div class="element">
                                 <label for="stuff">
@@ -810,9 +825,9 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                                         data-original-title="This includes this and that "></span>
                                 </label>
                                 <div class="bar">
-                                    <div class="inner_bar">50</div>
+                                    <div class="inner_bar"><?php echo number_format(($rate_stuff / 5 * 100)); ?></div>
                                 </div>
-                                <p class="value">4.3</p>
+                                <p class="value"><?php echo $rate_stuff; ?></p>
                             </div>
                         </div>
                     </div>
@@ -862,6 +877,17 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                         </p>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        for(let i = 1; i < 6; i++){   
+                            let w = $("#reviews .ratings .ratings_sub_container .element:nth-child(" + i + ") .bar .inner_bar").html();
+                            if(parseInt(w) < 0.2)
+                                $("#reviews .ratings .ratings_sub_container .element:nth-child(" + i + ") .bar .inner_bar").css({"width": "5%"})
+                            else
+                            $("#reviews .ratings .ratings_sub_container .element:nth-child(" + i + ") .bar .inner_bar").css({"color":"orange", "width": w + "%"})
+                        }
+                    })
+                </script>
            <?php
         }
     }else{

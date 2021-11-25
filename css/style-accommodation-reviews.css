@@ -36,15 +36,15 @@
     width: 88%;
     margin-right: 2%;
     background-color: #f1f1f1;
+    color: #f1f1f1;
     height: 17px;
     border-radius: 25px;
     float: left;
 }
 #reviews .ratings .ratings_sub_container .element .bar .inner_bar{
-    width: 75%;
+    width: 0px;
     border-radius: 25px;
     background-color: orange;
-    color: orange;
     text-align: center;
     font-size: 10px;
 }
