@@ -28,6 +28,7 @@
     </div>
     <?php
         $accommodation = (isset($_REQUEST['accommodation']) && $_REQUEST['accommodation'] != "") ? $_REQUEST['accommodation'] : "";
+        $_SESSION['reder'] = "view-accommodation.php?accommodation=" . $accommodation;
     ?>
     <input type="hidden" id="accommodation" value="<?php echo $accommodation; ?>">
     <!--displayer-->
@@ -78,7 +79,6 @@
 	<script src="./js/slide-show.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        
         function visit_site(url){
             let con = confirm("You are now leaving our website and you visiting a third party website," + 
                                 " Our T&Cs and Policies does not apply there."+

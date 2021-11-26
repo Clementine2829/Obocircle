@@ -878,17 +878,6 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                             else
                             $("#reviews .ratings .ratings_sub_container .element:nth-child(" + i + ") .bar .inner_bar").css({"color":"orange", "width": w + "%"})
                         }
-                        /*
-                        $("#u_ratings span").each(function(){
-                            $(this).click(function() {
-                                var $this = $(this);
-                                clicked = $("#u_ratings span").index($this) + 1;
-                                $this.prop("checked", true);
-                //				alert($("#u_ratings span").index($this) + 1);
-                                unchecked_n($("#u_ratings span").index($this) + 1);
-                                checked_n($("#u_ratings span").index($this) + 1);
-                            });
-                        });*/
                     })
                     function rate_this_accommodation(payload){
                         $("#display_rating").css({'display':'inline-block'})
@@ -898,6 +887,7 @@ function attachInstructionText(stepDisplay, marker, text, map) {
                     }
                     function close_rating(){
                         $("#display_rating").css({'display':'none'})
+                        setTimeout(function() { reviews();}, 300);
                     }
                     function view_answer(num){
                         $("#reviews .faq .question .answer").css({"display":"none"})

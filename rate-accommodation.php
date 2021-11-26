@@ -164,7 +164,7 @@ input[type=number], select{
                 </td>
                 <td>
                     <div>
-                        <select id="rate_rooms">
+                        <select id="rate_stuff">
                             <option value="select">--Select--</option>
                             <option value="5">Very Good</option>
                             <option value="4">Good</option>
@@ -197,3 +197,17 @@ input[type=number], select{
     </table>
     <button class="btns_rates" onclick="star_ratings()">Submit results</button>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#u_ratings span").each(function(){
+			$(this).click(function() {
+				var $this = $(this);
+				clicked = $("#u_ratings span").index($this) + 1;
+				$this.prop("checked", true);
+				//alert($("#u_ratings span").index($this) + 1);
+				unchecked_n($("#u_ratings span").index($this) + 1);
+				checked_n($("#u_ratings span").index($this) + 1);
+			});
+		});
+	});
+</script>
