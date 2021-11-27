@@ -65,6 +65,33 @@
 			return;
 		}
 		if(sizeof($accommodations) > 0) {
+            foreach($accommodations as $accommodation => $value){
+                $temp_accommodation = $accommodations[$accommodation]['id'];
+                $sql = "SELECT stars_values, scale_values, rate_counter
+                        FROM star_and_scale_rating 
+                        WHERE accommo_id = \"$temp_accommodation\" LIMIT 1";
+                $results = $sql_results->results_accommodations($sql);
+                $sum_scale = " / ";
+                $sum_stars = $counter = 0;
+                if($results->num_rows > 0){
+                    $row = $results->fetch_assoc();
+                    $stars = explode(",", $row['stars_values']);
+                    $scale = explode(",", $row['scale_values']);
+                    $counter = $row['rate_counter'];
+                    $sum_scale = 0;
+                    for($i = 0; $i < (sizeof($stars) - 1);$i++){
+                        $sum_stars = $sum_stars + $stars[$i];
+                        $sum_scale = $sum_scale + $scale[$i];
+                    }
+                    $sum_stars = ($sum_stars > 0) ? number_format(($sum_stars / $counter)) : $sum_stars;
+                    $sum_scale = ($sum_scale > 0) ? number_format(($sum_scale / $counter), 1) : $sum_scale;
+                    if($sum_stars > 5) $sum_stars = number_format(0.0);
+                    if($sum_scale > 10 || $sum_scale <= 0) $sum_scale = number_format(0.0, 1);
+                    $accommodations[$accommodation]['stars'] = $sum_stars; 
+                    $accommodations[$accommodation]['ratings'] = $sum_scale; 
+                    $accommodations[$accommodation]['reviews'] = $counter; 
+                }            
+            }
             ?>
                 <div class="accommodations">
                     <div class="accommodation_map" id="accommodation_map" style="width: 100%; height: 200px; margin-bottom: 1%">  

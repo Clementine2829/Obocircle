@@ -50,23 +50,25 @@ function star_ratings() {
     $('#rate_msg_err').html("");
     var data = "stars=" + clicked + "&location=" + location + "&service=" + service 
                 + "&rooms=" + rooms + "&stuff=" + stuff + "&scale=" + recommend + "&payload=" + payload;
-    alert(data); return;
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState > 0 || this.readyState < 4)
             $('#rate_msg_success').html("Loading...");
         if (this.readyState == 4 && this.status == 200)
-            $('#rate_msg_success').html("Survey send successfully. " + 
-                                    "<span style='color:green'>" +
-                                    "<br>Thank you for taking part in this survay." + 
-                                            "We appreciate your participation</span>" +
-                                    "<br><span style='color:red'>" +
-                                    "NB. If you previously gave ratings to this accommodation.." + 
-                                            "They will be overwritten</span>");
-            $('.btns_rates').css({'display':'none'})
-            document.getElementById('rate_msg_success').innerHTML += this.responseText; 
+            if(this.responseText == "success"){
+                $('#rate_msg_success').html("Survey send successfully. " + 
+                                        "<span style='color:green'>" +
+                                        "<br>Thank you for taking part in this survay." + 
+                                                "We appreciate your participation</span>" +
+                                        "<br><span style='color:red'>" +
+                                        "NB. If you previously gave ratings to this accommodation.." + 
+                                                "They will be overwritten</span>");
+                $('.btns_rates').css({'display':'none'})
+            }else{
+                document.getElementById('rate_msg_success').innerHTML = "<span style='color: red'><br>Survey sent failed. Make sure you are logged in and try agin. <br>If the error persist, we will look at it and try again in 24 hours</span>"; 
+            }
     }
-    xhttp.open("POST", "../server/accommodation-survey.php?" + data, true);
+    xhttp.open("POST", "./server/accommodation-survey.php?" + data, true);
     xhttp.send();
     document.getElementById('my_table').innerHTML = originalTable;
     document.getElementById('rating_row').style.display = "inline";

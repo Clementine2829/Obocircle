@@ -9,7 +9,7 @@
             <div style="color: red; margin: 4% 2%;">
                 <h4>Oops..!!</h4>
                 <p>It seems like the link is broken or has been changed <br>
-                Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
+                Please use the link provided on the <a href="./featured.php">accommodations' listing</a><br>
                 If the error persist, we'll have a look at it on our side soon</p>
             </div>                
             <?php
@@ -40,7 +40,7 @@
                             <div style="color: red; margin: 4% 2%;">
                                 <h4>Oops..!!</h4>
                                 <p>It seems like the link is broken or has been changed <br>
-                                Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
+                                Please use the link provided on the <a href="./featured.php">accommodations' listing</a><br>
                                 If the error persist, we'll have a look at it on our side soon</p>
                             </div> 
                             <?php
@@ -68,7 +68,33 @@
                                         "reviews" => 0,
                                         "location" => $row['main_address'],
                                         "about" => $row['about']);
-
+                        
+                        /************************** Load reviews *************************/
+                        $temp_accommodation = $accommodation['id'];
+                        $sql = "SELECT stars_values, scale_values, rate_counter
+                                FROM star_and_scale_rating 
+                                WHERE accommo_id = \"$temp_accommodation\" LIMIT 1";
+                        $results = $sql_results->results_accommodations($sql);
+                        $sum_scale = " / ";
+                        $sum_stars = $counter = 0;
+                        if($results->num_rows > 0){
+                            $row = $results->fetch_assoc();
+                            $stars = explode(",", $row['stars_values']);
+                            $scale = explode(",", $row['scale_values']);
+                            $counter = $row['rate_counter'];
+                            $sum_scale = 0;
+                            for($i = 0; $i < (sizeof($stars) - 1);$i++){
+                                $sum_stars = $sum_stars + $stars[$i];
+                                $sum_scale = $sum_scale + $scale[$i];
+                            }
+                            $sum_stars = ($sum_stars > 0) ? number_format(($sum_stars / $counter)) : $sum_stars;
+                            $sum_scale = ($sum_scale > 0) ? number_format(($sum_scale / $counter), 1) : $sum_scale;
+                            if($sum_stars > 5) $sum_stars = number_format(0.0);
+                            if($sum_scale > 10 || $sum_scale <= 0) $sum_scale = number_format(0.0, 1);
+                            $accommodation['stars'] = $sum_stars; 
+                            $accommodation['ratings'] = $sum_scale; 
+                            $accommodation['reviews'] = $counter;
+                        }
                         /************************** Load amounts *************************/
                         $room_id = $accommodation['room']['id'];
                         $sql = "SELECT cash, bursary 
@@ -104,7 +130,7 @@
                     <div style="color: red; margin: 4% 2%;">
                         <h4>Oops..!!</h4>
                         <p>It seems like the link is broken or has been changed <br>
-                        Please use the link provided on the <a href="../featured.php">accommodations' listing</a><br>
+                        Please use the link provided on the <a href="./featured.php">accommodations' listing</a><br>
                         If the error persist, we'll have a look at it on our side soon</p>
                     </div>                
                     <?php
@@ -157,7 +183,7 @@
                                                   display: inline;">
                                             ' . $ratings . ' </p>';
                                     $reviews = $accommodation["reviews"];
-                                    $reviews = (reviews == 1) ? " 1 Review" : ' ' . $reviews . " Reviews";
+                                    $reviews = ($reviews == 1) ? " 1 Review" : ' ' . $reviews . " Reviews";
                                     echo '<small>' . $reviews . '</small>';
                                 }else{
                                     echo '<p class="rating" style=" padding: 1% 3%;
@@ -752,7 +778,16 @@ function attachInstructionText(stepDisplay, marker, text, map) {
             }
             ?>
             <div id="reviews">
-                <h4 class="name"><?php echo $name; ?></h4>
+                <h4 class="name"><?php echo $name; ?>
+                <span style="font-size: 15px">
+                <?php
+                    $stars = number_format($sum_stars);
+                    for($j = 1; $j < 6; $j++){
+                        echo '<span class="fas fa-star ' . (($stars >= $j) ? "checked" : "") . '"></span>';
+                    }
+                ?>
+                </span>
+                </h4>
                 <div class="ratings">
                     <h5>Guest overall ratings</h5>
                     <div class="ratings_container">

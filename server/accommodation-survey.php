@@ -1,6 +1,6 @@
 <?php session_start();
 $stars = $location = $service = $rooms = $stuff = $scale = $payload = $user = "";
-if ($_SERVER["REQUEST_METHOD"] != "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	if(isset($_REQUEST['stars']) && preg_match('/[12345]/', $_REQUEST['stars']))
 		$stars = check_inputs($_REQUEST["stars"]);
 	else return;
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST"){
 		$rooms = check_inputs($_REQUEST["rooms"]);
 	else return;
 	if(isset($_REQUEST['stuff']) && preg_match('/[12345]/', $_REQUEST['stuff']))
-		stuff = check_inputs($_REQUEST["stuff"]);
+		$stuff = check_inputs($_REQUEST["stuff"]);
 	else return;
 	if(isset($_REQUEST['scale']) && preg_match('/\d{1}/', $_REQUEST['scale']))
 		$scale = check_inputs($_REQUEST["scale"]);
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST"){
     
     $sql = "SELECT * FROM star_and_scale_rating WHERE accommo_id = \"$payload\" LIMIT 1";
     $results_location = $connection->query($sql);
-	$rate_count = $rate_values = 0;
+	$rate_count = 0;
 	//ratings exist already 
     if ($results_location->num_rows > 0) {
 		$row = $results_location->fetch_assoc();
@@ -67,20 +67,119 @@ if ($_SERVER["REQUEST_METHOD"] != "POST"){
             }
         }
     }else{
-        $temp_stars = $star_values . ",";
-        $temp_scale = $scale_values . ",";
+        $temp_stars = $stars . ",";
+        $temp_scale = $scale . ",";
+        $user = $user . ",";
         $sql = "INSERT INTO star_and_scale_rating
                 VALUES (\"$id\", \"$payload\", \"$temp_stars\", \"$temp_scale\", \"$user\", \"1\")";
     }
     if ($connection->query($sql)){
-        //do nothing, all is good
-    
         //write the next ones from  here
-    }
+        echo "success";
+        $sql = "SELECT average_ratings.*,
+                        rate_location.location_values,
+                        rate_services.services_values,
+                        rate_rooms.rooms_values,
+                        rate_stuff.stuff_values
+                FROM ((((average_ratings 
+                    INNER JOIN rate_location ON average_ratings.location_id = rate_location.location_id)
+                    INNER JOIN rate_services ON average_ratings.services_id = rate_services.services_id)
+                    INNER JOIN rate_rooms ON average_ratings.rooms_id = rate_rooms.rooms_id)
+                    INNER JOIN rate_stuff ON average_ratings.stuff_id = rate_stuff.stuff_id)
+                WHERE average_ratings.accommo_id = \"$payload\"";    
+        $results_location = $connection->query($sql);
+        $rate_count = $rate_values = 0;
+        //ratings exist already 
+        if ($results_location->num_rows > 0) {
+            $row = $results_location->fetch_assoc();
+            $location_id = $row['location_id'];
+            $services_id = $row['services_id'];
+            $rooms_id = $row['rooms_id'];
+            $stuff_id = $row['stuff_id'];
+            $names = explode(",", $row['rate_names']);
+            $rate_count = $row['rate_counter'];
+            $location_values = explode(",", $row['location_values']);
+            $service_values = explode(",", $row['services_values']);
+            $room_values = explode(",", $row['rooms_values']);
+            $stuff_values = explode(",", $row['stuff_values']);
+            if($user != ""){
+                for($i = 0; $i < $rate_count; $i++){
+                  if($user == $names[$i]){
+                        $location_values[$i] = $location;
+                        $service_values[$i] = $service;
+                        $room_values[$i] = $rooms;
+                        $stuff_values[$i] = $stuff;
 
+                        $temp_location_values = implode(",", $location_values);
+                        $temp_service_values = implode(",", $service_values);
+                        $temp_room_values = implode(",", $room_values);
+                        $temp_stuff_values = implode(",", $stuff_values);
+                        $sql = "UPDATE rate_location 
+                                SET location_values = \"$temp_location_values\"
+                                WHERE location_id = \"$location_id\"";
+                        if ($connection->query($sql)){ 
+                            //do nothing
+                        }
+                        $sql = "UPDATE rate_services 
+                                SET services_values = \"$temp_service_values\"
+                                WHERE services_id = \"$services_id\"";
+                        if ($connection->query($sql)){ 
+                            //do nothing
+                        }
+                        $sql = "UPDATE rate_rooms 
+                                SET rooms_values = \"$temp_room_values\"
+                                WHERE rooms_id = \"$rooms_id\"";
+                        if ($connection->query($sql)){ 
+                            //do nothing
+                        }
+                        $sql = "UPDATE rate_stuff 
+                                SET stuff_values = \"$temp_stuff_values\"
+                                WHERE stuff_id = \"$stuff_id\"";
+                        if ($connection->query($sql)){ 
+                            //do nothing
+                        }
+                        break;
+                    }else{
+                        continue;
+                    }
+                }
+            }
+        }else{
+            $temp_location = $location . ",";
+            $temp_services = $service . ",";
+            $temp_rooms = $rooms . ",";
+            $temp_stuff = $stuff . ",";
+            $sql = "INSERT INTO rate_location
+                    VALUES (\"$id\", \"$temp_location\")";
+            if ($connection->query($sql)){
+                //do nothign
+            }
+            $sql = "INSERT INTO rate_services
+                    VALUES (\"$id\", \"$temp_services\")";
+            if ($connection->query($sql)){
+                //do nothign
+            }
+            $sql = "INSERT INTO rate_rooms
+                    VALUES (\"$id\", \"$temp_rooms\")";
+            if ($connection->query($sql)){
+                //do nothign
+            }
+            $sql = "INSERT INTO rate_stuff
+                    VALUES (\"$id\", \"$temp_stuff\")";
+            if ($connection->query($sql)){
+                //do nothign
+            }
+            $sql = "INSERT INTO average_ratings
+                    VALUES (\"$payload\", \"$id\", \"$id\", \"$id\", \"$id\", \"$user,\", \"1\")";
+            if ($connection->query($sql)){
+                //do nothign
+            }
+        }
+    
+    }
     $connection->close();
 }else {
-    echo "<br><h5>Invalid request</br>";
+    echo "<br><h5 style='color: red'>Invalid request</br>";
     return;		
 }
 function check_inputs($data){

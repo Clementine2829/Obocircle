@@ -47,6 +47,7 @@
 							preg_match('/\d{1,1}/', $row["profile_status"])){
 								$_SESSION["s_id"] = $row["id"];
 								$_SESSION["s_first_name"] = $row["first_name"];
+								$_SESSION["s_email"] = $row["email"];
                                 preg_match($pattern, $row["email"]) && 
 								$_SESSION["s_profile_status"] = $row['profile_status'];
 								$_SESSION['s_user_type'] = $row['user_type'];

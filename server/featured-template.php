@@ -83,7 +83,7 @@
                                           display: inline;">
                                     ' . $ratings . ' </p>';
                             $reviews = $accommodations[$accommodation]["reviews"];
-                            $reviews = (reviews == 1) ? " 1 Review" : ' ' . $reviews . " Reviews";
+                            $reviews = ($reviews == 1) ? " 1 Review" : ' ' . $reviews . " Reviews";
                             echo '<small>' . $reviews . '</small>';
                         }else{
                             echo '<p class="rating" style="padding: 1% 3%;

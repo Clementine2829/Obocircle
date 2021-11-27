@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <style type="text/css">
 input[type=number], select{
     width: 65%;
@@ -74,6 +75,20 @@ input[type=number], select{
     </p>
     <span onclick="close_rating()" 
         class="close" title="Close Modal">&times;</span>
+    <?php 
+        if(!isset($_SESSION['s_id']) || !isset($_SESSION['s_email'])){
+            echo "<div style='margin-left: 5%'>";
+                require_once "./offline.html";
+            echo "</div>";
+            return;
+        }else if(!isset($_SESSION['s_profile_status']) || 
+                (isset($_SESSION['s_profile_status']) && $_SESSION['s_profile_status'] != "1")){
+            echo "<div style='margin-left: 5%'>";
+                require_once "./access_denied.html";
+            echo "</div>";
+            return;
+        }
+    ?>
     <table id="my_table">
         <colgroup>
             <col span="1">

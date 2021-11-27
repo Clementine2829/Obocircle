@@ -73,6 +73,7 @@
 #overview_container .sub_container:nth-child(1) .info h4 {
     margin-bottom: 2px;   
 }
+#reviews .name .checked,
 #overview_container .sub_container:nth-child(1) .info .stars .checked {
     color: orange;
 }

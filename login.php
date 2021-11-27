@@ -11,8 +11,9 @@
 			}else echo "<span id='link'>home.php</span>";
 			?>
 			<script type="text/javascript">
-				let con = confirm("You are currently logged in, would you like to logout");
-				window.location = ((con == true) ? "logout.php" : $("#link").html());
+				//let con = confirm("You are currently logged in, would you like to logout");
+				//window.location = ((con == true) ? "logout.php" : $("#link").html());
+				window.location = $("#link").html();
 			</script>
 			<?php
 		}
