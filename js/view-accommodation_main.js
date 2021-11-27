@@ -26,8 +26,7 @@ function star_ratings() {
     if(check_values(clicked, err_msg))$('#rate_msg_err').html("");
     else return;
     $('#rate_msg_success').html("");
-    var payload = window.location.search;;
-    if(payload != "") payload = payload.replace("?payload=", ""); 
+    var payload = $("#accommodation").val();
     var err_msg = "Select Location";
     var location = check_values($('#rate_location').val(), err_msg, $('#rate_location'));
     if(!location) return; 
