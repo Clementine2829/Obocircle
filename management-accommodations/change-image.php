@@ -1,9 +1,6 @@
 <!--header-->
 <?php require_once('./header.php'); ?>
     <style rel="stylesheet" type="text/css">
-
-
-
         #footer1, 
         #footer2{display: none;}
         #footer3{margin-bottom: 0px;}

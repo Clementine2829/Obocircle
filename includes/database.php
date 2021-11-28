@@ -71,8 +71,7 @@
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE,
 		FOREIGN KEY (image_id) REFERENCES images (image_id) ON DELETE CASCADE
 	);
-    
-    
+        
     CREATE TABLE STAR_AND_SCALE_RATING (
     	rate_id VARCHAR (20) NOT NULL,
 		accommo_id VARCHAR (40) NOT NULL,
@@ -163,7 +162,13 @@
 		FOREIGN KEY (question_id) REFERENCES FAQs (question_id) ON DELETE CASCADE,
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
     )
-
+        
+    CREATE TABLE TESTIMONIALS(
+        user_id VARCHAR (45) NOT NULL PRIMARY KEY,
+        testimonial VARCHAR (300) NOT NULL,
+        organization VARCHAR (20) NOT NULL,
+        display CHAR (1) NOT NULL DEFAULT "0"
+    )
 ************************************************************************************************
     create database obo_users;
     create table users(

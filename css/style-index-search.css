@@ -29,6 +29,7 @@
     padding: 1% 2%;
     border: none;
     outline: none;
+    background-color: white;
 }
 #main_container .search button{
     width: auto;

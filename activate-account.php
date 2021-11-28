@@ -81,7 +81,7 @@
                 <form id="activate_account_form" method="post" action="activate-account.php">
                     <div class="sub_container">
                         <h5>Activate account</h5>
-                        <p>An activation code has been send your email.</p>
+                        <p>An activation code has been send to your email address you provided on signup. You can use the button below to request another one</p>
                         <div class="recover">
                             <label for="number">Enter 6 digit code: </label>
                             <span class="err"> * </span><br>

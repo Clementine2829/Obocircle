@@ -16,68 +16,7 @@
             <div id="featured_accommodations_heading">
                 <p><strong>FEATURED ACCOMMODATIONS</strong> <a href="featured.php" class="view_more">...VIEW MORE</a></p>
             </div>
-            <div id="featured_accommodations">
-                <div class="featured_accommodations">
-                    <div class="accommodation">
-                        <div class="image">
-                            <a href="view-accommodation.php?accommodation=123" target="_blank">
-                                <img src="./images/accommodation/African House/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
-                            </a> 
-                        </div>
-                        <div class="accommodation_detaails">
-                            <a class="accommodation_name">Africa House</a><br>
-                            <p>
-                                Johannesburg<br>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star"></span>
-                                <span class="fas fa-star"></span>
-                                <small>7 reviews</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accommodation">
-                        <div class="image">
-                            <a href="view-accommodation.php?accommodation=123" target="_blank">
-                                <img src="./images/accommodation/Lithuba residence/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
-                            </a> 
-                        </div>
-                        <div class="accommodation_detaails">
-                            <a class="accommodation_name">Lithuba residence</a><br>
-                            <p>
-                                Johannesburg<br>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star"></span>
-                                <small>10 reviews</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="accommodation">
-                        <div class="image">
-                            <a href="view-accommodation.php?accommodation=123" target="_blank">
-                                <img src="./images/accommodation/South Point/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
-                            </a> 
-                        </div>
-                        <div class="accommodation_detaails">
-                            <a class="accommodation_name">South Point</a><br>
-                            <p>
-                                Johannesburg<br>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <span class="fas fa-star checked"></span>
-                                <small>22 reviews</small>
-                            </p>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
+            <div id="featured_accommodations"></div>
         </div>
         <div class="col-sm-1"></div>
     </div>
@@ -86,42 +25,8 @@
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
-            <div id="accommodations_heading">
-                <small style="float: right; font-style: italic;">
-                    Enable location for better accuracy in finding accommodations
-                    <span data-toggle="tooltip" data-placement="left" title class="fas fas fa-info-circle" 
-                        data-original-title="Click on the lock on the URL bar to grant-access"></span>
-                </small><br>
-                <p><strong>ACCOMMODATIONS @ JOHANNESBURG</strong> <a href="./featured.php?location=Johannesburg" class="view_more">...VIEW MORE</a></p>
-            </div>
-            <div id="accommodations_by_location">
-                <div class="accommodations_by_location">
-                    <div class="accommodation">
-                        <div class="image">
-                            <a href="view-accommodation.php?accommodation=123&location=johannesburg" target="_blank">
-                                <img src="./images/accommodation/African House/res1.jpg" alt="African House" style="width: 100%; height: 100%; ">
-                                <div class="accommodation_name">House Africa</div>
-                            </a> 
-                        </div>
-                    </div>
-                    <div class="accommodation">
-                        <div class="image">
-                            <a href="view-accommodation.php?accommodation=123&location=vaal" target="_blank">
-                                <img src="./images/accommodation/Lithuba residence/res1.jpg" alt="Lithuba Residence" style="width: 100%; height: 100%; ">
-                                <div class="accommodation_name">Lithuba Residence</div>
-                            </a> 
-                        </div>
-                    </div>
-                    <div class="accommodation">
-                        <div class="image">
-                            <a href="view-accommodation.php?accommodation=123&location=pretoria" target="_blank">
-                                <img src="./images/accommodation/South Point/res1.jpg" alt="South Point" style="width: 100%; height: 100%; ">
-                                <div class="accommodation_name">South Point</div>
-                            </a> 
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="accommodations_heading"></div>
+            <div id="accommodations_by_location"></div>
         </div>
         <div class="col-sm-1"></div>
     </div>
@@ -135,40 +40,7 @@
             </button>
         </div>
         <div class="col-sm-5" style="text-align:right;">
-			<div id="review_slide" class="carousel slide" data-ride="carousel" >
-				<div class="carousel-inner" style="border-right:4px solid lightblue; border-radius:5px; padding-right:5px;" >
-					<div class="carousel-item active">
-					    <p>
-                            <i>Obocircle helped to find the best accommodation for my sister at Living @ Rissik, I will always be thankful.</i>
-                            <br>
-                            <strong><i>--Clementine @ UJ--</i></strong>
-					    </p>
-                        <div class="image">
-                            <img src="./images/users/123/img1.jpg" alt="Clementine" style="width: 100%; height:  100%;">
-                        </div>
-					</div>					
-					<div class="carousel-item ">
-					    <p><i>
-					    	Obocircle helped to find the best accommodation for my sister at Living @ Rissik, I will always be thankful.</i>
-                            <br> 
-                            <strong><i>--Edison Mkhabela - Eddi's Printing--</i></strong>
-					    </p>
-                        <div class="image">
-                            <img src="./images/users/123/img1.jpg" alt="Clementine" style="width: 100%; height:  100%;">
-                        </div>
-					</div>
-					<div class="carousel-item ">
-					    <p><i>
-					    	I never thoguht it will be this easy to find accommodations. all thanks to Obocircle. especially since i am new here at Pretoria.</i> 
-                            <br>
-                            <strong><i>--Eric  Hlongwayo @ GreenSite Project--</i></strong> 
-					    </p>
-                        <div class="image">
-                            <img src="./images/users/123/img1.jpg" alt="Clementine" style="width: 100%; height:  100%;">
-                        </div>
-					</div>
-				</div>
-			</div>
+			<div id="review_slide" class="carousel slide" data-ride="carousel" ></div>
 			<div>
 				<a class="carousel-control-prev" href="#review_slide" data-slide="prev">
 					<span class="carousel-control-prev-icon" style="color:black"></span>
@@ -193,7 +65,7 @@
                                 <img src="./images/places/polokwane.jpeg" alt="South Point" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
                                     <strong>Polokwane</strong><br>
-                                    <small>13 Properties</small>
+                                    <small id="polokwane">Coming soon</small>
                                 </div>
                             </a> 
                         </div>
@@ -204,7 +76,7 @@
                                 <img src="./images/places/pretoria.jpeg" alt="South Point" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
                                     <strong>Pretoria</strong><br>
-                                    <small>2 Properties</small>
+                                    <small id="pretoria">Coming soon</small>
                                 </div>
                             </a> 
                         </div>
@@ -215,7 +87,7 @@
                                 <img src="./images/places/johannesburg.jpeg" alt="African House" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
                                     <strong>Johannesburg</strong><br>
-                                    <small>22 Properties</small>
+                                    <small id="johannesburg">Coming soon</small>
                                 </div>
                             </a> 
                         </div>
@@ -226,7 +98,7 @@
                                 <img src="./images/places/capetown.jpeg" alt="South Point" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
                                     <strong>Cape town</strong><br>
-                                    <small>Coming soon</small>
+                                    <small id="capetown">Coming soon</small>
                                 </div>
                             </a> 
                         </div>
@@ -237,7 +109,7 @@
                                 <img src="./images/places/durban.jpeg" alt="Lithuba Residence" style="width: 100%; height: 100%; ">
                                 <div class="city_details">
                                     <strong>Durban</strong><br>
-                                    <small>Coming soon</small>
+                                    <small id="durban">Coming soon</small>
                                 </div>
                             </a> 
                         </div>
@@ -260,7 +132,42 @@
 	<script src="js/footer.js" type="text/javascript"></script>
 	<script src="js/search.js" type="text/javascript"></script>
     <script type="text/javascript">
-
+        
+        $(document).ready(function(){
+            //load featured
+            let url = "./server/accommodations-home-page.inc.php?action=featured";
+            let loc = "#featured_accommodations";
+            send_data(url, displayer, loc);
+            
+            //load by loactions
+            url = "./server/accommodations-home-page.inc.php?action=location";
+            loc = "#accommodations_by_location";
+            send_data(url, displayer, loc);
+            
+            url = "./server/accommodations-home-page.inc.php?action=heading";
+            loc = "#accommodations_heading";
+            send_data(url, displayer, loc);
+            
+            //load testimonials
+            url = "./server/testimonials.php";
+            loc = "#review_slide";
+            send_data(url, displayer, loc);
+            
+            //load accommodatoins count
+            url = "./server/accommodations-home-page.inc.php?action=accommodations";
+            send_data(url, accommodations_count, "");
+        })
+        function accommodations_count(data, loc){
+            console.log(data);
+            if (data != "" && data != null) {
+                data = JSON.parse(data);
+                if(parseInt(data.polokwane) > 0) $("#polokwane").html(data.polokwane);
+                if(parseInt(data.pretoria) > 0) $("#pretoria").html(data.pretoria);
+                if(parseInt(data.johannesburg) > 0) $("#johannesburg").html(data.johannesburg);
+                if(parseInt(data.capetown) > 0) $("#capetown").html(data.capetown);
+                if(parseInt(data.durban) > 0) $("#durban").html(data.durban);
+            }
+        }
     </script>
 </body>      
 </html>

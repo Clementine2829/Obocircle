@@ -58,7 +58,7 @@
                             $image = (isset($_SESSION['s_dp']) && $_SESSION['s_dp'] != "") ? substr($_SESSION['s_id'], 7, 10) . "/" . $_SESSION['s_dp'] : "";
                         ?>
                         <img src="./images/users/<?php echo $image; ?>" alt="<?php echo $full_name; ?>">				
-                        <a href="update-display-picture.php" target="_blank">
+                        <a href="update-display-picture.php">
                             <span class="fa fa-camera"></span> Edit
                         </a>
                     </div>
@@ -88,6 +88,16 @@
                         <span><?php echo $address; ?></span>
                     </div>
                     <div class="sub_container"><br>
+                        <?php
+                            if(isset($_SESSION['s_user_type']) && $_SESSION['s_user_type'] != 1){
+                                ?>
+                                    <p><strong>Activate account:</strong></p>
+                                    <span>
+                                        Your account is not activated yet. Click <a href="./activate-account.php">here</a> to activate it.<br><br>
+                                    </span>
+                                <?php
+                            }
+                        ?>
                         <p><strong>Invite a friend:</strong></p>
                         <span>
                             Invite a friend to earn 35% of referals. Copy and share this link <a href="https://obocircle.com/signup.php?ref=<?php echo $ref_code; ?>">https://obocircle.com/signup.php?ref=<?php echo $ref_code; ?></a><br>

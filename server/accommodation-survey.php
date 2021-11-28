@@ -39,11 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     $sql = "SELECT * FROM star_and_scale_rating WHERE accommo_id = \"$payload\" LIMIT 1";
-    $results_location = $connection->query($sql);
+    $results = $connection->query($sql);
 	$rate_count = 0;
 	//ratings exist already 
-    if ($results_location->num_rows > 0) {
-		$row = $results_location->fetch_assoc();
+    if ($results->num_rows > 0) {
+		$row = $results->fetch_assoc();
         $star_values = explode(",", $row['stars_values']);
         $scale_values = explode(",", $row['scale_values']);
         $names = explode(",", $row['names']);
@@ -87,11 +87,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     INNER JOIN rate_rooms ON average_ratings.rooms_id = rate_rooms.rooms_id)
                     INNER JOIN rate_stuff ON average_ratings.stuff_id = rate_stuff.stuff_id)
                 WHERE average_ratings.accommo_id = \"$payload\"";    
-        $results_location = $connection->query($sql);
+        $results = $connection->query($sql);
         $rate_count = $rate_values = 0;
         //ratings exist already 
-        if ($results_location->num_rows > 0) {
-            $row = $results_location->fetch_assoc();
+        if ($results->num_rows > 0) {
+            $row = $results->fetch_assoc();
             $location_id = $row['location_id'];
             $services_id = $row['services_id'];
             $rooms_id = $row['rooms_id'];

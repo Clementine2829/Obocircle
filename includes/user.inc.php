@@ -58,9 +58,9 @@
 									limit 1";
 							$result = $sql_results->results_profile($sql);
 							if ($result->num_rows > 0) {
-								while ($row = $result->fetch_assoc())
-									$_SESSION["s_dp"] = $row["image"];
-							}
+								$row = $result->fetch_assoc();
+                                $_SESSION["s_dp"] = $row["image"];
+							}else $_SESSION["s_dp"] = "";
 							return true;
 						}
 					}
