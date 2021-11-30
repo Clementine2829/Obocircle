@@ -1,5 +1,5 @@
 <?php session_start();
-    require './validate_data.php';
+    require '../../server/validate_data.php';
     if($_SERVER["REQUEST_METHOD"] == "POST"){	        
         if(!isset($_SESSION['s_first_name']) || !isset($_SESSION['s_id']) || 
             !isset($_SESSION['s_profile_status']) || !isset($_SESSION['s_user_type'])){
@@ -9,7 +9,7 @@
             require "../access_denied.html";
             return;
         }
-        require_once '../includes/conn.inc.php';
+        require_once '../../includes/conn.inc.php';
         /*$temp_id = $_SESSION['s_id'];
         $sql = "SELECT manager FROM accommodation WHERE manager = \"$temp_id\" LIMIT 10";
         $sql_results = new SQL_results();
@@ -120,7 +120,7 @@
                                        VALUES ('$rooms', '$id', '$checkbox1', '$checkbox2', '$checkbox3')";
                 if (!$connection->query($insert_rooms_table)) 
                     echo "<br>Error setting up your accommodation. Please try again";			
-                $insert_address_table = "INSERT INTO address
+                $insert_address_table = "INSERT INTO address (address_id, accommo_id, main_address)
                                        VALUES ('$addr', '$id', '$address')";
                 if (!$connection->query($insert_address_table)) 
                     echo "<br>Error setting up your accommodation. Please try again<br> address error";			

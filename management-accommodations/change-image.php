@@ -75,13 +75,23 @@
                     return;
                 }*/
 
-                if(isset($_REQUEST['payload']) && $_REQUEST['payload'] != "" &&
-                    preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload']))
-                    $payload = $_REQUEST['payload'];
-                else{
+                $user_id = $_SESSION['s_id'];
+                $sql = "SELECT id, name
+                        FROM accommodations
+                        WHERE manager=\"$user_id\" LIMIT 15";
+                require("includes/conn.inc.php");
+                $sql_results = new SQL_results();
+                $results = $sql_results->results_accommodations($sql);
+                $div = "";
+                if($results->num_rows == 1){
+                    $row = $results->fetch_assoc();
+                    $payload = $row['id'];
+                    $src = $row['name'];
+                }else{
                     echo $err_link;
                     return;
                 }
+            
                 if(isset($_REQUEST['image']))
                     if(preg_match('/^[a-zA-Z0-9]+\.+(jpg|jpeg|png|gif)*$/', $_REQUEST['image']))
                         $image = $_REQUEST['image'];
@@ -92,15 +102,16 @@
                     preg_match('/^[a-zA-Z\@\'\.\,\s]*$/', $_REQUEST['src']))
                     $src = $_REQUEST['src'];
                 else {
-                    echo $err_link;
-                    return;
+                    if($src == ""){ 
+                        echo $err_link;
+                        return;
+                    }
                 }
             /*	else if(isset($_REQUEST['a_name']) && $_REQUEST['a_name'] != "" &&
                     preg_match('/^[a-zA-Z\@\'\.\,\s]*$/', $_REQUEST['a_name']))
                     $src = $_REQUEST['a_name'];
             */	
 
-                require("includes/conn.inc.php");
                 $db_login = new DB_login_updates();
                 $connection = $db_login->connect_db("accommodations");
                 $manager_id = $_SESSION['s_id'];

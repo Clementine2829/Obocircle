@@ -1,95 +1,82 @@
     <!--header-->
     <?php require_once('./header.php'); ?>
     <!--end header-->
+    <?php
+        
+        if(!isset($_SESSION['s_id'])){
+            ?>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <br><br><br><div>
+                    <?php require_once "./offline.html"; ?>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <?php
+            return;
+        }
+        $msg = "";
 
-<style rel="stylesheet" type="text/css">
-    #user_info{
-        margin: 8% auto 1% auto;
-    }
-    #user_info .sub_container{
-        text-align: left;
-        float: left;
-        width: 60%;
-        border: 1px solid lightblue;
-        padding: 2% 1%;
-        margin: 2% 20%;
-        border-radius: 15px;
-    }
-    #user_info .sub_container h5{
-        padding-bottom: 2%;
-        border-bottom: 1px solid skyblue;
-    }
-    #user_info .sub_container .recover{
-        padding-bottom: 4%;
-        border-bottom: 1px solid skyblue;
-    }
-    #user_info .sub_container .recover input{
-        border: 1px solid lightblue;
-        padding: 1% 3%;
-        width: 50%;
-        outline: none;
-    }
-    #user_info .sub_container .recover input[type=submit]{
-        width: auto;
-        background-color: #007bff;
-        color: white;        
-    }
-    
-    #user_info .sub_container .btns{
-        margin-top: 3%;
-    }
-    #user_info .sub_container .btns button{
-        float: left;
-        border-radius: 12px;
-        border: 2px solid #007bff;
-        padding: 1% 3%;
-        background-color: #007bff;
-        color: white;
-    }
-    #user_info .sub_container .btns button:nth-child(2){
-        margin-left: 5%;
-        border: 2px solid gray;
-        background-color: gray;
-    }
-    #user_info .sub_container .btns button:hover{
-        background-color: white;
-        color: gray;
-    }
-    #change_password{
-        border: 2px solid gray;
-        padding: 5px 10px;
-        margin-top: 4%;
-        width: 25%;
-        background-color: gray;
-        color: white;
-    }
-    #change_password:hover{
-        color: gray;
-        background-color: white;
-    }
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+            $msg = "Invalid activation code. Please try again";   
+            $activation_code = (!empty($_POST['activate_account']) && preg_match('/\d{6}/', $_POST['activate_account'])) ? $_POST['activate_account'] : "";
+            
+            if($activation_code != ""){
+                $user = $_SESSION['s_id'];
+                $sql = "SELECT expire_date 
+                        FROM activate_account 
+                        WHERE user_id = \"$user\" AND veri_link = \"$activation_code\" LIMIT 1";
+                require("./includes/conn.inc.php");
+                $sql_results = new SQL_results();
+                $results = $sql_results->results_profile($sql);
+                if($results->num_rows > 0){
+                    $data = $results->fetch_assoc();
+                    $today_date = strtotime(date("Y-m-d"));
+                    $expire_date = strtotime(preg_replace('[/]', '-', $data['expire_date']));
+                    
+                    $db_login = new DB_login_updates();
+                    $connection = $db_login->connect_db("obo_users");
 
-    #user_account{display: none}
-    #footer1, 
-    #footer2{display: none;}
-    #footer3{margin-bottom: 0px;}
-    #footer4{margin-top: 0px;}
-</style>
+                    if($expire_date != "" && $today_date > $expire_date){
+                        $msg = "This code has expired, please request another one";
+                    }else if($today_date == $expire_date){
+                        $_SESSION['s_profile_status'] = "1";
+                        $msg = "<span style='color: blue'>Account has been activated successfully</span>";
+                        $sql = "UPDATE users_extended
+                                SET profile_status = \"1\"
+                                WHERE user_id = \"$user\"";
+                        if ($connection->query($sql)) {
+                            //do nothing
+                        }
+                    }
+                    $sql = "DELETE 
+                            FROM activate_account 
+                            WHERE user_id = \"$user\" AND veri_link = \"$activation_code\"";
+                    if ($connection->query($sql)) {
+                        //do nothing
+                    }
+                }
+            }
+        }
+    ?>  
+    <link rel="stylesheet" type="text/css" href="./css/activate-account.css">
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div id="user_info">
-                <form id="activate_account_form" method="post" action="activate-account.php">
+                <form id="activate_account_form" method="POST" action="activate-account.php">
                     <div class="sub_container">
                         <h5>Activate account</h5>
                         <p>An activation code has been send to your email address you provided on signup. You can use the button below to request another one</p>
                         <div class="recover">
                             <label for="number">Enter 6 digit code: </label>
-                            <span class="err"> * </span><br>
+                            <span class="err"><?php echo $msg; ?> </span><br>
                             <input type="number" placeholder="Enter 6 digit code" name="activate_account" required>
                         </div>
                         <div class="btns">
                             <button id="activate_account_btn">Activate</button>
-                            <button id="resend_code_btn">Resend code</button>
+                            <button id="resend_code_btn" disabled>Resend code</button>
                         </div>
                     </div>
                 </form>
@@ -112,48 +99,10 @@
 	<script type="text/javascript">
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
-            $('#change_password').click(function(){
-                let old_password = get_old_password;
-                let new_password = get_new_password;
-                let confrim_password = get_confirm_password;
-                if(old_password == "" || new_password == "" || confirm_password == "") return;
-                $('#change_password_form').submit();
+            $('#resend_code_btn').click(function(){
+                
             });
         }); 
-        function get_old_password(){
-            let password = $("#old_password").val();
-            let err = $("#err_old_password");
-            if(password == ""){
-                err.html("Old password is required")
-                return "";
-            }else if(password.length  < 8 ){
-                err.html("Password is too short")
-                return "";
-            }
-            err.html(" * ")
-            return password;
-        }
-        function get_new_password(){
-            let password = $("#new_password").val();
-            let err = $("#err_new_password");
-            if(password == ""){
-                err.html("New password is required")
-                return "";
-            }else if(password.length  < 8 ){
-                err.html("Password is too short")
-                return "";
-            }
-            err.html(" * ")
-            return password;
-        }        
-        function get_confirm_password(){
-            if($("#confrim_password").val() != $("#new_password").val()){
-                $("#err_confrim_password").html("Passwords does not match")
-                return "";
-            }
-            $("#err_confrim_password").html(" * ")
-            return $("#confrim_password").val();
-        }
     </script>
 </body>      
 </html>

@@ -1,6 +1,6 @@
 <?php 
 require("header.php"); 
-$_SESSION['redir'] = "home.php";
+$_SESSION['redir'] = "notifications.php";
 ?>
 	<div class="row">
 		<div class="col-sm-12" ></div>
@@ -131,7 +131,7 @@ $_SESSION['redir'] = "home.php";
 											<?php echo $row['n_date']; ?>
 										</td>
 										<td>
-											<button onclick="delete_message('<?php echo $row['id']; ?> ')"><span class="fas fa-trash"></span></button>
+											<button onclick="delete_message('<?php echo $row['notification_id']; ?>')"><span class="fas fa-trash"></span></button>
 										</td>
 									</tr>
 								<?php
@@ -164,8 +164,8 @@ $_SESSION['redir'] = "home.php";
 		function delete_message(message){
 			let con = confirm("Are you sure you want to delete this message?");
 			if(con == true){
-				let url = "helper_pages/notifications.incl.php?action=delete&message=" + message;
-				send_data("", "", "", url, delete_message_helper);
+				let url = "./server/notifications.inc.php?action=delete&message=" + message;
+				send_data(url, delete_message_helper);
 			}
 		}
 		function delete_message_helper(data, loc){

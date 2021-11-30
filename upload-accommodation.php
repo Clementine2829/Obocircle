@@ -88,7 +88,7 @@
 	<script src="js/validate_email.js" type="text/javascript"></script>
 	<script src="js/footer.js" type="text/javascript"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&libraries=places&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&libraries=places&callback=initMap"></script>
 	<script type="text/javascript">
         
         function switch_location(){
@@ -266,12 +266,16 @@
 	</script>
     <script type="text/javascript">
 
+function getMapCoordinates(){
+    return { lat: -26.199070, lng: 28.058319};
+}
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 function initMap() {
+  let data = getMapCoordinates();
   const map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 40.749933, lng: -73.98633 },
+    center: data,
     zoom: 13,
     mapTypeControl: false,
   });
@@ -292,7 +296,7 @@ function initMap() {
   // Bind the map's bounds (viewport) property to the autocomplete object,
   // so that the autocomplete requests use the current map bounds for the
   // bounds option in the request.
-  autocomplete.bindTo("bounds", map);
+  //autocomplete.bindTo("bounds", map);
 
   const infowindow = new google.maps.InfoWindow();
   const infowindowContent = document.getElementById("infowindow-content");
@@ -328,8 +332,7 @@ function initMap() {
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
     infowindowContent.children["place-name"].textContent = place.name;
-    infowindowContent.children["place-address"].textContent =
-      place.formatted_address;
+    infowindowContent.children["place-address"].textContent = place.formatted_address;
     infowindow.open(map, marker);
   });
 

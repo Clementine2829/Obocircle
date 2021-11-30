@@ -16,11 +16,11 @@
 		}else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "delete" && isset($_REQUEST['message'])){
 			$message = $_REQUEST['message'];
 			$sql = "UPDATE notifications
-					SET n_status = \"3\"
-					WHERE id = \"$message\"";
+					SET n_status = \"1\"
+					WHERE notification_id = \"$message\"";
 			require("../includes/conn.inc.php");
 			$db_login = new DB_login_updates();
-			$connection = $db_login->connect_db("teamaces");
+			$connection = $db_login->connect_db("obo_users");
 			if ($connection->query($sql)) {
 				echo "Message deleted successfully";
 			}else{

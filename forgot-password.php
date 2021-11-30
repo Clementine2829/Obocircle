@@ -109,6 +109,8 @@
 	<script src="js/change-password.js" type="text/javascript"></script>
 	<script type="text/javascript">
         $(document).ready(function(){
+            $("#login_btn").click(function(){window.location = './login.php'})
+            $("#register_btn").click(function(){window.location = './signup.php'})
             $('[data-toggle="tooltip"]').tooltip();
             $('#change_password').click(function(){
                 let old_password = get_old_password;

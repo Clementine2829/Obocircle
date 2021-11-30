@@ -89,7 +89,7 @@
                     </div>
                     <div class="sub_container"><br>
                         <?php
-                            if(isset($_SESSION['s_user_type']) && $_SESSION['s_user_type'] != 1){
+                            if(isset($_SESSION['s_profile_status']) && $_SESSION['s_profile_status'] != 1){
                                 ?>
                                     <p><strong>Activate account:</strong></p>
                                     <span>
