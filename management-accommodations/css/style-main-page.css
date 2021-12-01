@@ -39,7 +39,7 @@
 #telephone, 
 #website{
     width: 25%;
-    padding: 2px 2%;
+    padding: 8px 2% 8px 10px;
     border: 1px solid lightblue;
     border-radius: 10px;
 }

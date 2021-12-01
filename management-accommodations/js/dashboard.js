@@ -17,14 +17,9 @@ $(document).ready(function(){
     
     $("#stats_applications").click(function(){statistics_applications();})
     $("#stats_accommodation").click(function(){statistics_accommodation();})
-    
-    
 })
 function new_accommodation(){
     special_displayer("select-accommodation.php");
-/*    let url = "./management-accommodations/upload-images.php?payload=" + $("#payload").val();
-    let loc = "#displayer";
-    send_data(url, displayer, loc);*/
 }
 function load_main_page(){
     special_displayer("main-page.php");

@@ -29,7 +29,8 @@
                     </div>
                 <?php
             }else{
-                echo 'Not found';
+                require_once 'accommodation-not-found.html';
+                return;
             }
         }else{
             require_once '../access_denied.html';

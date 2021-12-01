@@ -56,8 +56,7 @@
                 $row = $results->fetch_assoc();
                 $accommodation = $row['id'];    
             }else if($results->num_rows < 1){
-                echo '<p style="color: red"><strong><br>No accommodation found</strong><br>
-                        If you belive this is an errro, please contact us at support@obocircle.com</p>';
+                require_once 'accommodation-not-found.html';
                 return;
             }
             

@@ -19,13 +19,13 @@
             $count = $res->num_rows;
         */
 
-        $name = $address1 = $address2 = $address3 = $town = $code = $checkbox1 = $address = "";
+        $name = $address1 = $address2 = $town = $code = $checkbox1 = $address = "";
         $checkbox2 = $checkbox3 = $about = "";
 
         if(isset($_REQUEST["name"]) && preg_match("/^[a-zA-Z0-9\'\.\@\,\s]*$/", $_REQUEST["name"]) &&
             $_REQUEST["name"] != "") $name = check_inputs($_REQUEST["name"]); 
         else $name = "";
-        if(isset($_REQUEST['address']) && $_REQUEST['address'] == "google"){
+        if(isset($_REQUEST['address']) && $_REQUEST['address'] != ""){
             $address = $_REQUEST['address'];
         }else{
             if(isset($_REQUEST["address1"]) && preg_match("/^[a-zA-Z0-9\'\.\@\,\s]*$/", $_REQUEST["address1"]) &&
@@ -70,7 +70,7 @@
             echo "<br>Declare: " . $declare;
             echo "<br>CheckBoxes-> 1: " . $checkbox1 . " 2: " . $checkbox2 . " 3: " . $checkbox3;
         */
-            if ($name != "" && ($address != "" || ($address1 != "" && $town != "" && $code != "")) && $declare != 0 &&
+        if ($name != "" && ($address != "" || ($address1 != "" && $town != "" && $code != "")) && $declare != 0 &&
                 ($checkbox1 == 1 || $checkbox2 == 1 || $checkbox3 == 1)){
 
         //echo "Returned here "; return;
@@ -91,7 +91,6 @@
                 }else{
                     $address1 = mysqli_real_escape_string($connection, $address1);
                     $address2 = mysqli_real_escape_string($connection, $address2);
-                    $address3 = mysqli_real_escape_string($connection, $address3);
                     $town = mysqli_real_escape_string($connection, $town);
                     $code = mysqli_real_escape_string($connection, $code);
                 }
@@ -107,21 +106,18 @@
                 if($address != ""){
                     $my_address = $address;
                 }else{
-                    if($address2 == "" && $address3 == "")
-                        $my_address = $address1 . '<br>' . $town;
+                    if($address2 == "")
+                        $my_address = $address1 . '<br>' . $town . "<br>" . $code;
                     else if($address2 == "" )
-                        $my_address = $address1 . '<br>' . $address3 . '<br>' . $town;
-                    else if($address3 == "" )
-                        $my_address = $address1 . '<br>' . $address2 . '<br>' . $town;		
-                    else $my_address = $address1 . '<br>' . $address2 . '<br>' . $address3 . '<br>' . $town;
+                        $my_address = $address1 . '<br>' . $address3 . '<br>' . $town . "<br>" . $code;
+                    else $my_address = $address1 . '<br>' . $address2 . '<br>' . $town . "<br>" . $code;
                 }
-                $my_address = "";
                 $insert_rooms_table = "INSERT INTO rooms (room_id, accommo_id, single_sharing, double_sharing, multi_sharing)
                                        VALUES ('$rooms', '$id', '$checkbox1', '$checkbox2', '$checkbox3')";
                 if (!$connection->query($insert_rooms_table)) 
                     echo "<br>Error setting up your accommodation. Please try again";			
                 $insert_address_table = "INSERT INTO address (address_id, accommo_id, main_address)
-                                       VALUES ('$addr', '$id', '$address')";
+                                       VALUES ('$addr', '$id', '$my_address')";
                 if (!$connection->query($insert_address_table)) 
                     echo "<br>Error setting up your accommodation. Please try again<br> address error";			
 

@@ -24,8 +24,8 @@
                     <span class="err" id="err_name"> *</span> <br>
                     <br>
                     <label for="">Physical Address:</label><br>
-                    <input type="radio" name="address_type" onchange="switch_location()" value="google" checked> Use Google maps
-                    <input type="radio" name="address_type" onchange="switch_location()" value="manual"> Enter address manually<br> 
+                    <input type="radio" name="address_type" onchange="switch_location()" value="google" disabled> Use Google maps
+                    <input type="radio" name="address_type" onchange="switch_location()" value="manual" checked> Enter address manually<br> 
                     <div id="maps1">
                         <div id="pac-container">
                             <input id="pac-input" type="text" placeholder="Enter a location" /> 
@@ -90,6 +90,9 @@
 
     <script async defer src="https://maps.googleapis.com/maps/api/js key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&libraries=places&callback=initMap"></script>
 	<script type="text/javascript">
+        $(document).ready(function(){
+            switch_location();
+        })
         
         function switch_location(){
             let loc = $("input[type=radio]:checked").val();
@@ -212,20 +215,19 @@
             } 
             
             var confirm_this = confirm('Are you sure all the supplied infomation is Correct?\n' +
-                                        'Because you cannot change them going forward!');
+                                        'Because some of them you cannot change them going forward!');
             if (confirm_this){
                 var data = "name=" + name + 
                             "&address1=" + address1 +  
                             "&address2=" + address2 +  
                             "&town=" + town +  
                             "&code=" + code +  
+                            "&address=" + address +  
                             "&about=" + about +
                             "&checkbox1=" + checkbox1 +  
                             "&checkbox2=" + checkbox2 +  
                             "&checkbox3=" + checkbox3 +
                             "&declare=" + declare ;
-                //alert(data); return;
-                
                 document.getElementById("success_msg").style.color = "blue";
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function(){
