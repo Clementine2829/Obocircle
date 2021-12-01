@@ -145,20 +145,20 @@
             
                 }
             }
-            if($accommodations['polokwane'] == 1) $accommodations['polokwane'] . " Property"; 
-            else $accommodations['polokwane']=  $accommodations['polokwane'] . " Properties";
+            if($accommodations['polokwane'] == 1) $accommodations['polokwane'] = $accommodations['polokwane'] . " Property"; 
+            else $accommodations['polokwane'] = $accommodations['polokwane'] . " Properties";
             
-            if($accommodations['johannesburg'] == 1) $accommodations['johannesburg'] . " Property"; 
-            else $accommodations['johannesburg']=  $accommodations['johannesburg'] . " Properties";
+            if($accommodations['johannesburg'] == 1) $accommodations['johannesburg'] = $accommodations['johannesburg'] . " Property"; 
+            else $accommodations['johannesburg'] = $accommodations['johannesburg'] . " Properties";
             
-            if($accommodations['pretoria'] == 1) $accommodations['pretoria'] . " Property"; 
-            else $accommodations['pretoria']=  $accommodations['pretoria'] . " Properties";
+            if($accommodations['pretoria'] == 1) $accommodations['pretoria'] = $accommodations['pretoria'] . " Property"; 
+            else $accommodations['pretoria'] = $accommodations['pretoria'] . " Properties";
             
-            if($accommodations['durban'] == 1) $accommodations['durban'] . " Property"; 
-            else $accommodations['durban']=  $accommodations['durban'] . " Properties";
+            if($accommodations['durban'] == 1) $accommodations['durban'] = $accommodations['durban'] . " Property"; 
+            else $accommodations['durban'] = $accommodations['durban'] . " Properties";
             
-            if($accommodations['capetown'] == 1) $accommodations['capetown'] . " Property"; 
-            else $accommodations['capetown']=  $accommodations['capetown'] . " Properties";
+            if($accommodations['capetown'] == 1) $accommodations['capetown'] = $accommodations['capetown'] . " Property"; 
+            else $accommodations['capetown'] = $accommodations['capetown'] . " Properties";
             
             echo json_encode($accommodations);
         }else if($action == "heading"){

@@ -107,9 +107,7 @@
                     $my_address = $address;
                 }else{
                     if($address2 == "")
-                        $my_address = $address1 . '<br>' . $town . "<br>" . $code;
-                    else if($address2 == "" )
-                        $my_address = $address1 . '<br>' . $address3 . '<br>' . $town . "<br>" . $code;
+                        $my_address = $address1 . '<br>' .  '<br>' . $town . "<br>" . $code;
                     else $my_address = $address1 . '<br>' . $address2 . '<br>' . $town . "<br>" . $code;
                 }
                 $insert_rooms_table = "INSERT INTO rooms (room_id, accommo_id, single_sharing, double_sharing, multi_sharing)

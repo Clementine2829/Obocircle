@@ -76,20 +76,23 @@
                 }*/
 
                 $user_id = $_SESSION['s_id'];
-                $sql = "SELECT id, name
-                        FROM accommodations
-                        WHERE manager=\"$user_id\" LIMIT 15";
                 require("includes/conn.inc.php");
-                $sql_results = new SQL_results();
-                $results = $sql_results->results_accommodations($sql);
-                $div = "";
-                if($results->num_rows == 1){
-                    $row = $results->fetch_assoc();
-                    $payload = $row['id'];
-                    $src = $row['name'];
-                }else{
-                    echo $err_link;
-                    return;
+                $payload = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+                if($payload == ""){
+                    $sql = "SELECT id, name
+                            FROM accommodations
+                            WHERE manager=\"$user_id\" LIMIT 15";
+                    $sql_results = new SQL_results();
+                    $results = $sql_results->results_accommodations($sql);
+                    $div = "";
+                    if($results->num_rows == 1){
+                        $row = $results->fetch_assoc();
+                        $payload = $row['id'];
+                        $src = $row['name'];
+                    }else{
+                        echo $err_link;
+                        return;
+                    }
                 }
             
                 if(isset($_REQUEST['image']))

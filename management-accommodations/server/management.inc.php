@@ -12,27 +12,30 @@
         }
         
         /********all is good**********/
-        $payload = $room_id = "";
+        $payload = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+        $room_id = "";
         $user_id = $_SESSION['s_id'];
-        $sql = "SELECT id, name
-                FROM accommodations
-                WHERE manager=\"$user_id\" LIMIT 15";
         require("../../includes/conn.inc.php");
-        $sql_results = new SQL_results();
-        $results = $sql_results->results_accommodations($sql);
-        $div = "";
-        if($results->num_rows > 1){
-            echo "Updates failed. Internal error. <br>Please reload page and try again";
-            return;
-        }else if($results->num_rows == 1){
-            $row = $results->fetch_assoc();
-            $payload = $row['id'];
-        }else if($results->num_rows < 1){
-            echo '<p style="color: red"><strong><br>No accommodation found</strong><br>
-                    If you belive this is an errro, please contact us at support@obocircle.com</p>';
-            return;
+        if($payload == ""){
+            $sql = "SELECT id, name
+                    FROM accommodations
+                    WHERE manager=\"$user_id\" LIMIT 15";
+            echo $sql; 
+            $sql_results = new SQL_results();
+            $results = $sql_results->results_accommodations($sql);
+            $div = "";
+            if($results->num_rows > 1){
+                echo "Updates failed. Internal error. <br>Please reload page and try again";
+                return;
+            }else if($results->num_rows == 1){
+                $row = $results->fetch_assoc();
+                $payload = $row['id'];
+            }else if($results->num_rows < 1){
+                echo '<p style="color: red"><strong><br>No accommodation found</strong><br>
+                        If you belive this is an errro, please contact us at support@obocircle.com</p>';
+                return;
+            }
         }
-
         
         $db_login = new DB_login_updates();
         $connection = $db_login->connect_db("accommodations");
