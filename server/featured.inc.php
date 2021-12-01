@@ -6,13 +6,13 @@
 	$next_page = 0;
 //	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_REQUEST['next_page']) && preg_match('/\d{1,}/', $_REQUEST['next_page'])) 
-			$next_page = $_REQUEST['next_page'] * 10 - 10;
+			$next_page = $_REQUEST['next_page'] * 5 - 5;
 		$sql = "SELECT accommodations.*, rooms.*, address.main_address 
                 FROM ((accommodations
                     INNER JOIN address ON accommodations.id = address.accommo_id)
                     INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
                 WHERE display = 1 
-                ORDER BY id DESC LIMIT 10 OFFSET $next_page";
+                ORDER BY id DESC LIMIT 5 OFFSET $next_page";
         require("../includes/conn.inc.php");
 		$sql_results = new SQL_results();
 		$results = $sql_results->results_accommodations($sql);
@@ -57,7 +57,7 @@
 							text-align: left;
 						}
 					</style>');
-			if((($next_page + 10) / 10) > 1){ //reverse the one on set up at the top 
+			if((($next_page + 5) / 5) > 1){ //reverse the one on set up at the top 
 				echo '<p id="Contents">No more accommodations to display, please make use of the "prev" button</p>';
 			}else{
 				echo '<p id="Contents">Accommodations not available at the moment. Check again later</p>';

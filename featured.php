@@ -95,7 +95,28 @@
 				</div>				
 				            
             </div>
-            <div id="display_results"></div>
+                <div id="display_results"></div>
+                <style type="text/css">
+                #next_page {
+                    margin-top: 4%;
+                    text-align: center;
+                }
+                #next_page .next_page {
+                    border: none;
+                    color: white;
+                    background-color: deepskyblue;
+                    border-radius: 7px;
+                    padding: 3px 7px;
+                    margin: 0px 1px;
+                }
+                #next_page .inner_page{
+                    display: inline;
+                    overflow: auto;
+                    white-space: nowrap;
+                    text-align: center;
+                }
+                </style>
+                <div id="next_page"></div>
         </div>
         <div class="col-sm-1"></div>
     </div>
@@ -114,12 +135,32 @@
 	<script src="js/search.js" type="text/javascript"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=google_maps"></script>
     <script type="text/javascript">
+		var function_type = -1;
+		var page = 1;
+		var r_type = "";
+		var search_val = "";
+		var set_url = "accommodations";
+		function get_url(){
+			return "./server/featured.inc.php?next_page=" + page;
+		}
+		function set_urls(fun){
+			return "next-prev.php?file=" + fun;
+/*			if(fun == "main"){
+			}else if(fun == "search"){
+				return "next-prev.php?file=search";
+				
+			}
+*/		}
+    </script>
+	<script src="./js/next-prev.js" type="text/javascript"></script>
+    <script type="text/javascript">
         $(document).ready(function(){
             load_main_default();
         });
         
         function load_main_default(){
-            let url = "./server/featured.inc.php";
+            get_btns();    
+            let url = "./server/featured.inc.php?next_page=" + page;
             send_data(url, displayer, "#display_results");
         }
         function view_accommodation(accommodation){
@@ -136,6 +177,63 @@
             */
         }
         
+        
+        
+        
+        
+        
+        
+        function validate_search(search, err_msg) {
+			var patten = /^[a-zA-Z0-9\s\.\-\@\,\(\)\?\'\"]*$/;
+			if(!search.match(patten)){
+				return "";
+				err_msg.innerHTML = "Invalid use of special characters";
+			}else{
+				err_msg.innerHTML = "";
+				return search;
+			}
+		}
+		function validate_patten(value) {
+			var patten = /^[0-9a-zA-Z\s]*$/;
+			if(!value.match(patten)){
+				return "";
+			}else return value;
+		}
+		function search_here() {
+			function_type = 1; //to be used by the next & prev btns 
+			let search = validate_search($('#location :text').val(), $('#err_msg'));
+			let room_type = validate_patten($('#select_here').val());
+			if((room_type == "select" || room_type == "") && search == ""){
+				$('#err_msg').html("Please select at least location or room type. Else use the filters below");
+				return;
+			}else if(room_type != "select" || search != ""){
+				if(search_val != search || r_type != room_type){
+					page = 1; //restart the paging
+				}
+				let url = "search-accommo.php?search=" + search + "&room_type=" + room_type + "&next_page=" + page;
+				set_url = "search" + "search=" + search + "&room_type=" + room_type; //global varriable 
+				get_btns();
+				send_data('display_here', url);
+				$('#err_msg').html("");
+				r_type = room_type;
+				search_val = search;
+			}
+		}
+		function search_filters() {
+			function_type = 2; //to be used by the next & prev btns 
+//			if(this.value == "select" || this.value == "none" || this.value == 0) return;
+			let general_filter = $('#general_filter').val(); 
+			let location = $('#locations').val();
+			let ratings = $('#ratings').val();			
+			if(general_filter == "select") general_filter = "";
+			if(location == "none" || location == "select") location = "";
+			if(ratings == "select" || ratings == 0) ratings = "";
+			let data = "general_filter=" + general_filter + "&location=" + location + "&ratings=" + ratings + "&next_page=" + page;
+			let url = "filter-accommo.php?" + data + "&next_page=" + page + "&w=" + get_window();
+			set_url = "main"; //global varriable 
+			get_btns();
+			send_data("display_here", url);
+		}
         
     </script>
     <script type="text/javascript">
