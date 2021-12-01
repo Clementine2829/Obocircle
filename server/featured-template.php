@@ -58,9 +58,6 @@
                       </a>
                     </div>
                 </div>
-                <div class="map">
-                    <div id="google_map_div"></div>
-                </div>
                 <div class="details">
                     <h4><?php echo $accommodations[$accommodation]["name"]; ?></h4>
                     <span class="stars">

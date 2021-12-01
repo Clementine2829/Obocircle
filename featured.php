@@ -8,117 +8,91 @@
 	<link rel="stylesheet" type="text/css" href="./css/style-featured.css">
     <div class="row">
         <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div id="filter_accommodations">
-                <div class="filter_accommodations">
-					<!--filters-->
-					<div class="filters">
-						<div id="worktype" class="sub_filter">
-							<p>
-								<strong>Room type</strong>
-								<span class="fas fa-angle-down"></span>
-							</p>
-							<div>
-								<input type="checkbox" name="room_type" id="roomtype1" value="roomtype1" > 
-								<span>Single Room</span>
-							</div>
-							<div>
-								<input type="checkbox" name="room_type" id="roomtype2" value="roomtype2" > 
-								<span>Double Sharing</span>
-							</div>
-							<div>
-								<input type="checkbox" name="room_type" id="roomtype3" value="roomtype3" > 
-								<span>Multi-Sharing</span>
-							</div>
-							<div>
-								<input type="checkbox" name="room_type" id="roomtype3" value="roomtype3" > 
-								<span>Any Sharing</span>
-							</div>
-						</div>
-						<div id="sort_by" class="sub_filter">
-							<p>
-								<strong>Sort by</strong>
-								<span class="fas fa-angle-down"></span>
-							</p>
-							<div>
-								<input type="radio" name="sort_by" id="nsfas" value="nsfas" > 
-								<span>NSFAS Accredited</span>
-							</div>
-							<div>
-								<input type="radio" name="sort_by" id="popular" value="popular" > 
-								<span>Most Popular</span>
-							</div>
-							<div>
-								<input type="radio" name="sort_by" id="rating" value="rating" > 
-								<span>Best Ratings</span>
-							</div>
-							<div>
-								<input type="radio" name="sort_by" id="recommendations" value="recommendations" > 
-								<span>Recommendations</span>
-							</div>
-							<div>
-								<input type="radio" name="sort_by" id="price" value="price" > 
-								<span>Price</span>
-							</div>
-						</div>	
-						<div id="guest_ratings" class="sub_filter">
-							<p>
-								<strong>Guest Ratings</strong>
-								<span class="fas fa-angle-down"></span>
-							</p>
-							<div>
-								<input type="radio" name="guest_ratings" id="excellent" value="excellent" > 
-								<span>Excellent</span>
-							</div>
-							<div>
-								<input type="radio" name="guest_ratings" id="verygood" value="verygood" > 
-								<span>Very Good</span>
-							</div>
-							<div>
-								<input type="radio" name="guest_ratings" id="good" value="good" > 
-								<span>Good</span>
-							</div>
-							<div>
-								<input type="radio" name="guest_ratings" id="fair" value="fair" > 
-								<span>Fair</span>
-							</div>
-							<div>
-								<input type="radio" name="guest_ratings" id="fine" value="fine" > 
-								<span>Fine</span>
-							</div>
-						</div>	
-                        <div>
-                            <button id="submit_filters" onclick="filter_results()">Submit</button>
-                            <button id="reset_filters" onclick="filter_results('reset')">Reset Filter</button>
+        <div class="col-sm-11">
+            <div class="sub_container">
+                <div class="buttons">
+                    <button id="filter_main_btn">
+                        <span class="fas fa-filter"></span>Filter
+                    </button>
+                    <select id="sort_results">
+                        <option value="">Our recommendations</option>
+                        <option value="name">Name</option>
+                        <option value="name">NSFAS Accredited</option>
+                        <option value="name">Most Popular</option>
+                        <option value="name">Best Ratings</option>
+                        <option value="name">Price</option>
+                        <option value="name">Recommendations</option>
+                    </select>
+                </div>
+                <div id="filter_accommodations">
+                    <div class="filter_accommodations">
+                        <!--filters-->
+                        <div class="filters">
+                            <div id="worktype" class="sub_filter">
+                                <p>
+                                    <strong>Room type</strong>
+                                    <span class="fas fa-angle-down"></span>
+                                </p>
+                                <div>
+                                    <input type="checkbox" name="room_type" id="roomtype1" value="roomtype1" > 
+                                    <span>Single Room</span>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="room_type" id="roomtype2" value="roomtype2" > 
+                                    <span>Double Sharing</span>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="room_type" id="roomtype3" value="roomtype3" > 
+                                    <span>Multi-Sharing</span>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="room_type" id="roomtype3" value="roomtype3" > 
+                                    <span>Any Sharing</span>
+                                </div>
+                            </div>
+                            <div id="guest_ratings" class="sub_filter">
+                                <p>
+                                    <strong>Guest Ratings</strong>
+                                    <span class="fas fa-angle-down"></span>
+                                </p>
+                                <div>
+                                    <input type="radio" name="guest_ratings" id="excellent" value="excellent" > 
+                                    <span>Excellent</span>
+                                </div>
+                                <div>
+                                    <input type="radio" name="guest_ratings" id="verygood" value="verygood" > 
+                                    <span>Very Good</span>
+                                </div>
+                                <div>
+                                    <input type="radio" name="guest_ratings" id="good" value="good" > 
+                                    <span>Good</span>
+                                </div>
+                                <div>
+                                    <input type="radio" name="guest_ratings" id="fair" value="fair" > 
+                                    <span>Fair</span>
+                                </div>
+                                <div>
+                                    <input type="radio" name="guest_ratings" id="fine" value="fine" > 
+                                    <span>Fine</span>
+                                </div>
+                            </div>	
+                            <div>
+                                <button id="submit_filters" onclick="filter_results()">Submit</button>
+                                <button id="reset_filters" onclick="filter_results('reset')">Reset Filter</button>
+                            </div>
                         </div>
-                    </div>
-				</div>				
-				            
-            </div>
+                    </div>								            
+                </div>
                 <div id="display_results"></div>
-                <style type="text/css">
-                #next_page {
-                    margin-top: 4%;
-                    text-align: center;
-                }
-                #next_page .next_page {
-                    border: none;
-                    color: white;
-                    background-color: deepskyblue;
-                    border-radius: 7px;
-                    padding: 3px 7px;
-                    margin: 0px 1px;
-                }
-                #next_page .inner_page{
-                    display: inline;
-                    overflow: auto;
-                    white-space: nowrap;
-                    text-align: center;
-                }
-                </style>
                 <div id="next_page"></div>
+            </div>
+            <div class="sub_container">
+                <div class="accommodation_map" id="accommodation_map">
+                    This is us
+                </div>             
+            </div>
         </div>
-        <div class="col-sm-1"></div>
+        <!--<div class="col-sm-1"></div>-->
     </div>
     <!--end main structure-->
     

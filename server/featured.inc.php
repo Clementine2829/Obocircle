@@ -94,8 +94,6 @@
             }
             ?>
                 <div class="accommodations">
-                    <div class="accommodation_map" id="accommodation_map" style="width: 100%; height: 200px; margin-bottom: 1%">  
-                    </div>                       
                     <?php require_once 'featured-template.php'; ?>
                 </div>
             <?php

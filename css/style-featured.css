@@ -1,12 +1,70 @@
-#filter_accommodations{
-    width: 20%;
+.sub_container{
+    width: 55%;
     float: left;
-    margin-top: 5%;
+}
+.sub_container:nth-child(1){
+    margin-top: 3%;
+}
+.sub_container:nth-child(2){
+    width: 45%;
+    padding: 1% 1% 2% 1%;
+    height: 700px;
+}
+.sub_container:nth-child(2) .buttons{
+    width: 100%;
+    float: left;
+}
+#filter_main_btn,
+#sort_results{
+    border: 1px solid skyblue;
+    background-color: skyblue;
+    color: white;
+    padding: 5px 7px;
+    margin: 2px 12px;
+    border-radius: 12px;
+    outline: none;
+}
+#sort_results{
+    float: right;
+    margin-right: 2px;
+}
+#filter_accommodations{
+    display: none;
+    width: 100%;
+    float: left;
 }        
 #filter_accommodations .filter_accommodations{
+    display: none;
     width: 100%;
     float: left;
     margin-right: 2%;
+    display: none;
+}
+#next_page {
+    margin-top: 4%;
+    text-align: center;
+}
+#next_page .next_page {
+    border: none;
+    color: white;
+    background-color: deepskyblue;
+    border-radius: 7px;
+    padding: 3px 7px;
+    margin: 0px 1px;
+}
+#next_page .inner_page{
+    display: inline;
+    overflow: auto;
+    white-space: nowrap;
+    text-align: center;
+}
+#accommodation_map{
+    width: 100%; 
+    float: left;
+    height: 100%;; 
+    margin-bottom: 1%;
+    margin-top: 5%;   
+    padding: 0px;
 }
 #filter_accommodations .filter_accommodations .filters .sub_filter{
     border: 1px solid skyblue;
@@ -40,9 +98,9 @@
 }
 
 #display_results{
-    width: 80%;
+    width: 100%;
     float: left;
-    margin-top: 5%;
+    margin-top: 7px;
 }
 #display_results .accommodations{
     width: 100%;
@@ -58,15 +116,11 @@
     border-radius: 7px;
     margin-bottom: 2%;
 }
-#display_results .accommodations .accommodation .images,
-#display_results .accommodations .accommodation .map{
-    width: 25%;
+#display_results .accommodations .accommodation .images{
+    width: 33%;
     height: 150px;
     float: left;
-    margin-right: 1%;
-}
-#display_results .accommodations .accommodation .map{
-    
+    padding-right: 2%;
 }
 #display_results .accommodations .accommodation .images .carousel{
     height: 100%;
@@ -81,17 +135,13 @@
     height: 100%;
     width: 100%;
 }
-
-#display_results .accommodations .accommodation .map{
-    width: 25%;
-}
 #display_results .accommodations .accommodation .details{
-    width: 30%;   
+    width: 42%;   
     float: left;
     margin: 7px auto;
 }
-#display_results .accommodations .accommodation .view_deals{
-    width: 15%;   
+#display_results .accommodations .accommodation .view_deal{
+    width: 25%;   
     float: left;
     margin: 7px auto;
 }
@@ -122,7 +172,7 @@
 }
 #display_results .accommodations .accommodation .view_deal .view_deal_btn{
     background-color: gray;
-    padding: 2% 3%;
+    padding: 12% 20%;
     margin-top: 2%;
     color: white;
     border: none;
@@ -131,5 +181,5 @@
     margin-bottom: 1%;
 }
 #display_results .accommodations .accommodation .view_deal .price{
-    margin-left: 4%;   
+    margin-left: 20%;   
 }

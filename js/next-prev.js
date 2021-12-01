@@ -125,7 +125,6 @@ function set_defaults(x, y){
 }
 function default_display() {
 	let url = get_url();
-    alert(url);
 	get_btns();
 	send_data(url, displayer, "#display_results");
 }
