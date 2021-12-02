@@ -4,15 +4,35 @@
 */
 	$accomo_id = $name = "";
 	$next_page = 0;
-//	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(isset($_REQUEST['next_page']) && preg_match('/\d{1,}/', $_REQUEST['next_page'])) 
-			$next_page = $_REQUEST['next_page'] * 5 - 5;
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		if(isset($_REQUEST['next_page']) && preg_match('/\d{1,}/', $_REQUEST['next_page'])){
+            $next_page = $_REQUEST['next_page'] * 5 - 5;	
+        } 
+        $search = (isset($_REQUEST['search']) && preg_match('/^[a-zA-Z0-9\s\,\'\"\+\-]/', $_REQUEST['search'])) ? $_REQUEST['search'] : "";
+        $sharing = (isset($_REQUEST['sharing'])) ? $_REQUEST['sharing'] : "";
 		$sql = "SELECT accommodations.*, rooms.*, address.main_address 
                 FROM ((accommodations
                     INNER JOIN address ON accommodations.id = address.accommo_id)
-                    INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
-                WHERE display = 1 
-                ORDER BY id DESC LIMIT 5 OFFSET $next_page";
+                    INNER JOIN rooms ON accommodations.id = rooms.accommo_id)";
+        if(preg_match('/[(nsfas)\s]+$/', $search)){
+            $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.nsfas LIKE \"%$search%\") "; 
+        }else if($search != ""){
+            $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.about LIKE \"%$search%\" OR 
+                        address.main_address LIKE \"%$search%\" OR address.contact LIKE \"%$search%\") "; 
+        }else $sql .= " WHERE (accommodations.display = 1) ";    
+        
+        if($sharing == "any"){
+            $sql .= " AND (rooms.single_sharing = \"1\" OR rooms.double_sharing = \"1\" OR rooms.multi_sharing = \"1\") ";
+        }else if($sharing == "single"){
+            $sql .= " AND (rooms.single_sharing = \"1\" ) ";
+        }else if($sharing == "double"){
+            $sql .= " AND (rooms.double_sharing = \"1\" ) ";
+        }else if($sharing == "multi"){
+            $sql .= " AND (rooms.multi_sharing = \"1\" ) ";
+        }
+        
+        $sql .= " ORDER BY accommodations.id DESC LIMIT 5 OFFSET $next_page";
+        //echo $sql;
         require("../includes/conn.inc.php");
 		$sql_results = new SQL_results();
 		$results = $sql_results->results_accommodations($sql);
@@ -52,7 +72,7 @@
 							font-size: 20px;
 							color: red;
 							margin: 3%;
-							margin-left: 0px;
+							margin-left: 2%;
 							font-weight: bold;
 							text-align: left;
 						}
@@ -60,7 +80,11 @@
 			if((($next_page + 5) / 5) > 1){ //reverse the one on set up at the top 
 				echo '<p id="Contents">No more accommodations to display, please make use of the "prev" button</p>';
 			}else{
-				echo '<p id="Contents">Accommodations not available at the moment. Check again later</p>';
+                if($search != ""){
+				    echo '<p id="Contents">Accommodations for the keyword "' . $search . '" not available. Please try again with different keyword</p>';
+                }else{
+				    echo '<p id="Contents">Accommodations not available at the moment. Check again later</p>';
+                }
 			}
 			return;
 		}
@@ -110,7 +134,7 @@
 				<p id="Contents">Accommodations not available at the moment. Try again later</p>');
 				return;
 		}
-/*	}else {
+	}else {
         echo "Invalid request";
         return;		
-	}*/
+	}

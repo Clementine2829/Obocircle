@@ -3,7 +3,7 @@
     $search = $sharing = "";
     if(isset($_GET['search'])) $search = $_GET['search'];
     if(isset($_GET['sharing'])) $sharing = $_GET['sharing'];
-
+    $search = (isset($_GET['location']) && $_GET['location'] != "") ? $_GET['location'] : "";     
     $sql = "";
 ?>  
 <!--main-->

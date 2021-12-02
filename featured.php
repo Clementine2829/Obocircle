@@ -3,6 +3,7 @@
     <!--end header-->
 
     <?php require_once('./search_div.php'); ?>
+    
 
     <!--main structure-->
 	<link rel="stylesheet" type="text/css" href="./css/style-featured.css">
@@ -14,6 +15,7 @@
                     <button id="filter_main_btn">
                         <span class="fas fa-filter"></span>Filter
                     </button>
+                    
                     <select id="sort_results">
                         <option value="">Our recommendations</option>
                         <option value="name">Name</option>
@@ -23,6 +25,15 @@
                         <option value="name">Price</option>
                         <option value="name">Recommendations</option>
                     </select>
+                    <div style="margin-left: 2%; color: gray">
+                        <?php
+                            if($search != ""){
+                                echo '<small>
+                                        <i>Showing accommodations at ' . $search . '. Click <a href="./featured.php">here</a> to reset</i>
+                                      </small>';
+                            }
+                        ?>
+                    </div>
                 </div>
                 <div id="filter_accommodations">
                     <div class="filter_accommodations">
@@ -87,9 +98,7 @@
                 <div id="next_page"></div>
             </div>
             <div class="sub_container">
-                <div class="accommodation_map" id="accommodation_map">
-                    This is us
-                </div>             
+                <div class="accommodation_map" id="accommodation_map"></div>             
             </div>
         </div>
         <!--<div class="col-sm-1"></div>-->
@@ -129,12 +138,13 @@
 	<script src="./js/next-prev.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            load_main_default();
+            let search = $("#search_keyword").val();
+            let url = "./server/featured.inc.php?next_page=" + page + "&search=" + search;
+            load_main_default(url);
         });
         
-        function load_main_default(){
-            get_btns();    
-            let url = "./server/featured.inc.php?next_page=" + page;
+        function load_main_default(url){
+            get_btns();
             send_data(url, displayer, "#display_results");
         }
         function view_accommodation(accommodation){
