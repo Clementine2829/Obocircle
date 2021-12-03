@@ -118,7 +118,7 @@ Powered and maintained by https://www.mcnetsolutions.co.za [McNet Solutions (Pty
 			if($respond == 0){
 				echo " And, is still \"Pending\".";
             }
-            echo "<br><br>Once the manager has seen or responded to it you will receive an email from us letting you know of those changes and also a notification will be put on the notification icon. Alternatively,  you can click <a href='#'>here</a> to check your application status and for other accommodations<br><br><br>";
+            echo "<br><br>Once the manager has seen or responded to it you will receive an email from us letting you know of those changes and also a notification will be put on the notification icon. Alternatively,  you can click <a href='./view-my-applications.php'>here</a> to check your application status and for other accommodations<br><br><br>";
 		}
 	}else{
 		echo "Some information supplied are not valid";
