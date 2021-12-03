@@ -98,6 +98,8 @@
                                 <?php
                             }
                         ?>
+                        <p><strong>Accommodation applications:</strong></p>
+                        <span><a href="./view-my-applications.php">View my accommodation applications </a><br><br></span>
                         <p><strong>Invite a friend:</strong></p>
                         <span>
                             Invite a friend to earn 35% of referals. Copy and share this link <a href="https://obocircle.com/signup.php?ref=<?php echo $ref_code; ?>">https://obocircle.com/signup.php?ref=<?php echo $ref_code; ?></a><br>
