@@ -973,6 +973,7 @@ function error(error_message) {
                             else
                             $("#reviews .ratings .ratings_sub_container .element:nth-child(" + i + ") .bar .inner_bar").css({"color":"orange", "width": w + "%"})
                         }
+                        view_answer(2);
                     })
                     function rate_this_accommodation(payload){
                         $("#display_rating").css({'display':'inline-block'})
@@ -985,11 +986,21 @@ function error(error_message) {
                         setTimeout(function() { reviews();}, 300);
                     }
                     function view_answer(num){
-                        $("#reviews .faq .question .answer").css({"display":"none"})
+/*                        $("#reviews .faq .question .answer").css({"display":"none"})
                         $("#reviews .faq .question:nth-child(" + num + ") .answer").css({"display":"inline-block"})
                         
                         $("#reviews .faq .question .q span").attr("class","fas fa-plus");
                         $("#reviews .faq .question:nth-child(" + num + ")  .q span").attr("class","fas fa-minus");
+*/
+                        let len = $("#reviews .faq .question").length;
+                        for(let i = 2; i < len; i++){
+                            //if(i != num){
+                                $("#reviews .faq .question:nth-child(" + i + ") .answer").css({"display":"none"})
+                                $("#reviews .faq .question:nth-child(" + i + ")  .q span").attr("class","fas fa-plus");
+                            //}
+                        }
+                        $("#reviews .faq .question:nth-child(" + num + ")  .q span").attr("class","fas fa-minus");
+                        $("#reviews .faq .question:nth-child(" + num + ") .answer").slideToggle();
                     }
                 </script>
            <?php

@@ -47,8 +47,8 @@
         <div class="col-sm-10">
             <div id="btn_apply">
                 <br>
-                <button onclick="load_apply_form('123')">Apply</button>
-                <button id="visit" onclick="visit_site('123');">
+                <button onclick="load_apply_form('<?php echo $accommodation; ?>')">Apply</button>
+                <button id="visit" onclick="visit_site('<?php echo $accommodation; ?>');">
                     <span class="fas fa-forward"></span> Visit site
                 </button>
             </div>

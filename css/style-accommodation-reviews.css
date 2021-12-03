@@ -67,9 +67,6 @@
     display: none;
     font-style: oblique;
 }
-#reviews .faq .question:nth-child(2) .answer{
-    display: inline;
-}
 .faq .question{
     border: 1px solid gray;
     padding-top: 1%;

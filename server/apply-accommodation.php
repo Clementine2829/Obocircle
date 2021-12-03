@@ -7,14 +7,14 @@
 				<br>
 				Reason might be:
 				<li>Accommodation does not support this service</li>
-				<li>Link is broken, especially if you entered it manually, or anything along those lines</li>
+				<li>Link is broken, especially if you entered it manually. if so, reload page from the accommodation list</li>
 			</div>
 		</div>';
 
 	$a_name = $a_address = $a_id = $a_names = "";
 	$id = $names = $surname = $phone = $email = $gender = "";
 	$new_address = array("", "", "", "", "");
-/*
+
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		if(isset($_REQUEST['accommodation']) && preg_match('/^[a-zA-Z0-9]+$/',$_REQUEST['accommodation']))
 			$a_id = $_REQUEST['accommodation'];
@@ -24,64 +24,56 @@
 		}
 		if($a_id != "")
 			$_SESSION['reder'] = "./main-accommodation.php?content_id=" . $a_id;
-		else $_SESSION['reder'] = "accommodation-area.php";
+		else $_SESSION['reder'] = "featured.php";
 
-		require 'includes/conn.inc.php';					
-		$sql = "SELECT name FROM accommodation WHERE id = \"$a_id\" AND display = \"1\" LIMIT 1";
+		require '../includes/conn.inc.php';					
+		$sql = "SELECT accommodations.name, address.main_address
+                FROM (accommodations 
+                    INNER JOIN address ON accommodations.id = address.accommo_id)
+                WHERE accommodations.id = \"$a_id\" AND accommodations.display = \"1\" LIMIT 1";
 		$sql_results = new SQL_results();
-		$results = $sql_results->results_a($sql);
+		$results = $sql_results->results_accommodations($sql);
 		if($results->num_rows > 0){
-			while($row = $results->fetch_assoc()){
-				if(preg_match('/^[a-zA-Z0-9\s\@\,\.\'\&]+$/' , $row['name'])) 
-					$a_names = check_inputs($row['name']);
-				break;
-			}
+			$row = $results->fetch_assoc();
+            if(preg_match('/^[a-zA-Z0-9\s\@\,\.\'\&]+$/' , $row['name']) && 
+                preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,\&]+$/' , $row['main_address'])){
+                $a_names = check_inputs($row['name']);
+                $temp_address = explode(",", str_replace("<br>", ",", $row['main_address']));
+                for($i = 0; $i < 4; $i++){
+                    if($temp_address[$i] != "") $a_address .= $temp_address[$i] . ", ";
+                    else continue;
+                }
+                $a_address = substr($a_address, 0, (strlen($a_address) - 2));
+            } 
 		}else{
 			echo $err_holder;
 			return;
 		}
-		$sql = "SELECT main_address FROM address WHERE accommo_id = \"$a_id\" LIMIT 1";
-		$results = $sql_results->results_a($sql);
-		if($results->num_rows > 0){
-			while($row = $results->fetch_assoc()){
-				if(preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,\&]+$/' , $row['main_address'])) 
-					$a_address = $row['main_address'];					
-				break;
-			}
-		}
-
 		if(isset($_SESSION['s_id']) && preg_match('/^[a-zA-Z0-9]+$/' , $_SESSION['s_id'])){
 			$id = $_SESSION['s_id'];
-			$sql = "SELECT first_name, middle_name, last_name, gender, email, phone
-					FROM clients WHERE id = \"$id\" LIMIT 1";
+			$sql = "SELECT first_name, last_name, gender, email, phone
+					FROM users WHERE id = \"$id\" LIMIT 1";
 			$sql_results = new SQL_results();
-			$results = $sql_results->my_profile($sql);
+			$results = $sql_results->results_profile($sql);
 			if($results->num_rows > 0){
-				while($row = $results->fetch_assoc()){
-					$address = "";
-					if(preg_match('/^[a-zA-Z\']+$/' , $row['first_name'])) $names = check_inputs($row['first_name']);
-					if(preg_match('/^[a-zA-Z\']+$/' , $row['middle_name'])) $names .= " " . check_inputs($row['middle_name']);
-					if(preg_match('/^[a-zA-Z\']+$/' , $row['last_name'])) $surname = check_inputs($row['last_name']);
-					if(preg_match('/\d{10}/' , $row['phone'])) $phone = check_inputs($row['phone']);
-					if(filter_var($row['email'], FILTER_VALIDATE_EMAIL)) $email = check_inputs($row['email']);
-					if(preg_match('/^[mfMF]+$/' , $row['gender'])) $gender = $row['gender'];
+				$row = $results->fetch_assoc();
+                if(preg_match('/^[a-zA-Z\']+$/' , $row['first_name'])) $names = check_inputs($row['first_name']);
+                if(preg_match('/^[a-zA-Z\']+$/' , $row['last_name'])) $surname = check_inputs($row['last_name']);
+                if(preg_match('/\d{10}/' , $row['phone'])) $phone = check_inputs($row['phone']);
+                if(filter_var($row['email'], FILTER_VALIDATE_EMAIL)) $email = check_inputs($row['email']);
+                if(preg_match('/^[mfMF]+$/' , $row['gender'])) $gender = $row['gender'];
 
-					$sql = "SELECT address, code
-							FROM address 
-							WHERE client_id = \"$id\" 
-							LIMIT 1";
-					$sql_results = new SQL_results();
-					$results = $sql_results->my_profile($sql);
-					if($results->num_rows > 0){
-						while($row = $results->fetch_assoc()){
-							$address = "";
-							if(preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,]+$/' , $row['address'])) $address = $row['address'];
-							if(preg_match('/\d{4}/' , $row['code'])) $address .= "<br>" . $row['code'];
-						}
-					}
-					if($address != "") $new_address = explode("<br>", $address);
-					break;
-				}
+                $sql = "SELECT address
+                        FROM users_extended 
+                        WHERE user_id = \"$id\" 
+                        LIMIT 1";
+                $sql_results = new SQL_results();
+                $results = $sql_results->results_profile($sql);
+                if($results->num_rows > 0){
+                    $row = $results->fetch_assoc();
+                    $address = (preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,]+$/' , $row['address'])) ? $row['address'] : "";
+                }
+                if($address != "") $new_address = explode("<br>", $address);
 			} 
 		}
 	}else {
@@ -94,17 +86,15 @@
 		$data = htmlspecialchars($data);
 		return $data;
 	}
-    */
+    
 ?>
 <div id="apply_data">
 	<span onclick="close_apply()" class="close" title="Close Modal">&times;</span>
 	<span id="returned_msg"></span>
 	<form method="post" id="accommodation_application_form">
 		<span>
-			<b>
-				<u style="font-size:24px;"><?php echo $a_names; ?></u><br>
-				<?php echo $a_address; ?> <br>
-			</b>
+			<b><u style="font-size:24px;"><?php echo $a_names; ?></u><br></b>
+            <i><?php echo $a_address; ?> <br></i>
 		</span>
 		<div>
 			<?php
@@ -219,7 +209,7 @@
 		<div>
 			<label>When would you like to move in? </label>
 			<span class="err" id="err_move_in" > * </span><br>
-			<input type="date" id="move_in" onblur="get_move_in()" min="<?php echo date('d-m-Y'); ?>">
+			<input type="date" id="move_in" onblur="get_move_in()" min="<?php echo date('Y-m-d'); ?>">
 		</div>
 		<div>
 			<label>Would you like to get our transportation services? </label>

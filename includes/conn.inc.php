@@ -43,6 +43,10 @@
 		public function results_profile($sql){
 			$db_connection = $this->connection("obo_users", $sql);
 			return $db_connection;
+		}  
+		public function results_applicaations($sql){
+			$db_connection = $this->connection("applications", $sql);
+			return $db_connection;
 		}        
 		private function check_user(){
 			/*

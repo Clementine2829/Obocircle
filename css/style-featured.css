@@ -69,8 +69,10 @@
 #filter_accommodations .filter_accommodations .filters .sub_filter{
     border: 1px solid skyblue;
     padding: 3%;
-    margin: auto 13% 5% auto;
+    margin: auto 2%;
     border-radius: 12px;
+    width: 46%;
+    float: left;
 }
 #filter_accommodations .filter_accommodations .filters p span:nth-child(2){
     float: right;
@@ -78,23 +80,29 @@
 }
 #submit_filters,
 #reset_filters{
-    width: 90%;
+    width: 46%;
     text-align: center;
     padding: 1%;
     background-color: skyblue;
     color: white;
     border: 2px solid skyblue;
     border-radius: 12px;
-    margin-top: 5%;
+    margin: 4% 2%;
+    float: left;
+    outline: none;
 }
 #reset_filters{
-    background-color: lightgray;
-    border-color: lightgray;
-    color: red;
+    background-color: skyblue;
+    border-color: white;
 }     
-#submit_filters:hover{
+#reset_filters{
+    background-color: gray;
+    border-color: gray;
+}
+#submit_filters:hover,
+#reset_filters:hover{
     background-color: white;
-    color: skyblue;
+    color: gray;
 }
 
 #display_results{

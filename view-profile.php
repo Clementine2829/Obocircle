@@ -55,7 +55,7 @@
                 <div id="image">
                     <div class="dp_container">
                         <?php
-                            $image = (isset($_SESSION['s_dp']) && $_SESSION['s_dp'] != "") ? substr($_SESSION['s_id'], 7, 10) . "/" . $_SESSION['s_dp'] : "";
+                            $image = (isset($_SESSION['s_dp']) && $_SESSION['s_dp'] != "") ? substr($_SESSION['s_id'], 7, 10) . "/" . $_SESSION['s_dp'] : "avata.png";
                         ?>
                         <img src="./images/users/<?php echo $image; ?>" alt="<?php echo $full_name; ?>">				
                         <a href="update-display-picture.php">

@@ -90,6 +90,14 @@
                         </div>
                     </div>
                 </div>								            
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#filter_main_btn").click(function(){
+                            $("#filter_accommodations").css({"display":"block"});
+                            $("#filter_accommodations .filter_accommodations:nth-child(" + 1 + ")").slideToggle();
+                        })
+                    })
+                </script>
             </div>
             <div id="display_results"></div>
             <div id="next_page"></div>

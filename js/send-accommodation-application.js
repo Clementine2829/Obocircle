@@ -59,7 +59,7 @@ function send_application(){
 				}
 			}
 		}
-		xhttp.open("POST", "accommodation-application.php?" + data, true);
+		xhttp.open("POST", "./server/applications-for-accommodation.php?" + data, true);
 		xhttp.send();
 	}
 }
