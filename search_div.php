@@ -2,10 +2,8 @@
 
     $search = (isset($_GET['search'])) ? $_GET['search'] : "";
     $sharing = (isset($_GET['sharing'])) ? $_GET['sharing'] : "";
-    $search = (isset($_GET['location']) && $_GET['location'] != "") ? $_GET['location'] : "";     
+    $search = (isset($_GET['location']) && $_GET['location'] != "") ? $_GET['location'] : $search;     
     $sql = "";
-echo "Seach: " . $search . " Loc: " . $_GET['location'];
-echo "Seach: " . $search . " Loc: " . $_GET['search'];
 ?>  
 <!--main-->
 <link rel="stylesheet" type="text/css" href="./css/style-index-search.css">
@@ -31,26 +29,10 @@ echo "Seach: " . $search . " Loc: " . $_GET['search'];
                     <span class="fas fa-users"></span>
                     <select id="sharing" name="sharing">
                         <?php
-                        if($sharing == "any"){
-                            echo '<option value="any" selected>Any Sharing</option>';                                
-                        }else{   
-                            echo '<option value="any">Any Sharing</option>';                                
-                        }
-                        if($sharing == "double"){
-                            echo '<option value="double" selected>Double Sharing</option>';
-                        }else{
-                            echo '<option value="double">Double Sharing</option>';
-                        }
-                        if($sharing == "single"){
-                            echo '<option value="single" selected>Single Sharing</option>';
-                        }else{
-                            echo '<option value="single">Single Sharing</option>';
-                        }
-                        if($sharing == "multi"){
-                            echo '<option value="multi" selected>Multi-Sharing</option>';
-                        }else{
-                            echo '<option value="multi">Multi-Sharing</option>';
-                        }
+                        echo '<option value="any" ' . (($sharing == "any") ? "selected": "") . '>Any Sharing</option>';
+                        echo '<option value="double" ' . (($sharing == "double") ? "selected": "") . '>Double Sharing</option>';
+                        echo '<option value="single" ' . (($sharing == "single") ? "selected": "") . '>Single Sharing</option>';
+                        echo '<option value="multi" ' . (($sharing == "multi") ? "selected": "") . '>Multi-Sharing</option>';
                         ?>
                     </select>
                 </div>

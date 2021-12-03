@@ -14,7 +14,7 @@
                 FROM ((accommodations
                     INNER JOIN address ON accommodations.id = address.accommo_id)
                     INNER JOIN rooms ON accommodations.id = rooms.accommo_id)";
-        if(preg_match('/[(nsfas)\s]+$/', $search)){
+        if(preg_match('/(nsfas\s)]+$/', $search)){
             $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.nsfas LIKE \"%$search%\") "; 
         }else if($search != ""){
             $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.about LIKE \"%$search%\" OR 

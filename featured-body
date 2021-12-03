@@ -20,9 +20,13 @@
                 </select>
                 <div style="margin-left: 2%; color: gray">
                     <?php
-                        if($search != ""){
+                        if(isset($_GET['location']) && $_GET['location'] != ""){
                             echo '<small>
                                     <i>Showing accommodations at ' . $search . '. Click <a href="./featured.php">here</a> to reset</i>
+                                  </small>';
+                        }else if($search != ""){
+                            echo '<small>
+                                    <i>Showing results for "' . $search . '". Click <a href="./featured.php">here</a> to reset</i>
                                   </small>';
                         }
                     ?>
