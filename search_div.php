@@ -1,10 +1,11 @@
 <?php
 
-    $search = $sharing = "";
-    if(isset($_GET['search'])) $search = $_GET['search'];
-    if(isset($_GET['sharing'])) $sharing = $_GET['sharing'];
+    $search = (isset($_GET['search'])) ? $_GET['search'] : "";
+    $sharing = (isset($_GET['sharing'])) ? $_GET['sharing'] : "";
     $search = (isset($_GET['location']) && $_GET['location'] != "") ? $_GET['location'] : "";     
     $sql = "";
+echo "Seach: " . $search . " Loc: " . $_GET['location'];
+echo "Seach: " . $search . " Loc: " . $_GET['search'];
 ?>  
 <!--main-->
 <link rel="stylesheet" type="text/css" href="./css/style-index-search.css">

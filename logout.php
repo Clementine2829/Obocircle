@@ -1,5 +1,10 @@
-<?php session_start(); 
-	unset($_SESSION["s_tittle"]);
+<?php session_start();
+    if($_SERVER['REQUEST_METHOD']=="POST" && isset($_REQUEST['cookies'])){
+        $_SESSION["s_cookies"] = "true";
+        return;
+    }
+
+    unset($_SESSION["s_tittle"]);
 	$_SESSION["s_last_name"] = "";
 	$_SESSION["s_email"] = "";
 	$_SESSION["s_password"] = "";

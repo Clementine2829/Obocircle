@@ -119,7 +119,56 @@
         </div>
         <div class="col-sm-1"></div>
     </div>
-
+    <?php 
+        if(!isset($_SESSION['s_cookies'])){
+            ?>
+            <div id="sticky_agreement">
+                <style type="text/css">
+                    .sticky {
+                        position: -webkit-sticky;
+                        position: fixed;
+                        z-index: 1;
+                        bottom: 0;
+                        background-color: gray;
+                        padding: 14px;
+                        font-size: 15px;
+                        float: left;
+                        width: 100%;
+                    }
+                    .sticky div {
+                        width: 92%;
+                        text-align: center;
+                    }
+                    #sticky_me{
+                        width: 8%;
+                        float: right;
+                        background-color: lightblue;
+                        border: 1px solid lightblue;
+                        margin-left: 2%;
+                        border-radius: 12px;
+                    }
+                </style>
+                <div class="sticky">
+                    <div>
+                    This Website uses cookies, and it collect some information for Analytics. Please review our legal agreements: 
+                        <a style="text-decoration:none; color:#660088" href="privacy_policy.html">Privacy Policy</a> and 
+                        <a style="text-decoration:none; color:#660088" href="terms_of_use.html">Terms of Use</a> for this website
+                    </div>
+                    <button id="sticky_me">Ok, Got it</button>
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#sticky_me").click(function(){
+                            //$("#sticky_me").remove();
+                            $("#sticky_agreement").remove();
+                            send_data("./logout.php?cookies=true", displayer, "");
+                        })
+                    })
+                </script>
+            </div>
+            <?php
+        }
+    ?>
     <!--footer-->
     <div class="row">
         <div class="col-sm-12">
