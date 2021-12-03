@@ -21,7 +21,7 @@ function send_application(){
 	let accommodation = $('#a_id').html();
 
 //	alert(communication_mode);
-
+    $("#all_errors").html("");
 	if((full_name == "" || surname == "" || student_no == "" || gender == "" || phone == "" 
 		|| email == "" || address_line_1 == "" || address_town == "" 
 		|| address_code == "" || learning == "" || payment_mode == "" || room_type == "" || 
