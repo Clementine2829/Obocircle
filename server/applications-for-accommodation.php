@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$exisit = false;
 	$sql = "SELECT a_status
 			FROM new_applicants
-			WHERE full_names = \"$full_name\" AND surname = \"$surname\" AND student_no = \"$student_no\"
+			WHERE (full_names = \"$full_name\" || surname = \"$surname\") AND student_no = \"$student_no\"
 			AND accommodation = \"$accommodation\"
 			LIMIT 1";
 	$sql_results = new SQL_results();
@@ -70,17 +70,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 							\"$communication_mode\", \"$move_in\", \"$transportation\", 
 							\"$accommodation\")";
 			if ($connection->query($sql)){
-
-				echo '
-						<span style="color: blue">
-							<br><div style="margin:1%; color: blue">
-							<span style="color: green">Application sent successfully</span>.<br>
-							Thank you for using our service. <br>
-							An email message has been sent to this email address ' . $email . ' as provided.<br>
-							Now you can wait for communication from the accommodation you 
-							applied to<br> Alternatively, you can track your applications <a href="#">here</a>.
-						</span>
-					';
+				echo '<span style="color: blue">
+                        <br><div style="margin:1%; color: blue">
+                        <span style="color: green">Application sent successfully</span>.<br>
+                        Thank you for using our service. <br>
+                        An email message has been sent to this email address ' . $email . ' as provided.<br>
+                        Now you can wait for communication from the accommodation you 
+                        applied to<br> Alternatively, you can track your applications <a href="./view-my-applications.php">here</a>.
+                    </span>';
+                $sql = "INSERT INTO application VALUES(\"$applicant_id\", \"$id\")";
+                if ($connection->query($sql)){
+                //do nothing   
+                }
+			                
 /*
     Set the following before using this file
     $name -> Name from where the email is from
@@ -113,6 +115,11 @@ Powered and maintained by https://www.mcnetsolutions.co.za [McNet Solutions (Pty
 
 			}else echo "Internal error encoutered while uploading your applications to this accommodation, Please try again";
 		}else {
+            $sql = "INSERT INTO application VALUES(\"$applicant_id\", \"$id\")";
+            if ($connection->query($sql)){
+            //do nothing   
+            }
+
 			//they already applied to this accommodation
 			echo "<br>Your applications to this accommodation already exisit in the system.";
 			if($respond == 0){

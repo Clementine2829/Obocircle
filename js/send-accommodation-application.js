@@ -18,7 +18,7 @@ function send_application(){
 	let transportation = get_transportation();
 	let location = get_location();
 	let agreement = get_agreement();
-	let accommodation = $('#a_id').html();
+	let accommodation = $('#accommodation').val();
 
 //	alert(communication_mode);
     $("#all_errors").html("");
@@ -56,6 +56,7 @@ function send_application(){
 				if(this.responseText.search("successfully")){
 					$('#this_table').html(originalTable);
 					$('#this_table').css({'display': 'none'})
+                    document.getElementById('accommodation_application_form').remove();
 				}
 			}
 		}

@@ -8,7 +8,7 @@
                 <p class="err" id="err_msg"></p>
             <?php
                 
-            $sql = "SELECT new_applicants.accommodation, new_applicants.action_date, new_applicants.a_status 
+            $sql = "SELECT new_applicants.accommodation, new_applicants.reg_date, new_applicants.a_status 
                     FROM (application 
                         INNER JOIN new_applicants ON application.app_id = new_applicants.id)
                     WHERE application.id = \"$user\" 
@@ -27,7 +27,7 @@
                                                "name"=>"",
                                                "address"=>"",
                                                "status"=>$row['a_status'],
-                                               "date"=>date("d M Y", strtotime(substr($row['action_date'], 0, 10))));
+                                               "date"=>date("d M Y", strtotime(substr($row['reg_date'], 0, 10))));
                     array_push($applications, $temp_applications);
                 }
                 if(sizeof($applications) > 0){
@@ -48,6 +48,7 @@
                                 <th>Address</th>
                                 <th>Status</th>
                                 <th>Date <br>approved/<br>rejected</th>
+                                <th></th>
                             </tr>
                             <?php
                             $counter = 1;
