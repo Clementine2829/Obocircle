@@ -8,12 +8,13 @@
                 <p class="err" id="err_msg"></p>
             <?php
                 
-            $sql = "SELECT new_applicants.accommodation, new_applicants.reg_date, new_applicants.a_status 
+            $sql = "SELECT new_applicants.accommodation, new_applicants.reg_date, new_applicants.a_status, 
+                            application.app_id 
                     FROM (application 
                         INNER JOIN new_applicants ON application.app_id = new_applicants.id)
                     WHERE application.id = \"$user\" 
-                        AND (new_applicants.a_status = \"0\" OR  new_applicants.a_status = \"1\" OR new_applicants.a_status = \"1\" OR  
-                            new_applicants.a_status = \"2\" OR  new_applicants.a_status = \"3\")  
+                        AND (new_applicants.a_status = \"0\" OR  new_applicants.a_status = \"1\" OR new_applicants.a_status = \"2\" OR  
+                            new_applicants.a_status = \"3\" OR  new_applicants.a_status = \"4\")  
                     LIMIT 20";
             //echo $sql;
             require("../includes/conn.inc.php");
@@ -24,6 +25,7 @@
             if ($results->num_rows > 0) {
                 while($row = $results->fetch_assoc()){
                     $temp_applications = array("id"=>$row['accommodation'],
+                                               "app_id"=>$row['app_id'],
                                                "name"=>"",
                                                "address"=>"",
                                                "status"=>$row['a_status'],
@@ -89,7 +91,7 @@
                                                 echo '<span style="color: red">Rejected</span>';
                                             }else if($applications[$application]['status'] == 3){
                                                 echo '<span style="color: blue">Pending <i>Your</i> approval/rejection</span>';
-                                                $select_options .= '<option value="' . $applications[$application]['id'] . '">' .   
+                                                $select_options .= '<option value="' . $applications[$application]['app_id'] . '">' .   
                                                                             $applications[$application]['name'] . '</option>';
                                                 if($message == ""){
                                                     $message = '<span style="color: blue">Congradulations, one of your applicatoins have been approved. Please select to approve or reject the offer</span>';
@@ -103,7 +105,7 @@
                                     <!-- 22 Apr 2021 -->
                                     <td>
                                         <span class="fas fa-trash" style='color: red' 
-                                                onclick="delete_application('<?php echo $applications[$application]['id']; ?>')">
+                                                onclick="delete_application('<?php echo $applications[$application]['app_id']; ?>')">
                                         </span>
                                     </td>
                                 </tr>
@@ -131,7 +133,7 @@
                                 <option value="approve">Approve</option>
                                 <option value="reject">Reject</option>
                             </select>
-                            <button id="submit_results">Submit</button>
+                            <button id="submit_results" onclick="send_application_response()">Submit</button>
                         </div>
                         <script type="text/javascript">
                             $(document).ready(function(){
@@ -142,8 +144,8 @@
                     }
                 }
             }else{
-                $message = "<h5>No applications found<h5>
-                        <p>You can click <a href='./featured.php'>here</a> to browse for accommodations to apply for one</p>";
+                echo "<br><h5 style='color: red'>No applications found</h5>
+                        <p>You can click <a href='./featured.php'>here</a> to browse for accommodations to apply for one</p><br>";
                 return;
             }
         }else{

@@ -35,23 +35,25 @@
         function delete_application(payload){
             let con = confirm("Are you sure you want to delete this applications? You cannot recover it once deleted");
             if(con == true){
-                let url = "./server/delete-application.php?application=" + payload;
+                let url = "./server/manage-application.php?application=" + payload + "&action=delete";
                 send_data(url, delete_application_helper, "");
             }
         }
         function delete_application_helper(data, loc){
             alert(data);
+            window.location.reload();
         }
-        function send_response(){
+        function send_application_response(){
             let accommodation = $("#accommodation_name").val();
             let action = $("#action").val();
+            alert(accommodation + " " + action);
             if(accommodation == "" || action == ""){
                 $("err_submit_msg").html("Please select both accommodation name and action to take before submit<br>");
+                return;
             }else{
                 $("err_submit_msg").html("");
-                return;
             }
-            let url = "./server/delete-application.php?accommodation=" + accommodation + "&action=" + action;
+            let url = "./server/manage-application.php?accommodation=" + accommodation + "&action=" + action;
             send_data(url, delete_application_helper, "");
         }
     </script>
