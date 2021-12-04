@@ -250,5 +250,14 @@
         primary key (notification_id, user_id), 
         foreign key (user_id) references users (id) on delete cascade
     )
+        
+        
+    /***********************************************************/
+    create table application(
+        id VARCHAR (45) NOT NULL,     
+        app_id VARCHAR (10) NOT NULL, 
+        PRIMARY KEY (app_id, id),
+        foreign key (app_id) references new_applicants (id) on delete cascade
+    )
 
 ?>

@@ -1,0 +1,78 @@
+#table_results{
+    margin: 5% 6% 0% 6%;
+}
+#table_results .err{
+    margin-bottom: 0px;
+}    
+#table_results table,
+#table_results table tr{
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+} 
+#table_results table tr th{
+    background-color: lightgray;
+}
+#table_results table tr:hover{
+    background-color: lightgray;
+}
+#table_results table col:nth-child(1){
+    width: 3%;
+}
+#table_results table col:nth-child(2){
+    width: 25%;
+}
+/*#table_results table col:nth-child(3){
+    width: 35%;
+}
+#table_results table col:nth-child(4){
+    width: 20%;
+}*/
+#table_results table col:nth-child(5){
+    width: auto;
+}
+#table_results table tr{
+    border-bottom: 1px solid #1b9ce3;
+    margin-bottom: 1%;
+}    
+#table_results table tr th:nth-child(1),
+#table_results table tr td:nth-child(1){
+    text-align: center;
+}    
+#table_results table tr td{
+    padding: 1% 0%;   
+}
+
+#actions{
+    padding-top: 3%;
+}
+#actions p{
+    margin-top: 2%;
+    margin-bottom: 0px;
+}    
+#accommodation_name,
+#action,
+#submit_results{
+    width: 20%;
+    border: 2px solid #1b9ce3;
+    padding: 2px 5px;
+    margin-right: 4px;
+    outline: none;
+}
+#action{
+    width: 10%;
+}
+#submit_results{
+    width: 7%;
+    color: white;
+    background-color: #1b9ce3;
+}
+#submit_results:hover{
+    background-color: white;
+    color: #1b9ce3;
+}
+
+#footer1, 
+#footer2{display: none;}
+#footer3{margin-bottom: 0px;}
+#footer4{margin-top: 0px;}
