@@ -7,11 +7,28 @@
 ?>  
 <!--main-->
 <link rel="stylesheet" type="text/css" href="./css/style-index-search.css">
-<style rel="sytlesheet" type="text/css">        
-    #main_container{
-        margin-top: 2%;
-    }        
-</style> 
+    <style type="text/css">
+        /*****************small screen********************/
+        @media only screen and (max-width: 1199px){
+
+            
+        }
+        @media only screen and (max-width: 500px){
+            #main_container br:nth-child(2){
+                display: none;
+            }
+            #main_container .search_keyword, 
+            #main_container .user, 
+            #main_container .search {
+                padding: 5% 3%;   
+            }
+            #main_container .search_keyword input {
+                width: 88%;
+                padding: 4% 2%;
+            }
+        }
+    </style>
+
 <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-10">

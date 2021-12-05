@@ -28,50 +28,6 @@
 	<link rel="icon" href="./images/logo/logo.png" type="image/gif" sizes="30*30">	    
 </head>
 <body>
-    <style type="text/css">
-        
-		html {scroll-behavior: smooth;}
-		* {box-sizing:border-box}
-        @media only screen and (max-width: 1199px){
-            #top_nav {
-                margin: 0%;
-                width: 100%;
-                padding: 1%;
-                padding-right: 0px;
-            }
-            #logo{
-                width: 62%;
-                padding: 2% 0% 3% 1%;
-                height: 20px;
-            }
-            #user_account {
-                width: 38%;
-                padding: 3% 0% 3% 2%;
-            }
-            #loggedin_dropedown button {
-                width: 90%;  
-            }
-            #logo .subNavitems {
-                width: 100%;
-            }
-            #user_account .register{
-                display: none;
-            }
-            #user_account .login{
-                width: 70%;
-            }
-            #user_account .login button{
-                width: 90%;
-            }
-            #user_account .notifications {
-                margin-right: 4%;
-            }
-            #user_account .login, 
-            #user_account .register {
-                background-color: white;
-            }
-        }
-    </style>
 	<div class="row" id="top_nav">
 		<div class="col-md-1" ></div>
 		<div class="col-sm-4" id="logo">

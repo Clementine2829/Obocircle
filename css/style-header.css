@@ -1,3 +1,5 @@
+html {scroll-behavior: smooth;}
+* {box-sizing:border-box;}
 #top_nav{
   margin-top: 1%;  
 }
@@ -83,4 +85,65 @@
     -webkit-transition: .2s all ease-in-out;
     -o-transition: .2s all ease-in-out;
     transition: .2s all ease-in-out;
+}
+/*****************small screen********************/
+@media only screen and (max-width: 1199px){
+   #logo{
+        margin-left: 8%;
+    }
+    #logo .subNavitems {
+        padding-top: 1%;
+        width: 120%;
+    }
+}
+@media only screen and (max-width: 500px){
+    #top_nav {
+        margin: 0%;
+        width: 100%;
+        padding: 1%;
+        padding-right: 0px;
+    }
+    #logo{
+        margin-left: 0px;
+        width: 62%;
+        padding: 2% 0% 3% 1%;
+        height: 20px;
+    }
+    #user_account {
+        width: 38%;
+        padding: 3% 0% 3% 2%;
+    }
+    #loggedin_dropedown {
+        background-color: white;
+        margin-top: 0px;
+        margin-right: 5%;
+    }
+    #loggedin_dropedown button::after {
+        display: none;
+    }
+    #loggedin_dropedown button {
+        width: 90%; 
+    }
+    #logo .subNavitems {
+        width: 100%;
+    }
+    #user_account .register{
+        display: none;
+    }
+    #user_account .login{
+        width: 70%;
+    }
+    #user_account .login button{
+        width: 90%;
+    }
+    #user_account .notifications {
+        margin-right: 4%;
+    }
+    #user_account .login, 
+    #user_account .register {
+        background-color: white;
+    }
+    #dropdown_items{   
+        transform: translate3d(-125px, 44px, 0px);
+    }
 }
