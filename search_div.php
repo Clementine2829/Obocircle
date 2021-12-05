@@ -31,7 +31,7 @@
                         <?php
                         echo '<option value="any" ' . (($sharing == "any") ? "selected": "") . '>Any Sharing</option>';
                         echo '<option value="double" ' . (($sharing == "double") ? "selected": "") . '>Double Sharing</option>';
-                        echo '<option value="single" ' . (($sharing == "single") ? "selected": "") . '>Single Sharing</option>';
+                        echo '<option value="single" ' . (($sharing == "single") ? "selected": "") . '>Single Room</option>';
                         echo '<option value="multi" ' . (($sharing == "multi") ? "selected": "") . '>Multi-Sharing</option>';
                         ?>
                     </select>

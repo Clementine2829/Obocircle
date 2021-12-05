@@ -28,6 +28,50 @@
 	<link rel="icon" href="./images/logo/logo.png" type="image/gif" sizes="30*30">	    
 </head>
 <body>
+    <style type="text/css">
+        
+		html {scroll-behavior: smooth;}
+		* {box-sizing:border-box}
+        @media only screen and (max-width: 1199px){
+            #top_nav {
+                margin: 0%;
+                width: 100%;
+                padding: 1%;
+                padding-right: 0px;
+            }
+            #logo{
+                width: 62%;
+                padding: 2% 0% 3% 1%;
+                height: 20px;
+            }
+            #user_account {
+                width: 38%;
+                padding: 3% 0% 3% 2%;
+            }
+            #loggedin_dropedown button {
+                width: 90%;  
+            }
+            #logo .subNavitems {
+                width: 100%;
+            }
+            #user_account .register{
+                display: none;
+            }
+            #user_account .login{
+                width: 70%;
+            }
+            #user_account .login button{
+                width: 90%;
+            }
+            #user_account .notifications {
+                margin-right: 4%;
+            }
+            #user_account .login, 
+            #user_account .register {
+                background-color: white;
+            }
+        }
+    </style>
 	<div class="row" id="top_nav">
 		<div class="col-md-1" ></div>
 		<div class="col-sm-4" id="logo">
@@ -40,16 +84,21 @@
 		<div class="col-sm-6" id="user_account">
             <?php
                 if(isset($_SESSION['s_id'])){
+                        if(strlen($_SESSION["s_first_name"]) > 15)
+                            echo "<span style='display: none' id='login_name'>Hi, " . substr($_SESSION["s_first_name"], 0, 6) . '..</span>';
+                        else  
+                            echo "<span style='display: none' id='login_name'>Hi, " . $_SESSION["s_first_name"] . '</span>';
+                        $image = (isset($_SESSION['s_dp']) && $_SESSION['s_dp'] != "") ? substr($_SESSION['s_id'], 5, 15) . "/" . $_SESSION['s_dp'] : "avata.png";
                     ?>
 						<span class="dropdown" id="loggedin_dropedown">
-							<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="">
-								<?php 
-									if(strlen($_SESSION["s_first_name"]) > 15)
-										echo "Hi, " . substr($_SESSION["s_first_name"], 0, 6) . '..';
-									else  
-										echo "Hi, " . $_SESSION["s_first_name"];
-								?>
-							</button>
+							<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="" id="dropdown_login_btn">
+                                <img src="./images/users/<?php echo $image; ?>" style="width: 30px; height: 30px; border-radius: 50%;">
+                            </button>
+                            <script type="text/javascript">
+                                if(window.innerWidth > 500){                                    
+                                    $("#dropdown_login_btn").html($("#login_name").html());
+                                }
+                            </script>
 							<div class="dropdown-menu" id="dropdown_items" >
                                 <?php
                                     if(isset($_SESSION['s_user_type'])  && $_SESSION['s_user_type'] == "premium_user")

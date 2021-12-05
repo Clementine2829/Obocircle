@@ -124,7 +124,7 @@
             ?>
             <div id="sticky_agreement">
                 <style type="text/css">
-                    .sticky {
+                    /*.sticky {
                         position: -webkit-sticky;
                         position: fixed;
                         z-index: 1;
@@ -146,7 +146,7 @@
                         border: 1px solid lightblue;
                         margin-left: 2%;
                         border-radius: 12px;
-                    }
+                    }*/
                 </style>
                 <div class="sticky">
                     <div>
