@@ -4,12 +4,55 @@
     
     <!--main-->
     <?php require 'search_div.php'; ?>
-    <link rel="stylesheet" type="text/css" href="./css/style-index-search.css">
     <link rel="stylesheet" type="text/css" href="./css/style-index.css">
 
     <!--end main-->
     <!--***********featured accommodations***********-->
-
+    <style type="text/css">
+        @media only screen and (max-width: 500px){
+            #featured_accommodations_heading{
+                margin: 8% 2% 0% 2%;
+            }
+            #featured_accommodations .featured_accommodations .accommodation:nth-child(5) {
+                display: none;
+            }
+            #featured_accommodations .featured_accommodations .accommodation {
+                width: 50%;
+                height: 50%;
+                padding: 1% 1% 4% 1%;
+            }
+            #featured_accommodations .featured_accommodations{
+                height: 500px;        
+            }
+            /***********************************************************************/
+            #accommodations_by_location .accommodations_by_location .accommodation:nth-child(5) {
+                display: none;
+            }
+            #accommodations_by_location .accommodations_by_location .accommodation {
+                width: 50%;
+                height: 50%;
+            }
+            #accommodations_heading small{
+                font-size: 65%;
+            }
+            #accommodations_by_location .accommodations_by_location {
+                height: 400px;   
+            }
+            #accommodations_by_location .accommodations_by_location .accommodation .image {
+                height: 100%;
+            }
+            #accommodations_at{
+                display: none;
+            }
+            /********************************************************/
+            #post_accommodation{
+                width: 98%;
+                margin: 4% 1%;
+            }
+        }
+        
+    </style>
+    
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
@@ -120,16 +163,16 @@
         <div class="col-sm-1"></div>
     </div>
     <?php 
-        if(!isset($_SESSION['s_cookies'])){
+        if(isset($_SESSION['s_cookies'])){
             ?>
             <div id="sticky_agreement">
                 <style type="text/css">
-                    /*.sticky {
+                    .sticky {
                         position: -webkit-sticky;
                         position: fixed;
                         z-index: 1;
                         bottom: 0;
-                        background-color: gray;
+                        background-color: lightgray;
                         padding: 14px;
                         font-size: 15px;
                         float: left;
@@ -140,13 +183,13 @@
                         text-align: center;
                     }
                     #sticky_me{
-                        width: 8%;
+                        width: auto;
                         float: right;
                         background-color: lightblue;
                         border: 1px solid lightblue;
                         margin-left: 2%;
                         border-radius: 12px;
-                    }*/
+                    }
                 </style>
                 <div class="sticky">
                     <div>

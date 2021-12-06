@@ -89,7 +89,7 @@ html {scroll-behavior: smooth;}
 /*****************small screen********************/
 @media only screen and (max-width: 1199px){
    #logo{
-        margin-left: 8%;
+        /*margin-left: 8%;*/
     }
     #logo .subNavitems {
         padding-top: 1%;

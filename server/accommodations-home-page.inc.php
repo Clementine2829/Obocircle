@@ -168,7 +168,7 @@
                     <span data-toggle="tooltip" data-placement="left" title class="fas fas fa-info-circle" 
                         data-original-title="Click on the lock on the URL bar to grant-access"></span>
                 </small><br>
-                <p><strong>ACCOMMODATIONS @ JOHANNESBURG</strong> <a href="./featured.php?location=Johannesburg" class="view_more">...VIEW MORE</a></p>
+                <p><strong><span id='accommodations_at'>ACCOMMODATIONS </span>@ JOHANNESBURG</strong> <a href="./featured.php?location=Johannesburg" class="view_more">...VIEW MORE</a></p>
             <?php  
         }else{
             echo "Invalid request";
