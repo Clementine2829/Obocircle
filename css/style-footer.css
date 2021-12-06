@@ -54,4 +54,47 @@
 #footer4 a{
     text-decoration: none;
 }
+#footer4 .col-md-5 snall{
+    float: right;
+    padding-right: 10%;   
+}
 .err{color: red;}
+/***********************************************/
+@media only screen and (max-width: 500px){
+    #footer1 .subscribe_footer br:nth-child(1) {
+        display: none;
+    }
+    #footer1 .subscribe_footer .subsribe {
+        margin: auto 2%;
+        width: 94%;
+        padding: 3%;
+    }
+    #footer1 .subscribe_footer .subsribe input[type=email] {
+        width: 62%;
+    }
+    #footer1 .subscribe_footer .subsribe input[type=button] {
+        width: auto;
+        padding: 2% 4%;
+    }
+    #footer1 .subscribe_footer br{
+        display: none;
+    }
+    #footer2 .col-md-5{
+        width: 50%;
+        margin-bottom: 2%;
+    }
+    #footer3 .col-md-10{
+        padding: 2%;   
+    }
+    #footer3 .col-md-10 .footer_container{
+        padding: 2% 3%;
+        background-color: lightgray;
+    }
+    #footer4 .col-md-5{
+        text-align: center;
+    }
+    #footer4 .col-md-5 snall{
+        float: center;
+        margin-bottom: 5%;
+    }
+}

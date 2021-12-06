@@ -58,8 +58,8 @@ function send_data(url,func=foo, loc, loading="", loading_text="", btn=""){
 function subscribe(){
 	let email = $("#email_footer");
 	let err_email = $("#err_email_footer");
-	let err_msg_1 = "Email address is required<br>";
-	let err_msg_2 = "Enter valid email address<br>";
+	let err_msg_1 = (((window.innerWidth < 500) ? "<br style='display: block'>": "") + "Email address is required<br>");
+	let err_msg_2 = (((window.innerWidth < 500) ? "<br style='display: block'>": "") + "Enter valid email address<br>");
 	return get_email(email, err_email, err_msg_1, err_msg_2, '');
 }
 function footer_subscribe(){
@@ -69,8 +69,9 @@ function footer_subscribe(){
 }
 function send_subscription(email, loc, name="", category=1){
 	if(email){
-		let url = "./server/subscribe.incl.php?email=" + email;
-		send_data(url, clear_subscribe, loc, "Loading, please wait");
+		let url = "./server/subscribe.inc.php?email=" + email;
+        let loading = (((window.innerWidth < 500) ? "<br style='display: block'>": "") + "Loading, please wait");
+		send_data(url, clear_subscribe, loc, loading);
 	}	
 }
 function clear_subscribe(data, loc){
