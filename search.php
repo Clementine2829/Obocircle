@@ -40,12 +40,7 @@
 	<script src="./js/next-prev.js" type="text/javascript"></script>
 	<script src="js/featured.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            let search = $("#search_keyword").val();
-            let url = "./server/featured.inc.php?next_page=" + page + "&search=" + search;
-            load_main_default(url);
-        });
-        
+ 
     </script>
 </body>      
 </html>

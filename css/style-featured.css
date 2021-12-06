@@ -14,8 +14,16 @@
     width: 100%;
     float: left;
 }
-#filter_main_btn,
-#sort_results{
+#google_map_btn,
+#list_view_btn,
+#search_toggle{
+    display: none;
+}
+#filter_main_btn, 
+#google_map_btn,
+#search_toggle,
+#list_view_btn,
+#sort_results {
     border: 1px solid skyblue;
     background-color: skyblue;
     color: white;
@@ -190,4 +198,46 @@
 }
 #display_results .accommodations .accommodation .view_deal .price{
     margin-left: 20%;   
+}
+@media only screen and (max-width: 500px){
+    #main_container{
+        display: none;
+    }
+    #main_container h3{
+        display: none;
+    }
+    #filter_main_btn, 
+    #google_map_btn,
+    #search_toggle,
+    #sort_results {
+        margin: 2px 0px;
+    }
+    #search_toggle{
+        text-align: center;
+        display: inline-block;
+    }
+    #list_view_btn,
+    #google_map_btn{
+        position: fixed;
+        bottom: 2%;
+        text-align: center;
+        z-index: 1;
+    }
+    #google_map_btn{
+        display: inline-block;
+    }
+    #list_view_btn{
+        display: none;
+    }
+    .sub_container:nth-child(2) {
+        display: none;
+        width: 100%;
+    }
+    .sub_container{
+        width: 100%;   
+    }
+    .sub_container .buttons{
+        margin-top: 2%;
+        margin-right: 2%;
+    }
 }

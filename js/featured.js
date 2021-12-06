@@ -1,4 +1,24 @@
-    function load_main_default(url){
+$(document).ready(function(){
+    let search = $("#search_keyword").val();
+    let url = "./server/featured.inc.php?next_page=" + page + "&search=" + search + "&resolution=" + window.innerWidth;
+    load_main_default(url);
+    $("#search_toggle").click(function(){
+        $("#main_container").slideToggle();
+    })
+    $("#google_map_btn").click(function(){
+        $(".sub_container:nth-child(1)").css({"display":"none"})
+        $(".sub_container:nth-child(2)").css({"display":"block"})
+        $("#google_map_btn").css({"display":"none"});
+        $("#list_view_btn").css({"display":"block"});
+    })
+    $("#list_view_btn").click(function(){
+        $(".sub_container:nth-child(1)").css({"display":"block"})
+        $(".sub_container:nth-child(2)").css({"display":"none"})
+        $("#list_view_btn").css({"display":"none"});
+        $("#google_map_btn").css({"display":"block"});
+    })
+});
+function load_main_default(url){
         get_btns();
         send_data(url, displayer, "#display_results");
     }

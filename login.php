@@ -47,6 +47,12 @@
 						window.location = document.getElementById('reder').innerHTML; 
 					</script>
 					<?php
+				}else if(isset($_SESSION['s_user_type']) && isset($_SESSION['s_user_type']) != "premium_user"){
+					?>
+					<script type="text/javascript">
+						window.location = "./dashboard.php"; 
+					</script>
+                    <?php
 				}else{
 					?>
 						<script type="text/javascript">
@@ -58,6 +64,15 @@
 		}
 	?>
 	<link rel="stylesheet" type="text/css" href="./css/style-login.css">
+    <style type="text/css">
+        @media only screen and (max-width: 500px){
+            #top_nav {
+                
+            }
+    
+        }
+</style>
+
 	<br><br>
 	<div class="row" >
 		<div class="col-sm-2" ></div>

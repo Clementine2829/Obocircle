@@ -1,5 +1,43 @@
 <!--main structure-->
 <link rel="stylesheet" type="text/css" href="./css/style-featured.css">
+<style type="text/css">
+@media only screen and (max-width: 500px){
+    #display_results {
+        width: 97%;
+    }
+    #display_results .accommodations .accommodation {
+        height: 200px;   
+    }
+    #display_results .accommodations .accommodation:last-child {
+        margin-bottom: 5%;
+    }
+    #display_results .accommodations .accommodation .images {
+        height: 140px;   
+        width: 40%;
+        float: left;
+    }
+    #display_results .accommodations .accommodation .details {
+        width: 60%;   
+        float: left;
+    }
+    #display_results .accommodations .accommodation .view_deal {
+        width: 100%; 
+        float: left;
+    }
+    #display_results .accommodations .accommodation .view_deal div{
+        display: none;
+    }
+    #display_results .accommodations .accommodation .view_deal .view_deal_btn {
+        display: inline;
+        float: right;
+        margin-left: 4%;
+        padding: 2% 6%;
+        margin-top: -4%;
+        margin-right: 2%;
+        margin-bottom: 1%;
+    }
+}
+</style>
 <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-11">
@@ -8,7 +46,12 @@
                 <button id="filter_main_btn">
                     <span class="fas fa-filter"></span>Filter
                 </button>
-
+                <button id="search_toggle">
+                    <span class="fas fa-search"></span>
+                </button>
+                <button id="google_map_btn">
+                    <span class="fas fa-map"></span> Google Map
+                </button>
                 <select id="sort_results">
                     <option value="">Our recommendations</option>
                     <option value="name">Name</option>
@@ -103,7 +146,10 @@
             <div id="next_page"></div>
         </div>
         <div class="sub_container">
-            <div class="accommodation_map" id="accommodation_map"></div>             
+            <div class="accommodation_map" id="accommodation_map"></div>   
+            <button id="list_view_btn">
+                <span class="fas fa-list"></span> List View
+            </button>            
         </div>
     </div>
     <!--<div class="col-sm-1"></div>-->
