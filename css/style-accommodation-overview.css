@@ -140,3 +140,41 @@
 #btn_apply button:nth-child(2) {
     background-color: purple;
 }
+/***************************************************/
+@media only screen and (max-width: 500px){
+    #header_btns .header_btns:nth-child(1) a {
+        padding: 3px;   
+    }
+    #accommodation, #overview_container, #overview_container .sub_container {
+        margin: 2px;
+    }
+    #overview_container .sub_container:nth-child(1) .image{
+        width: 38%;
+    }
+    #overview_container .sub_container:nth-child(1) .info {
+        width: 60%;   
+    }
+    #overview_container .sub_container:nth-child(1) .price {
+        width: 100%;   
+    }
+    #overview_container .sub_container:nth-child(1) .price div {
+        float: left;
+        overflow: auto;
+        margin-left: 2%;
+    }
+    #overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(1) {
+        width: 28%;   
+    }
+    #overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(2),
+    #overview_container .sub_container:nth-child(1) .price div table colgroup col:nth-child(3) {
+        width: 25%;
+    }
+    #btn_apply {
+        width: 100%;
+        margin: 1%;
+    }
+    #btn_apply button {
+        width: 48%;
+    }    
+}
+

@@ -58,14 +58,29 @@ input[type=number], select{
 #my_table tr td{
     padding-left: 2%;
 }
-
 @media only screen and (max-width: 800px){
-#display_rating {
-    margin: 5% auto 15% 4%;
-    padding: 5px 15px 15px 5px;
-    width: 90%;
-}
-#my_table tr td:first-child{padding-right: 10px;}
+    #display_rating {
+        margin: 0% auto 15% 0%;
+        padding: 5% 15px 15px 5px;
+        width: 100%;
+    }
+    #rate_us{
+        width: 100%;
+        margin-top: 1px;   
+    }
+    #my_table tr td:first-child{
+        padding-right: 10px;
+    }
+    input[type=number], 
+    select{
+        width: 86%;
+    }
+    #my_table col:nth-child(1{
+        width: 55%;
+    }
+    #my_table col:nth-child(2){
+        width: 45%;
+    }
 }
 </style>
 <div id="rate_us">

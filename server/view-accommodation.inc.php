@@ -240,7 +240,6 @@
                                         <col span="1">
                                         <col span="1">
                                         <col span="1">
-                                        <col span="1">
                                     </colgroup>
                                     <tbody>
                                         <?php
@@ -352,7 +351,11 @@
                     </div>
                 </div>
             </div>
-          
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("#overview_container .sub_container:nth-child(1) .price div table tr th:nth-child(1)").html("Room<br>Type");
+                })    
+            </script>
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'images'){
             ?>
@@ -443,7 +446,8 @@
                       81 Rissik street
                     </option>
                   </select>
-                  <b>End: </b>
+                  <br id="special_break_line">
+                  <b>To: </b>
                   <select id="end">
                     <option value="<?php echo $address; ?>"><?php echo $name; ?></option>
                   </select> 

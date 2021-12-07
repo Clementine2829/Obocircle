@@ -16,6 +16,12 @@
     color: gray;
     background-color: white;
 }
+@media only screen and (max-width: 500px){
+    #change_password{
+        width: auto;
+        padding: 5px 4%;
+    }
+}
 </style>
     <div class="row">
         <div class="col-sm-1"></div>

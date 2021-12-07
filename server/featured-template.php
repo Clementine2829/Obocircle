@@ -60,13 +60,15 @@
                 </div>
                 <div class="details">
                     <?php
-                        $name = substr($accommodations[$accommodation]["name"], 0, 25);
+                        $name = substr($accommodations[$accommodation]["name"], 0, 26);
                         if(strlen($name) > 25) 
                             $name .= "..";
                         if(isset($_REQUEST['resolution']) && intval($_REQUEST['resolution']) < 500){
-                            if(strlen($name) > 15) echo '<h4>' . substr($name, 0, 15) . '..</h4>';
-                        else echo '<h4>' . $name . '</h4>';
+                            if(strlen($name) > 15)
+                                $name = '<h4>' . substr($name, 0, 13) . '..</h4>';
+                            else $name = '<h4>' . $name . '</h4>';
                         }
+                        echo '<h4>' . $name . '</h4>';
                     ?>
                     <span class="stars">
                         <?php 

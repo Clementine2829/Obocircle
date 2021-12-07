@@ -84,6 +84,15 @@ $_SESSION['redir'] = "notifications.php";
                     padding-top: 5%;
                     border-top: none;
                 }
+                @media only screen and (max-width: 800px){
+                    #notifications_holder {
+                        margin: 1%;
+                        margin-top: 7%;
+                    }
+                    #notifications_holder table{
+                        width: 100%;
+                    }
+                }
 			</style>
 			<div id="notifications_holder">
 				<table>

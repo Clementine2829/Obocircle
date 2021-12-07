@@ -1,5 +1,6 @@
 function get_window(){
-	return (window.innerWidth < 500) ? w = "1" : w = "";
+    return "";
+    return (window.innerWidth < 500) ? w = "1" : w = "";
 }
 function get_btns(){
 	let btns = 0;

@@ -5,8 +5,18 @@
 	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-overview.css">
 	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-about.css">
 	<link rel="stylesheet" type="text/css" href="./css/style-accommodation-reviews.css">
-
 	<link rel="stylesheet" type="text/css" href="./css/style-apply-accommodation.css">
+    <style type="text/css">
+        #special_break_line{
+            display: none;
+        }
+        @media only screen and (max-width: 500px){
+            #special_break_line{
+                display: block;
+            }
+        }
+    </style>
+
     <!--heading-->
     <div class="row">
         <div class="col-sm-1"></div>
