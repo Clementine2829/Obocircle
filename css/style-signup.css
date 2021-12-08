@@ -78,3 +78,21 @@ input[type=number]:active,input[type=email]:active, select:active, input[type=bu
 	input[type=text], input[type=password], input[type=date],
 	input[type=number],input[type=email], select{width: 80%;}
 }
+@media only screen and (max-width: 500px){
+    #top_nav {
+        width: 100%;
+    }
+    #logo {
+        margin-top: 0px;
+        margin-bottom: 8%;
+        padding-top: 5px;
+        padding-bottom: 2%;
+    }
+    #logo a {
+        width: 100%;
+        height: 60px;
+    }
+    #sign_body{
+        margin: auto 2%;
+    }
+}

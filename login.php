@@ -65,12 +65,7 @@
 	?>
 	<link rel="stylesheet" type="text/css" href="./css/style-login.css">
     <style type="text/css">
-        @media only screen and (max-width: 500px){
-            #top_nav {
-                
-            }
-    
-        }
+
 </style>
 
 	<br><br>
