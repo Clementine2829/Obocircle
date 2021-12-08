@@ -46,11 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		$row = $results->fetch_assoc();
         $star_values = explode(",", $row['stars_values']);
         $scale_values = explode(",", $row['scale_values']);
-        $names = explode(",", $row['names']);
         $rate_count = $row['rate_counter'];
-        if($user != ""){
+        
+        $temp_names = $row['names']; //to be used tfor searching
+        if(strpos($temp_names, $user) !== false){ //the person is found on the list 
+            $names = explode(",", $temp_names);
             for($i = 0; $i < $rate_count; $i++){
-              if($user == $names[$i]){
+                if($user == $names[$i]){
                     $star_values[$i] = $stars;
                     $scale_values[$i] = $scale;
                   
@@ -58,13 +60,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     $temp_scale_values = implode(",", $scale_values);
                     $sql = "UPDATE star_and_scale_rating 
                             SET stars_values = \"$temp_star_values\",
-                            scale_values = \"$temp_scale_values\"
+                                scale_values = \"$temp_scale_values\"
                             WHERE accommo_id = \"$payload\"";
                     break;
                 }else{
                     continue;
                 }
-            }
+            }            
+        }else{//the person is not found on the list 
+            $temp_star_values = $row['stars_values'] . $stars . ",";
+            $temp_scale_values = $row['scale_values'] . $scale . ",";
+            $temp_names .= $user . ",";
+            $rate_count++;
+            $sql = "UPDATE star_and_scale_rating 
+                    SET stars_values = \"$temp_star_values\",
+                    scale_values = \"$temp_scale_values\",
+                    names = \"$temp_names\",
+                    rate_counter = \"$rate_count\"
+                    WHERE accommo_id = \"$payload\"";            
         }
     }else{
         $temp_stars = $stars . ",";
@@ -96,13 +109,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $services_id = $row['services_id'];
             $rooms_id = $row['rooms_id'];
             $stuff_id = $row['stuff_id'];
-            $names = explode(",", $row['rate_names']);
+            $temp_names = $row['rate_names'];
             $rate_count = $row['rate_counter'];
-            $location_values = explode(",", $row['location_values']);
-            $service_values = explode(",", $row['services_values']);
-            $room_values = explode(",", $row['rooms_values']);
-            $stuff_values = explode(",", $row['stuff_values']);
-            if($user != ""){
+            if(strpos($temp_names, $user) !== false){ //the person is found on the list 
+                $names = explode(",", $temp_names);
+                $location_values = explode(",", $row['location_values']);
+                $service_values = explode(",", $row['services_values']);
+                $room_values = explode(",", $row['rooms_values']);
+                $stuff_values = explode(",", $row['stuff_values']);
                 for($i = 0; $i < $rate_count; $i++){
                   if($user == $names[$i]){
                         $location_values[$i] = $location;
@@ -143,6 +157,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         continue;
                     }
                 }
+            }else{//the person is not found on the list 
+                $temp_location_values = $row['location_values'] . $location . ",";
+                $temp_service_values = $row['services_values'] . $service . ",";
+                $temp_room_values = $row['rooms_values'] . $rooms . ",";
+                $temp_stuff_values = $row['stuff_values'] . $stuff . ",";
+                $temp_names .= $user . ",";
+                $rate_count++;
+                
+                $sql = "UPDATE average_ratings 
+                        SET rate_names = \"$temp_names\",
+                            rate_counter = \"$rate_count\"
+                        WHERE location_id = \"$location_id\"";
+                if ($connection->query($sql)){ 
+                    //do nothing
+                }
+                $sql = "UPDATE rate_location 
+                        SET location_values = \"$temp_location_values\"
+                        WHERE location_id = \"$location_id\"";
+                if ($connection->query($sql)){ 
+                    //do nothing
+                }
+                $sql = "UPDATE rate_services 
+                        SET services_values = \"$temp_service_values\"
+                        WHERE services_id = \"$services_id\"";
+                if ($connection->query($sql)){ 
+                    //do nothing
+                }
+                $sql = "UPDATE rate_rooms 
+                        SET rooms_values = \"$temp_room_values\"
+                        WHERE rooms_id = \"$rooms_id\"";
+                if ($connection->query($sql)){ 
+                    //do nothing
+                }
+                $sql = "UPDATE rate_stuff 
+                        SET stuff_values = \"$temp_stuff_values\"
+                        WHERE stuff_id = \"$stuff_id\"";
+                if ($connection->query($sql)){ 
+                    //do nothing
+                }
             }
         }else{
             $temp_location = $location . ",";
@@ -175,7 +228,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 //do nothign
             }
         }
-    
+    }else{
+        echo "<br><h5 style='color: red'>Error updating ratings. Please try again</br>";
+        return;		
     }
     $connection->close();
 }else {
