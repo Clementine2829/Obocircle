@@ -20,7 +20,7 @@ $(document).ready(function(){
 });
 function load_main_default(url="", search=""){
     url = "./server/featured.inc.php?next_page=" + page + "&search=" + search + url + "&resolution=" + window.innerWidth;
-    //alert(url);
+    alert(url);
     get_btns();
     send_data(url, displayer, "#display_results");
 }
@@ -28,6 +28,7 @@ function view_accommodation(accommodation){
     window.location = "view-accommodation.php?accommodation=" + accommodation;
 }
 function main_filter(){
+    function_type = 1;
     let search = $("#search_keyword").val();
     let room_type = get_room_type();
     let guest_rating = get_guest_rating();

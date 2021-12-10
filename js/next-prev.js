@@ -81,9 +81,11 @@ function set_btn_action(btn_type="", i=-1, type){
 
 	disable_btns();	
 	//make it flexible by checing if it is default, search or filter that is being used
-    if(function_type == 1) search_here();
-    else if(function_type == 2) search_filters();
-    else default_display();
+    if(function_type == 1) main_filter();
+    else{
+        let search = $("#search_keyword").val();
+        load_main_default(search);    
+    }
 }
 function disable_btns(){
 	let btns = $("#next_page .next_page").length;
