@@ -32,7 +32,7 @@
                     <div>
                         <label><strong>Date of birth</strong></label>
                         <span class="err" id="err_date_of_birth"> * </span><br>
-                        <input type="date" id="date_of_birth" onblur="get_date_of_birth()" min="<?php echo date("d-M-y"); ?>">
+                        <input type="date" id="date_of_birth" onblur="get_date_of_birth()" max="<?php echo date("Y-m-d"); ?>">
                     </div>                    
                     <div>
                         <label><strong>Gender</strong></label>

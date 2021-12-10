@@ -70,6 +70,18 @@
     color: gray;
     background-color: white;
 }
+#change_password{
+    border: 2px solid gray;
+    padding: 5px 10px;
+    margin-top: 4%;
+    width: 25%;
+    background-color: gray;
+    color: white;
+}
+#change_password:hover{
+    color: gray;
+    background-color: white;
+}
 #user_account{display: none}
 #footer1, 
 #footer2{display: none;}
@@ -97,5 +109,8 @@
         width: auto;
         padding: 5px 4%;
     }
-    
+    #change_password{
+        width: auto;
+        padding: 5px 4%;
+    }
 }

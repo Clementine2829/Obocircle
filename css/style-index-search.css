@@ -37,7 +37,7 @@
     border: none;
     outline: none;
     background-color: skyblue;
-    color: white;
+    /*color: white;*/
 }
 .err{color: red}
 /*****************small screen********************/

@@ -3,26 +3,6 @@
     <!--end header-->
 
     <link rel="stylesheet" type="text/css" href="./css/style-view-profile.css">
-<style rel="stylesheet" type="text/css">
-#change_password{
-    border: 2px solid gray;
-    padding: 5px 10px;
-    margin-top: 4%;
-    width: 25%;
-    background-color: gray;
-    color: white;
-}
-#change_password:hover{
-    color: gray;
-    background-color: white;
-}
-@media only screen and (max-width: 500px){
-    #change_password{
-        width: auto;
-        padding: 5px 4%;
-    }
-}
-</style>
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">

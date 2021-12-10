@@ -4,16 +4,28 @@
 */
 	$accomo_id = $name = "";
 	$next_page = 0;
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $sort_by = " accommodations.id ";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if(isset($_REQUEST['next_page']) && preg_match('/\d{1,}/', $_REQUEST['next_page'])){
             $next_page = $_REQUEST['next_page'] * 5 - 5;	
-        } 
+        }
         $search = (isset($_REQUEST['search']) && preg_match('/^[a-zA-Z0-9\s\,\'\"\+\-]/', $_REQUEST['search'])) ? $_REQUEST['search'] : "";
-        $sharing = (isset($_REQUEST['sharing'])) ? $_REQUEST['sharing'] : "";
-		$sql = "SELECT accommodations.*, rooms.*, address.main_address 
-                FROM ((accommodations
+        $room_type = (isset($_REQUEST['room_type']) && preg_match('/(any|single|double|multi)/', $_REQUEST['room_type'])) ? $_REQUEST['room_type'] : "";
+        $guest_rating = (isset($_REQUEST['guest_rating']) && preg_match('/^[1-5]+$/', $_REQUEST['guest_rating'])) ? $_REQUEST['guest_rating'] : "";
+        $sharing = (isset($_REQUEST['sharing'])) ? $_REQUEST['sharing'] : $room_type;
+		if(isset($_REQUEST['sort'])){
+            if($_REQUEST['sort'] == "name") $sort_by = " accommodations.name ";
+            else if($_REQUEST['sort'] == "name") $sort_by = " accommodations.name ";
+            else if($_REQUEST['sort'] == "nsfas") $sort_by = " accommodations.nsfas ";
+            else if($_REQUEST['sort'] == "rating") $sort_by = " star_and_scale_rating.stars_main ";
+            else if($_REQUEST['sort'] == "price") $sort_by = " accommodations.id ";
+            else if($_REQUEST['sort'] == "recommendation") $sort_by = " star_and_scale_rating.scale_main ";            
+        }
+        $sql = "SELECT accommodations.*, rooms.*, address.main_address 
+                FROM (((accommodations
                     INNER JOIN address ON accommodations.id = address.accommo_id)
-                    INNER JOIN rooms ON accommodations.id = rooms.accommo_id)";
+                    INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
+                    LEFT JOIN star_and_scale_rating ON accommodations.id = star_and_scale_rating.accommo_id)";
         if(preg_match('/(nsfas\s)]+$/', $search)){
             $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.nsfas LIKE \"%$search%\") "; 
         }else if($search != ""){
@@ -30,9 +42,12 @@
         }else if($sharing == "multi"){
             $sql .= " AND (rooms.multi_sharing = \"1\" ) ";
         }
+        if($guest_rating > 0 && $guest_rating <= 5){
+            $sql .= " AND (star_and_scale_rating.stars_main >= \"$guest_rating\" ) ";
+        }
         
-        $sql .= " ORDER BY accommodations.id DESC LIMIT 5 OFFSET $next_page";
-        //echo $sql;
+        $sql .= " ORDER BY $sort_by DESC LIMIT 5 OFFSET $next_page";
+        echo $sql;
         require("../includes/conn.inc.php");
 		$sql_results = new SQL_results();
 		$results = $sql_results->results_accommodations($sql);

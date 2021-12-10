@@ -55,11 +55,11 @@
                 <select id="sort_results">
                     <option value="">Our recommendations</option>
                     <option value="name">Name</option>
-                    <option value="name">NSFAS Accredited</option>
-                    <option value="name">Most Popular</option>
-                    <option value="name">Best Ratings</option>
-                    <option value="name">Price</option>
-                    <option value="name">Recommendations</option>
+                    <option value="nsfas">NSFAS Accredited</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="rating">Best Ratings</option>
+                    <option value="price" disabled>Price</option>
+                    <option value="recommendation">Recommendations</option>
                 </select>
                 <div style="margin-left: 2%; color: gray">
                     <?php
@@ -85,19 +85,19 @@
                                 <span class="fas fa-angle-down"></span>
                             </p>
                             <div>
-                                <input type="checkbox" name="room_type" id="roomtype1" value="roomtype1" > 
+                                <input type="radio" name="room_type" id="roomtype1" value="single" > 
                                 <span>Single Room</span>
                             </div>
                             <div>
-                                <input type="checkbox" name="room_type" id="roomtype2" value="roomtype2" > 
+                                <input type="radio" name="room_type" id="roomtype2" value="double" > 
                                 <span>Double Sharing</span>
                             </div>
                             <div>
-                                <input type="checkbox" name="room_type" id="roomtype3" value="roomtype3" > 
+                                <input type="radio" name="room_type" id="roomtype3" value="multi" > 
                                 <span>Multi-Sharing</span>
                             </div>
                             <div>
-                                <input type="checkbox" name="room_type" id="roomtype3" value="roomtype3" > 
+                                <input type="radio" name="room_type" id="roomtype3" value="any" > 
                                 <span>Any Sharing</span>
                             </div>
                         </div>
@@ -107,29 +107,29 @@
                                 <span class="fas fa-angle-down"></span>
                             </p>
                             <div>
-                                <input type="radio" name="guest_ratings" id="excellent" value="excellent" > 
+                                <input type="radio" name="guest_ratings" id="excellent" value="5" > 
                                 <span>Excellent</span>
                             </div>
                             <div>
-                                <input type="radio" name="guest_ratings" id="verygood" value="verygood" > 
+                                <input type="radio" name="guest_ratings" id="verygood" value="4" > 
                                 <span>Very Good</span>
                             </div>
                             <div>
-                                <input type="radio" name="guest_ratings" id="good" value="good" > 
+                                <input type="radio" name="guest_ratings" id="good" value="3" > 
                                 <span>Good</span>
                             </div>
                             <div>
-                                <input type="radio" name="guest_ratings" id="fair" value="fair" > 
+                                <input type="radio" name="guest_ratings" id="fair" value="2" > 
                                 <span>Fair</span>
                             </div>
                             <div>
-                                <input type="radio" name="guest_ratings" id="fine" value="fine" > 
+                                <input type="radio" name="guest_ratings" id="fine" value="1" > 
                                 <span>Fine</span>
                             </div>
                         </div>	
                         <div>
-                            <button id="submit_filters" onclick="filter_results()">Submit</button>
-                            <button id="reset_filters" onclick="filter_results('reset')">Reset Filter</button>
+                            <button id="submit_filters" onclick="main_filter()">Submit</button>
+                            <button id="reset_filters" onclick="load_main_default()">Reset Filter</button>
                         </div>
                     </div>
                 </div>								            
