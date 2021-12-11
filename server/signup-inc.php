@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				}
 
 				$link = password_hash($firstname, PASSWORD_DEFAULT);
-                $sql = "SELECT activate_id FROM activate_account WHERE user_id = \"\" LIMIT 1";
+                $sql = "SELECT activate_id FROM activate_account WHERE user_id = \"$id\" LIMIT 1";
 				$link = $ref_code = get_ref_code($sql_results, $sql);
 				$veri_id = password_hash($firstname, PASSWORD_DEFAULT);
 				$veri_id = substr($link,7,30);
@@ -174,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $expire_date = substr($this_date, 0, 10);
 				$sql_update = "INSERT INTO activate_account(activate_id, user_id, expire_date, veri_link)
 								VALUES(\"$veri_id\", \"$id\", \"$expire_date\", \"$link\")";
-				if (!$connection->query($sql_update)){
+				if ($connection->query($sql_update)){
 					$name = "Obocircle (Auto-generated-mail)";
 					$subject = "Account Activation link";
 					$email = "no-reply@obocircle.com";
@@ -187,7 +187,7 @@ Please use the code below to activate your account
 " . $link . "
 
 
-
+GxT2YBJCAL211211003335.jpg
 Copyright © " . date("Y") . " Obocircle.com | All rights reserved
 				info@obocircle.com";
 

@@ -72,33 +72,35 @@
 		FOREIGN KEY (image_id) REFERENCES images (image_id) ON DELETE CASCADE
 	);
         
-    CREATE TABLE STAR_AND_SCALE_RATING (
+    CREATE TABLE star_and_scale_rating (
     	rate_id VARCHAR (20) NOT NULL,
 		accommo_id VARCHAR (40) NOT NULL,
 		stars_values TEXT,
 		scale_values TEXT,
         rate_counter VARCHAR (3),
+        stars_main float not null default 0,
+        scale_main float not null default 0,
 		PRIMARY KEY (accommo_id, rate_id),
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);
     
-    CREATE TABLE RATE_LOCATION (
+    CREATE TABLE rate_location (
     	location_id VARCHAR (10) NOT NULL PRIMARY KEY,
 		location_values TEXT
 	);    
-    CREATE TABLE RATE_SERVICES (
+    CREATE TABLE rate_services (
     	services_id VARCHAR (10) NOT NULL PRIMARY KEY,
 		services_values TEXT
 	);    
-    CREATE TABLE RATE_ROOMS (
+    CREATE TABLE rate_rooms (
     	rooms_id VARCHAR (10) NOT NULL PRIMARY KEY,
 		rooms_values TEXT
 	);    
-    CREATE TABLE RATE_STUFF (
+    CREATE TABLE rate_stuff (
     	stuff_id VARCHAR (10) NOT NULL PRIMARY KEY,
 		stuff_values TEXT
 	);
-    CREATE TABLE AVERAGE_RATINGS (
+    CREATE TABLE average_ratings (
     	accommo_id VARCHAR (40) NOT NULL,
     	location_id VARCHAR (10) NOT NULL,
     	services_id VARCHAR (10) NOT NULL,
@@ -150,11 +152,11 @@
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
 	);
 
-    CREATE TABLE FAQs(
+    CREATE TABLE faqs(
         question_id VARCHAR (10) NOT NULL PRIMARY KEY,
         question VARCHAR (150) NOT NULL
     );
-    CREATE TABLE QUESTION_ANSWERS(
+    CREATE TABLE question_answer(
         question_id VARCHAR (10) NOT NULL,
         accommo_id VARCHAR (40) NOT NULL,
         answer VARCHAR (150) NOT NULL,
@@ -163,7 +165,7 @@
 		FOREIGN KEY (accommo_id) REFERENCES accommodations (id) ON DELETE CASCADE
     )
         
-    CREATE TABLE TESTIMONIALS(
+    CREATE TABLE testimonials(
         user_id VARCHAR (45) NOT NULL PRIMARY KEY,
         testimonial VARCHAR (300) NOT NULL,
         organization VARCHAR (20) NOT NULL,

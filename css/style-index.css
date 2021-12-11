@@ -174,4 +174,7 @@
         width: 98%;
         margin: 4% 1%;
     }
+    #accommodations_by_cities .accommodations_by_cities .city .image .city_details {
+        left: auto;
+    }
 }
