@@ -63,7 +63,7 @@
                 $surname = (preg_match('/^[a-zA-Z\']+$/' , $row['last_name'])) ? check_inputs($row['last_name']) : "";                 
                 $phone = (preg_match('/\d{10}/' , $row['phone'])) ? check_inputs($row['phone']) : "";                 
                 $email = (filter_var($row['email'], FILTER_VALIDATE_EMAIL)) ? check_inputs($row['email']) : ""; 
-                $gender = preg_match('/^[mfMF]+$/' , $row['gender'])) ? $row['gender'] : "";
+                $gender = (preg_match('/^[mfMF]+$/' , $row['gender'])) ? $row['gender'] : "";
                 $address = (preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,]+$/' , $row['address'])) ? check_inputs($row['address']) : "";
                 if($address != "") $new_address = explode("<br>", $address);
 			} 

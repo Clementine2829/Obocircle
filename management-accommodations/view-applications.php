@@ -127,8 +127,8 @@
             <div id="application_head">
                 <div class="sub_head">
                     <div class="radio_btns">
-                        <input type="radio" name="results" value="accepted" id="new_results" checked> <strong>Accepted results</strong><br>
-                        <input type="radio" name="results" value="pending" id="other_results"> <strong>Other results</strong>
+                        <input type="radio" name="results" value="pending" id="other_results" checked> <strong>Other applications<br></strong>
+                        <input type="radio" name="results" value="accepted" id="new_results"> <strong>Accepted applications</strong>
                     </div>
                 </div>
                 <div class="sub_head" style="text-aligh: right">
@@ -280,7 +280,6 @@
                     //switch between showing new results and accepted results
                     //use the same page to display the results i.e. this function load_data(sort="", sort_by="", type="new")
                     //for us type agr is "accepted"
-                    console.log(action);
                     if($("#new_results").is(":checked")){
                         load_data("", "", "accepted");
                     }else{

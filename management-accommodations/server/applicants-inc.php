@@ -124,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 		$results = $sql_results->results_applicaations($sql);
 		if($results->num_rows > 0){
 			if($sql_type != "accepted")
-				echo '<strong class="nb">NB!</strong> <span class="nb">Some information might be hidden for security reasons!</span>';
+				echo '<strong class="nb" style="float: left">NB!</strong> <span class="nb">Some information might be hidden for security reasons!</span>';
 			?>
 			<table>
                 <colgroup>
@@ -171,8 +171,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         $id = $row['id'];
                         $contact_mode = $row['communication_method'];
                         $status = $row['a_status'];
-                        if($sql_type == "accepted") $get_date = str_replace("-", "/", substr($row['reg_date'], 0, 10));
-                        else  $get_date = $row['reg_date'];
+                        $get_date = date("d/m/y", strtotime(substr($row['reg_date'], 0, 10)));
 
                         if($payment == 1) $payment = "NSFAS";
                         else if($payment == 2) $payment = "BURSARY";
