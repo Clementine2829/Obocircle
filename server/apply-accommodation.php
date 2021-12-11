@@ -51,28 +51,20 @@
 		}
 		if(isset($_SESSION['s_id']) && preg_match('/^[a-zA-Z0-9]+$/' , $_SESSION['s_id'])){
 			$id = $_SESSION['s_id'];
-			$sql = "SELECT first_name, last_name, gender, email, phone
-					FROM users WHERE id = \"$id\" LIMIT 1";
+			$sql = "SELECT users.first_name, users.last_name, users.gender, users.emailusers., phone
+					FROM (users 
+                        LEFT JOIN users_extended ON users.id = address.user_id)
+                    WHERE users.id = \"$id\" LIMIT 1";
 			$sql_results = new SQL_results();
 			$results = $sql_results->results_profile($sql);
 			if($results->num_rows > 0){
 				$row = $results->fetch_assoc();
-                if(preg_match('/^[a-zA-Z\']+$/' , $row['first_name'])) $names = check_inputs($row['first_name']);
-                if(preg_match('/^[a-zA-Z\']+$/' , $row['last_name'])) $surname = check_inputs($row['last_name']);
-                if(preg_match('/\d{10}/' , $row['phone'])) $phone = check_inputs($row['phone']);
-                if(filter_var($row['email'], FILTER_VALIDATE_EMAIL)) $email = check_inputs($row['email']);
-                if(preg_match('/^[mfMF]+$/' , $row['gender'])) $gender = $row['gender'];
-
-                $sql = "SELECT address
-                        FROM users_extended 
-                        WHERE user_id = \"$id\" 
-                        LIMIT 1";
-                $sql_results = new SQL_results();
-                $results = $sql_results->results_profile($sql);
-                if($results->num_rows > 0){
-                    $row = $results->fetch_assoc();
-                    $address = (preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,]+$/' , $row['address'])) ? $row['address'] : "";
-                }
+                $names = (preg_match('/^[a-zA-Z\']+$/' , $row['first_name'])) ? check_inputs($row['first_name']) : "";                 
+                $surname = (preg_match('/^[a-zA-Z\']+$/' , $row['last_name'])) ? check_inputs($row['last_name']) : "";                 
+                $phone = (preg_match('/\d{10}/' , $row['phone'])) ? check_inputs($row['phone']) : "";                 
+                $email = (filter_var($row['email'], FILTER_VALIDATE_EMAIL)) ? check_inputs($row['email']) : ""; 
+                $gender = preg_match('/^[mfMF]+$/' , $row['gender'])) ? $row['gender'] : "";
+                $address = (preg_match('/^[a-zA-Z0-9\<\>\s\@\'\.\,]+$/' , $row['address'])) ? check_inputs($row['address']) : "";
                 if($address != "") $new_address = explode("<br>", $address);
 			} 
 		}

@@ -1,6 +1,6 @@
 <?php session_start();
 $stars = $location = $service = $rooms = $stuff = $scale = $payload = $user = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] != "POST"){
 	if(isset($_REQUEST['stars']) && preg_match('/[12345]/', $_REQUEST['stars']))
 		$stars = check_inputs($_REQUEST["stars"]);
 	else return;
@@ -56,11 +56,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     $star_values[$i] = $stars;
                     $scale_values[$i] = $scale;
                   
+                    $st = $star_values;
+                    $sc = $scale_values;
+                    for($j = 0; $j < ($rate_count-1); $j++){
+                        $stars = $stars + $st[$j];
+                        $scale = $scale + $sc[$j];
+                    }
+                    $stars = (number_format($stars,1) / $rate_count);
+                    $scale = (number_format($scale,1) / $rate_count); 
+
                     $temp_star_values = implode(",", $star_values);
                     $temp_scale_values = implode(",", $scale_values);
                     $sql = "UPDATE star_and_scale_rating 
                             SET stars_values = \"$temp_star_values\",
-                                scale_values = \"$temp_scale_values\"
+                                scale_values = \"$temp_scale_values\",
+                                stars_main = \"$stars\",
+                                scale_main = \"$scale\"
                             WHERE accommo_id = \"$payload\"";
                     break;
                 }else{
@@ -72,11 +83,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $temp_scale_values = $row['scale_values'] . $scale . ",";
             $temp_names .= $user . ",";
             $rate_count++;
+            $st = explode(",", $temp_star_values);
+            $sc = explode(",", $temp_scale_values);
+            for($i = 0; $i < ($rate_count-1); $i++){
+                $stars = $stars + $st[$i];
+                $scale = $scale + $sc[$i];
+            }
+            $stars = (number_format($stars,1) / $rate_count);
+            $scale = (number_format($scale,1) / $rate_count); 
             $sql = "UPDATE star_and_scale_rating 
                     SET stars_values = \"$temp_star_values\",
                     scale_values = \"$temp_scale_values\",
                     names = \"$temp_names\",
-                    rate_counter = \"$rate_count\"
+                    rate_counter = \"$rate_count\",
+                    stars_main = \"$stars\",
+                    scale_main = \"$scale\"
                     WHERE accommo_id = \"$payload\"";            
         }
     }else{
@@ -84,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $temp_scale = $scale . ",";
         $user = $user . ",";
         $sql = "INSERT INTO star_and_scale_rating
-                VALUES (\"$id\", \"$payload\", \"$temp_stars\", \"$temp_scale\", \"$user\", \"1\")";
+                VALUES (\"$id\", \"$payload\", \"$temp_stars\", \"$temp_scale\", \"$user\", \"1\", \"$stars\", \"$scale\")";
     }
     if ($connection->query($sql)){
         //write the next ones from  here

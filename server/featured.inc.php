@@ -47,7 +47,7 @@
         }
         
         $sql .= " ORDER BY $sort_by DESC LIMIT 5 OFFSET $next_page";
-        echo $sql;
+        //echo $sql;
         require("../includes/conn.inc.php");
 		$sql_results = new SQL_results();
 		$results = $sql_results->results_accommodations($sql);
