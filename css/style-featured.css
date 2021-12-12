@@ -242,4 +242,39 @@
         margin-top: 2%;
         margin-right: 2%;
     }
+
+    #display_results {
+        width: 97%;
+    }
+    #display_results .accommodations .accommodation {
+        height: 200px;   
+    }
+    #display_results .accommodations .accommodation:last-child {
+        margin-bottom: 5%;
+    }
+    #display_results .accommodations .accommodation .images {
+        height: 140px;   
+        width: 40%;
+        float: left;
+    }
+    #display_results .accommodations .accommodation .details {
+        width: 60%;   
+        float: left;
+    }
+    #display_results .accommodations .accommodation .view_deal {
+        width: 100%; 
+        float: left;
+    }
+    #display_results .accommodations .accommodation .view_deal div{
+        display: none;
+    }
+    #display_results .accommodations .accommodation .view_deal .view_deal_btn {
+        display: inline;
+        float: right;
+        margin-left: 4%;
+        padding: 2% 6%;
+        margin-top: -4%;
+        margin-right: 2%;
+        margin-bottom: 1%;
+    }
 }

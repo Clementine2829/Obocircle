@@ -20,7 +20,7 @@ $(document).ready(function(){
 });
 function load_main_default(url="", search=""){
     url = "./server/featured.inc.php?next_page=" + page + "&search=" + search + url + "&resolution=" + window.innerWidth;
-    alert(url);
+    //alert(url);
     get_btns();
     send_data(url, displayer, "#display_results");
 }
@@ -69,17 +69,41 @@ var marker = new google.maps.Marker({
     title: 'Truman House' 
 });
 }
-function this_map(){
-var my_latlng = {lat: -26.199070, lng: 28.058319};
+// The following example creates five accessible and
+// focusable markers.
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("accommodation_map"), {
+    zoom: 14,
+    center: { lat: -26.202493, lng: 28.043779 },
+  });
+  // Set LatLng and title text for the markers. The first marker (Boynton Pass)
+  // receives the initial focus when tab is pressed. Use arrow keys to
+  // move between markers; press tab again to cycle through the map controls.
+  const tourStops = [
+    [{ lat: -26.199070, lng: 28.058319 }, "Boynton Pass"],
+    [{ lat: -26.198563, lng: 28.049817 }, "Airport Mesa"],
+    [{ lat: -26.196301, lng: 28.048787 }, "Chapel of the Holy Cross"],
+    [{ lat: -26.200580, lng: 28.057721 }, "Red Rock Crossing"],
+    [{ lat: -26.201778, lng: 28.032548 }, "Bell Rock"],
+  ]
+  // Create an info window to share between markers.
+  const infoWindow = new google.maps.InfoWindow();
 
-var map = new google.maps.Map(document.getElementById('google_map_div'), {
-    zoom: 8, 
-    center:my_latlng
-})
+  // Create the markers.
+  tourStops.forEach(([position, title], i) => {
+    const marker = new google.maps.Marker({
+      position,
+      map,
+      title: `${i + 1}. ${title}`,
+      label: `${i + 1}`,
+      optimized: false,
+    });
 
-var marker = new google.maps.Marker({
-    position: my_latlng, 
-    map: map,
-    title: 'Truman House' 
-});
-}
+    // Add a click listener for each marker, and set up the info window.
+    marker.addListener("click", () => {
+      infoWindow.close();
+      infoWindow.setContent(marker.getTitle());
+      infoWindow.open(marker.getMap(), marker);
+    });
+  });
+}     

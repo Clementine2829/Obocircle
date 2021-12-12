@@ -1,0 +1,54 @@
+<!-- page.html -->
+<!doctype html>
+<html>
+  <head>
+    <title>Which city am I in?</title>
+    <script src="//geoip-js.com/js/apis/geoip2/v2.1/geoip2.js"></script>
+  </head>
+
+  <body>
+    <p>
+       Where am I?
+    </p>
+
+    <p>
+      You are in <span id="city"></span>.
+    </p>
+      <script type="text/javascript">
+      
+      // demo.js
+var fillInPage = (function() {
+  var updateCityText = function(geoipResponse) {
+
+    /*
+     * It's possible that we won't have any names for this city.
+     * For language codes with a special character such as pt-BR,
+     * replace names.en with names['pt-BR'].
+    */
+    var cityName = geoipResponse.insights.names.en || 'your city';
+
+    document.getElementById('city').innerHTML = cityName
+  };
+
+  var onSuccess = function(geoipResponse) {
+    updateCityText(geoipResponse);
+  };
+
+  // If we get an error, we will display an error message
+  var onError = function(error) {
+    document.getElementById('city').innerHTML = 'an error!  Please try again..'
+  };
+
+  return function() {
+    if (typeof geoip2 !== 'undefined') {
+      geoip2.city(onSuccess, onError);
+    } else {
+      document.getElementById('city').innerHTML = 'a browser that blocks GeoIP2 requests'
+    }
+  };
+}());
+
+fillInPage();
+      </script>
+  </body>
+</html>
