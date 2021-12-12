@@ -1,0 +1,94 @@
+.form_container{
+    margin: 1% auto;
+    margin-top: 5%;
+    width: 100%;
+    float: left;
+}	
+.form_container div:nth-child(1){
+    width: 100%;
+    float: left;
+}	
+.form_container div:nth-child(1) p{
+    background-image: linear-gradient(to right, rgba(100, 100, 100, .8), rgba(50, 50, 50, 0));
+    border-left: 3px solid #007bff;
+    padding: 3px 5px;
+    color: white;
+}
+.form_container div:nth-child(2){
+    width: 100%;
+    float: left;
+}	
+.form_container form div:nth-child(1),
+.form_container form div:nth-child(2),
+.form_container form div:nth-child(3){
+    width: 50%;
+    float: left;
+    padding-right: 10%;
+    margin-bottom: 2%
+}
+.form_container form div:nth-child(1) div,
+.form_container form div:nth-child(2) div{
+    width: 85%;
+}
+.form_container form div:nth-child(1) input,
+.form_container form div:nth-child(2) textarea{
+    width: 95%;
+    border: none;
+    border-left: 3px solid #007bff;
+    background-color: rgba(220, 220, 220, .8);
+    padding: 2px 5px;
+    margin-bottom: 2%; 
+
+}
+.form_container form div:nth-child(1) input:active,
+.form_container form div:nth-child(1) input:focus,
+.form_container form div:nth-child(2) textarea:active,
+.form_container form div:nth-child(2) textarea:focus{
+    outline: none;
+}
+.form_container form div:nth-child(2) textarea{
+    width: 95%;
+    height: 165px;
+}
+.form_container form input[type=button]{
+    padding: 5px 12px;
+    background-color: lightblue;
+    border: none;
+}
+.form_container form input[type=button]:hover{
+    background-color: #007bff;
+}
+@media only screen and (max-width: 800px){
+    .form_container{
+        margin: 4%;
+        margin-top: 6%;
+    }
+    .form_container div:nth-child(1) p {
+        padding: 3px 8px;
+        color: black;
+    }
+    .form_container div:nth-child(2) {
+        width: 100%;
+    }
+    .form_container form div:nth-child(1), 
+    .form_container form div:nth-child(2) {
+        width: 100%;
+    }
+
+    .form_container form div:nth-child(1) div, .form_container form div:nth-child(2) div {
+        width: 65%;
+    }
+    #subject {
+        width: 95%;
+    }
+    .form_container form div:nth-child(2) textarea {
+        height: 120px;
+    }
+    .form_container div:nth-child(3) {
+        width: 100%;
+        margin-top: 2%;
+    }
+    .form_container div:nth-child(3) h4, .form_container div:nth-child(3) p {
+        margin-left: 1%;
+    }
+}
