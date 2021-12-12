@@ -2,7 +2,7 @@
     <?php require_once('./header.php'); ?>
     <!--end header-->
 
-    <link rel="stylesheet" type="text/css" href="./css/activate-contact-us.css">
+    <link rel="stylesheet" type="text/css" href="./css/style-contact-us.css">
     <div class="row">
         <div class="col-sm-1" ></div>
         <div class="col-sm-10" >

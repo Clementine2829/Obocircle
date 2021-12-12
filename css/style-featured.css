@@ -199,6 +199,53 @@
 #display_results .accommodations .accommodation .view_deal .price{
     margin-left: 20%;   
 }
+/*************************google maps *******************************/
+#accommodation_map .accommodations .accommodation{
+    width: 350px;
+    height: 100px;
+    border-radius: 12px;
+}
+#accommodation_map .accommodations .accommodation .image{
+    width: 36%;
+    height: 100%;
+    float: left;
+    border-top-left-radius: 12px;
+
+}
+#accommodation_map .accommodations .accommodation .details{
+    width: 64%;
+    float: left;
+    padding: 1% 2%;
+}
+#accommodation_map .accommodations .accommodation .details h4,
+#accommodation_map .accommodations .accommodation .details p{
+    margin-bottom: 0px;
+}
+#accommodation_map .accommodations .accommodation .details .location{
+    float: left;
+}
+#accommodation_map .accommodations .accommodation .details .stars .checked{
+    color: orange;
+}
+#accommodation_map .accommodations .accommodation .details .nsfas span {
+    background-color: red;
+    border-radius: 7px;
+    color: white;
+    font-size: 15px;
+    padding: 3px 3%;
+    margin-top: 5px;
+    width: auto;
+}
+#accommodation_map .accommodations .accommodation .details .view_deal_btn{
+    float: right;
+    background-color: gray;
+    padding: 1% 3%;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    box-shadow: 2px 2px 7px 1px;
+    margin-bottom: 1%;
+}
 @media only screen and (max-width: 500px){
     #main_container{
         display: none;
@@ -276,5 +323,14 @@
         margin-top: -4%;
         margin-right: 2%;
         margin-bottom: 1%;
+    }
+
+    /**********************google maps *********************/
+    #accommodation_map .accommodations .accommodation{
+        width: 100%;
+        height: 100px;
+        border-radius: 12px;
+        bottom: 0;
+        text-align: center;
     }
 }

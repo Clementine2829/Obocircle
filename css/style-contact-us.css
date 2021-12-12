@@ -76,13 +76,13 @@
     }
 
     .form_container form div:nth-child(1) div, .form_container form div:nth-child(2) div {
-        width: 65%;
+        width: 100%;
     }
     #subject {
         width: 95%;
     }
     .form_container form div:nth-child(2) textarea {
-        height: 120px;
+        height: 150px;
     }
     .form_container div:nth-child(3) {
         width: 100%;

@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- JQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="js/jquery-3.4.1.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		})
+	</script>
+	<script src="https://kit.fontawesome.com/3e0b52ccd4.js" crossorigin="anonymous"></script>      
     <title>Custom Popups</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
     <style type="text/css">
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -72,6 +91,55 @@ body {
     </style>
     </head>
   <body>
+      <style type="text/css">
+          #map .accommodations .accommodation{
+              width: 350px;
+              height: 100px;
+              border-radius: 12px;
+          }
+          #map .accommodations .accommodation .image{
+              width: 36%;
+              height: 100%;
+              float: left;
+              border-top-left-radius: 12px;
+          
+          }
+          #map .accommodations .accommodation .details{
+              width: 64%;
+              float: left;
+              padding: 1% 2%;
+          }
+          #map .accommodations .accommodation .details h4,
+          #map .accommodations .accommodation .details p{
+              margin-bottom: 0px;
+          }
+          #map .accommodations .accommodation .details .location{
+            float: left;
+          }
+          #map .accommodations .accommodation .details .stars .checked{
+              color: orange;
+          }
+          #map .accommodations .accommodation .details .nsfas span {
+            background-color: red;
+            border-radius: 7px;
+            color: white;
+            font-size: 15px;
+            padding: 3px 3%;
+            margin-top: 5px;
+            width: auto;
+          }
+          #map .accommodations .accommodation .details .view_deal_btn{
+                float: right;
+                background-color: gray;
+                padding: 1% 3%;
+                color: white;
+                border: none;
+                border-radius: 7px;
+                box-shadow: 2px 2px 7px 1px;
+                margin-bottom: 1%;
+          }
+      </style>
+          
     <div id="map"></div>
     <div id="content">Hello world!</div>
 
@@ -86,17 +154,45 @@ body {
 function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 14,
-    center: { lat: 34.84555, lng: -111.8035 },
+    center: { lat: -26.199070, lng: 28.058319 },
   });
+    let div_container = '<div class="accommodations">';
+        div_container += '<div class="accommodation">';
+        div_container += '<div class="image">';
+        div_container += '<img src="./images/accommodation/African House/res1.jpg" alt="" style="width: 100%; height: 100%;">';
+        div_container += '</div>';
+        div_container += '<div class="details">';
+        div_container += '<h4>African House</h4>';
+        div_container += '<span class="stars">';
+        div_container += '<span class="fas fa-star checked"></span>';
+        div_container += '<span class="fas fa-star checked"></span>';
+        div_container += '<span class="fas fa-star checked"></span>';
+        div_container += '<span class="fas fa-star" ></span>';
+        div_container += '<span class="fas fa-star" ></span>';
+        div_container += '</span>';
+        div_container += '<p class="nsfas">';
+        div_container += '<span>NSFAS Accredited</span>';
+        div_container += '</p>';
+        div_container += '<p class="location">';
+        div_container += '<span class="fas fa-map-marker-alt"></span>';
+        div_container += '<strong>Johannesburg</strong>';
+        div_container += '</p>';
+        div_container += '<button class="view_deal_btn">';
+        div_container += 'VIEW DEAL';
+        div_container += '<span class="fas fa-angle-right"></span>';
+        div_container += '</button>';
+        div_container += '</div>  ';                
+        div_container += '</div>';
+        div_container += '</div>';
   // Set LatLng and title text for the markers. The first marker (Boynton Pass)
   // receives the initial focus when tab is pressed. Use arrow keys to
   // move between markers; press tab again to cycle through the map controls.
   const tourStops = [
-    [{ lat: 34.8791806, lng: -111.8265049 }, "Boynton Pass"],
-    [{ lat: 34.8559195, lng: -111.7988186 }, "Airport Mesa"],
-    [{ lat: 34.832149, lng: -111.7695277 }, "Chapel of the Holy Cross"],
-    [{ lat: 34.823736, lng: -111.8001857 }, "Red Rock Crossing"],
-    [{ lat: 34.800326, lng: -111.7665047 }, "Bell Rock"],
+    [{ lat: -26.199716, lng: 28.051702 }, div_container],
+    [{ lat: -26.194608, lng: 28.034257 }, div_container],
+    [{ lat: -26.200038, lng: 28.040672 }, div_container],
+    [{ lat: -26.197651, lng: 28.041348 }, div_container],
+    [{ lat: -26.192629, lng: 28.042639 }, div_container],
   ];
   // Create an info window to share between markers.
   const infoWindow = new google.maps.InfoWindow();
@@ -110,11 +206,10 @@ function initMap() {
   tourStops.forEach(([position, title], i) => {
     const marker = new google.maps.Marker({
       position,
-      label: "Afric",
+      label: "R2500",
       map,
       icon: image,
-      title: `${i + 1}. ${title}`,
-      label: `${i + 1}`,
+      title: `${title}`,
       optimized: false,
     });
 

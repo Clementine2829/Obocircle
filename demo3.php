@@ -148,7 +148,12 @@ function initMap() {
     new google.maps.LatLng(-33.866, 151.196),
     document.getElementById("content")
   );
-  popup.setMap(map);
+   let popup2 = new Popup(
+     new google.maps.LatLng(34.8791806, -111.8265049),
+     document.getElementById("content")
+  );
+  //popup.setMap(map);
+  popup2.setMap(map);
 }      
       </script>
     </body>
