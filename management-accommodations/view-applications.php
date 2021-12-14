@@ -107,8 +107,8 @@
                 #results table colgroup col:nth-child(8) {
                     width: auto;
                 }
-                #results table colgroup col:nth-child(8) {
-                    max-width: 25%;
+                #results table colgroup col:nth-child(9) {
+                    width: 25%;
                 }
                 #results table colgroup col:nth-child(6),
                 #results table colgroup col:nth-child(7) {
@@ -143,6 +143,18 @@
             </div>
             <div id="results" ></div>
 
+
+
+
+
+
+
+<div id="cle"></div>
+
+
+
+
+
             <script type="text/javascript">
                 $(document).ready(function(){
                     load_data();
@@ -151,6 +163,7 @@
         //				disable_btns();
                     });
                     $("#application_head .sub_head .radio_btns :radio").click(function(){show_students();})
+                    $("#sort_results").change(function(){show_students();})
                 });
 
                 function get_data(){
@@ -161,6 +174,7 @@
                 function load_data(sort="", sort_by="", apps_type="") {
                     let payload = $('#payload').val();
                     let url = "./management-accommodations/server/applicants-inc.php?payload=" + payload + "&sort=" + sort + "&sort_by=" + sort_by + "&apps_type=" + apps_type;
+                    
                     let loc = '#results';
                     send_data(url, displayer_helper, loc);
                 }
@@ -203,10 +217,6 @@
                     }
                 }
                 function accept_application(){
-        //			alert("Page still under construction"); return;
-        //			alert('An email has been sent to all those applicants their results were successful');
-                    //get all the ids of people selected and send them through
-
                     var counter = document.getElementsByClassName('s_all');
                     let apps = "";
                     for(let i = 0; i < counter.length; i++){
@@ -216,38 +226,18 @@
                     }
                     if(apps){
                         let payload = $('#payload').html();
-                        let url = "./accepted-results.php?payload=" + payload + "&data=" + apps.substr(0, apps.length - 1);
-                        let xhttp = new XMLHttpRequest();
-                        xhttp.onreadystatechange = function() {
-                            if (this.readyState > 0 && this.readyState < 4) {
-                                $('#action button:nth-child(2)').html("Loading..")
-                                $('#action button').prop('disabled', true);
-                            }
-                            if (this.readyState == 4 && this.status == 200){
-                                $('#action button').prop('disabled', false);
-                                $('#action button:nth-child(2)').html("Accept");
-                                $('#clement').html(this.responseText);
-                                if(this.responseText == ""){	
-        /*							for(let i = 0; i < counter.length; i++){
-                                        if(document.getElementsByClassName('s_all')[i].checked){
-                                            document.getElementByTagName('tr')[i].style.display = "false";
-                                        }
-                                    }
-        */							alert("Data accepted successfully.");
-                                    $('#show_students button').html('Show new results');
-                                    load_data("", "", "accepted");
-                                    //more details, either them that you send each individual emals letting them know 
-                                    //and let them know where to find the new data of the individuas, 
-                                    //either a new page where they will find the accepted client or send the data to their database
-                                    //for them to work it on their own    
-                                }else{
-                                    //error occured 
-                                }
-                            }
-                        };
-                        xhttp.open("POST", url, true);
-                        xhttp.send();				
+                        let url = ".management-accommodation/server/accepted-results.php?payload=" + payload + "&data=" + apps.substr(0, apps.length - 1);
+                        send_data(url, accept_displayer, " ", "#action button:nth-child(2)", "Loading..", '#action button:nth-child(2)');
                     }
+                }
+                function accept_displayer(data, loc){
+                    $("#cle").html(data);
+                    if(data == ""){
+                        alert("Data accepted successfully and emails were sent to all selected individuals");
+                        load_data("", "", "accepted");
+                    }else alert(data);
+                    $('#action button').prop('disabled', false);
+                    $('#action button:nth-child(2)').html("Accept");
                 }
                 function decline_application(){
                     let con = confirm("Are you sure you want to decline the results selected?");
@@ -280,10 +270,11 @@
                     //switch between showing new results and accepted results
                     //use the same page to display the results i.e. this function load_data(sort="", sort_by="", type="new")
                     //for us type agr is "accepted"
+                    let sort = $("#sort_results").val();
                     if($("#new_results").is(":checked")){
-                        load_data("", "", "accepted");
+                        load_data(sort, "", "accepted");
                     }else{
-                        load_data("", "", "");
+                        load_data(sort, "", "");
                     }
 
                 }

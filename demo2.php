@@ -119,24 +119,28 @@ body {
           #map .accommodations .accommodation .details .stars .checked{
               color: orange;
           }
+          #map .accommodations .accommodation .details .nsfas {
+              margin: 1% auto;
+          }
           #map .accommodations .accommodation .details .nsfas span {
             background-color: red;
             border-radius: 7px;
             color: white;
-            font-size: 15px;
-            padding: 3px 3%;
+            font-size: 14px;
+            padding: 1px 3%;
             margin-top: 5px;
             width: auto;
           }
           #map .accommodations .accommodation .details .view_deal_btn{
                 float: right;
                 background-color: gray;
-                padding: 1% 3%;
+                padding: 2% 4%;
+                margin-top: 2%;
                 color: white;
                 border: none;
                 border-radius: 7px;
                 box-shadow: 2px 2px 7px 1px;
-                margin-bottom: 1%;
+                margin-bottom: 0%;
           }
       </style>
           
@@ -194,6 +198,7 @@ function initMap() {
     [{ lat: -26.197651, lng: 28.041348 }, div_container],
     [{ lat: -26.192629, lng: 28.042639 }, div_container],
   ];
+    console.log(tourStops);
   // Create an info window to share between markers.
   const infoWindow = new google.maps.InfoWindow();
 
@@ -210,7 +215,7 @@ function initMap() {
       map,
       icon: image,
       title: `${title}`,
-      optimized: false,
+      optimized: true,
     });
 
     // Add a click listener for each marker, and set up the info window.

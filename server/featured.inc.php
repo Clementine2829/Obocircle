@@ -21,7 +21,7 @@
             else if($_REQUEST['sort'] == "price") $sort_by = " accommodations.id ";
             else if($_REQUEST['sort'] == "recommendation") $sort_by = " star_and_scale_rating.scale_main ";            
         }
-        $sql = "SELECT accommodations.*, rooms.*, address.main_address 
+        $sql = "SELECT accommodations.*, rooms.*, address.main_address, address.geolocation 
                 FROM (((accommodations
                     INNER JOIN address ON accommodations.id = address.accommo_id)
                     INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
@@ -64,6 +64,7 @@
 				$temp_arr = array("id" => $row['id'],
 								"name" => $row['name'], 
 								"images" => "", 
+								"image" => "", 
 								"nsfas" => $row['nsfas'], 
 								"room" => array("id" =>$row['room_id'],
                                                  "single_available" =>$row['single_sharing'],
@@ -74,7 +75,7 @@
                                                  "muti_sharing_amount" =>"Amount N/A"),
 								"manager" => $row['manager'],
 								"stars" => 0,
-								"map_coordinates" => "32.0.252.3, -6.36.005",
+								"coordinates" => $row['geolocation'],
 								"ratings" => 0,
 								"reviews" => 0,
 								"location" => $row['main_address'],
@@ -82,6 +83,7 @@
 				array_push($accommodations, $temp_arr);
 			}
 		}else {
+            if(isset($_REQUEST['map']) && $_REQUEST['map'] == "true") return; //google maps requires coordinates 
 			echo('<style type="text/css">
 						#Contents{
 							font-size: 20px;
@@ -130,6 +132,10 @@
                     $accommodations[$accommodation]['ratings'] = $sum_scale; 
                     $accommodations[$accommodation]['reviews'] = $counter; 
                 }            
+            }
+            if(isset($_REQUEST['map']) && $_REQUEST['map'] == "true"){
+                require_once '../maps-body.php';   
+                return; //google maps requires coordinates 
             }
             ?>
                 <div class="accommodations">

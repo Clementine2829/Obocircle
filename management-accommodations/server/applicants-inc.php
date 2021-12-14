@@ -1,39 +1,38 @@
-<?php    
-    session_start();
-	function get_contact($contact, $sql_type){
-		//hide some information so that they cannot contact the people themselves without responding first
-		if($sql_type == "accepted"){
-			if(preg_match('/\d{10}/', $contact))
-				return "(" . substr($contact, 0, 3) . ")-" . substr($contact, 3, 3) . "-" . substr($contact, 6); 
-			else return $contact;
-		}
-		if(preg_match('/\d{10}/', $contact)){
-			//number phone
-			$contact = "(" . substr($contact, 0, 3) . ") *** *" . substr($contact, 7, 3); 
-		}else if(filter_var($contact, FILTER_VALIDATE_EMAIL)){
-			//EMAIL 
-			$temp_email = $contact;
-			$indexOfAt = strpos($temp_email, '@');
-			$counter = strpos($temp_email, '@') - 3;
-			if($counter > 1){
-				$temp_email = substr($contact, 0, 3);
-				for($i = 0; $i < $counter; $i++){
-					$temp_email .= "*";
-				}
-			}else{
-				$temp_email = substr($contact, 0, 1);
-				if($counter == 0) $counter = 2;
-				else if($counter == -1) $counter = 1;
-				else $counter = 3;
-				for($i = 0; $i < $counter; $i++){
-					$temp_email .= "*";
-				}
-			}
-			$temp_email .= substr($contact, $indexOfAt);
-			$contact = $temp_email;
-		}
-		return $contact;
-	}
+<?php session_start();
+function get_contact($contact, $sql_type){
+    //hide some information so that they cannot contact the people themselves without responding first
+    if($sql_type == "accepted"){
+        if(preg_match('/\d{10}/', $contact))
+            return "(" . substr($contact, 0, 3) . ")-" . substr($contact, 3, 3) . "-" . substr($contact, 6); 
+        else return $contact;
+    }
+    if(preg_match('/\d{10}/', $contact)){
+        //number phone
+        $contact = "(" . substr($contact, 0, 3) . ") *** *" . substr($contact, 7, 3); 
+    }else if(filter_var($contact, FILTER_VALIDATE_EMAIL)){
+        //EMAIL 
+        $temp_email = $contact;
+        $indexOfAt = strpos($temp_email, '@');
+        $counter = strpos($temp_email, '@') - 3;
+        if($counter > 1){
+            $temp_email = substr($contact, 0, 3);
+            for($i = 0; $i < $counter; $i++){
+                $temp_email .= "*";
+            }
+        }else{
+            $temp_email = substr($contact, 0, 1);
+            if($counter == 0) $counter = 2;
+            else if($counter == -1) $counter = 1;
+            else $counter = 3;
+            for($i = 0; $i < $counter; $i++){
+                $temp_email .= "*";
+            }
+        }
+        $temp_email .= substr($contact, $indexOfAt);
+        $contact = $temp_email;
+    }
+    return $contact;
+}
 if($_SERVER['REQUEST_METHOD'] == "POST"){    
     if(isset($_SESSION['s_id']) || isset($_SESSION['s_user_type'])){
         if($_SESSION['s_user_type'] != "premium_user"){
@@ -79,14 +78,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	$sort = "";
 	$sort_by = 1;
 
-	if(isset($_REQUEST['sort']) && preg_match('/^[1-5]+$/', $_REQUEST['sort'])){
+	if(isset($_REQUEST['sort']) && preg_match('/^[a-z\_]+$/', $_REQUEST['sort'])){
 		$sort = $_REQUEST['sort'];
-		if($sort = 1) $sort = "full_names";
-		else if($sort == 2) $sort = "gender";
-		else if($sort == 3) $sort = "institution";
-		else if($sort == 4) $sort = "payment_method";
-		else if($sort == 5) $sort = "room_type";
-//		echo "<br> Sort: " . $sort;
+		if($sort == "name") $sort = "full_names";
+		else if($sort == "payment") $sort = "payment_method";
+		else if($sort == "room") $sort = "room_type";
+		//echo "<br> Sort: " . $sort;
 	}	
 	if(isset($_REQUEST['sort_by']) && preg_match('/(1|2)/', $_REQUEST['sort_by'])){
 		$sort_by = $_REQUEST['sort_by'];
@@ -101,23 +98,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	if($sort == "" && $sort_by != 2) $sort = "full_names ASC";
 	else if($sort == "") $sort = "full_names DESC";
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		$sql = "";
+        $sql = "SELECT * 
+                FROM new_applicants
+                WHERE accommodation = \"$accommodation\" AND (a_status = 0 OR a_status = 2 OR a_status = 3 OR a_status = 4) 
+                ORDER BY $sort LIMIT 35";
+                /* 0 => no action, 1 => accepted, 2 => declined */
 		if($sql_type == "accepted"){
 			$sql = "SELECT * 
 					FROM new_applicants
 					WHERE accommodation = \"$accommodation\" AND a_status = 1 
-					GROUP BY $sort";
-					/* 0 => no action, 1 => accepted, 2 => declined */
-		}else{
-			$sql = "SELECT * 
-					FROM new_applicants
-					WHERE accommodation = \"$accommodation\" AND (a_status = 0 OR a_status = 2 OR a_status = 3 OR a_status = 4 OR a_status = 5) 
-					GROUP BY $sort";
+					ORDER BY $sort LIMIT 35";
 					/* 0 => no action, 1 => accepted, 2 => declined */
 		}
-
-		if($sql == "") $sql = "SELECT id FROM new_applicants WHERE id = 1 student_no = 2 LIMIT 1";
-
 		$client_id = $name = $gender = $email = $phone = $institution = $payment = $room = $get_date = "";
 		require_once '../../includes/conn.inc.php';
 		$sql_results = new SQL_results();
@@ -141,11 +133,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 </colgroup>
                 <tbody>
                     <tr>
-                        <?php
-                            if($sql_type != "accepted"){
-                                echo "<th></th>";
-                            }
-                        ?>
+                        <th></th>
                         <th></th>
                         <th>Name</th>
                         <th>Sex</th>
@@ -154,7 +142,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         <th>Payment mode</th>
                         <th>Preffered room type</th>
                         <th>Status</th>
-                        <th>Date</th>
+                        <th>Move in Date</th>
                     </tr>
                 <?php
                 $j = 1; //counter
@@ -171,7 +159,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         $id = $row['id'];
                         $contact_mode = $row['communication_method'];
                         $status = $row['a_status'];
-                        $get_date = date("d/m/y", strtotime(substr($row['reg_date'], 0, 10)));
+                        $get_date = date("d/m/y", strtotime(substr($row['move_in'], 0, 10)));
 
                         if($payment == 1) $payment = "NSFAS";
                         else if($payment == 2) $payment = "BURSARY";
@@ -188,11 +176,15 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         else if($contact_mode == 2)
                             $contact = get_contact($phone, $sql_type);
                         if($status == 0) 
-                            $status = "<span style=\"padding:3px 7px; background-color: yellow; border-radius:6px\">Waiting</span>";
+                            $status = "<span style=\"padding:3px 7px; color: gray; border-radius:6px\">Pending <i>your</i> approval</span>";
                         else if($status == 1) 
-                            $status = "<span style=\"padding:3px 7px; background-color: green; border-radius:6px; color: white\">Accepted</span>";
+                            $status = "<span style=\"padding:3px 7px; color: green; border-radius:6px;\">They Accepted</span>";
                         else if($status == 2) 
-                            $status = "<span style=\"padding:3px 7px; background-color: red; border-radius:6px; color: white\">Declined</span>";
+                            $status = "<span style=\"padding:3px 7px; color: red; border-radius:6px;\"><i>You</i> rejected </span>";
+                        else if($status == 3) 
+                            $status = "<span style=\"padding:3px 7px; color: blue; border-radius:6px;\">Pending Thier approval</span>";
+                        else if($status == 4) 
+                            $status = "<span style=\"padding:3px 7px; color: red; border-radius:6px;\">They rejected</span>";
 
                         echo '<tr>';
                         if($sql_type != "accepted"){
@@ -202,7 +194,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                                     <input type="hidden" class="_applicants" value="' . $client_id . '">
                                 </td>';
                         }else{
-                            echo '  <td style="border-right: 1px solid gray">' . $j . '</td>';						
+                            echo '  <td style="border-right: 1px solid gray">' . $j . '</td><td></td>';						
                         }
                         echo ' 	<td>' . $name . '</td>
                                 <td>' . $gender . '</td>
