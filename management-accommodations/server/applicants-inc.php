@@ -81,6 +81,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	if(isset($_REQUEST['sort']) && preg_match('/^[a-z\_]+$/', $_REQUEST['sort'])){
 		$sort = $_REQUEST['sort'];
 		if($sort == "name") $sort = "full_names";
+		else if($sort == "status") $sort = "a_status";
+		else if($sort == "institution") $sort = "institution";
 		else if($sort == "payment") $sort = "payment_method";
 		else if($sort == "room") $sort = "room_type";
 		//echo "<br> Sort: " . $sort;
@@ -178,11 +180,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                         if($status == 0) 
                             $status = "<span style=\"padding:3px 7px; color: gray; border-radius:6px\">Pending <i>your</i> approval</span>";
                         else if($status == 1) 
-                            $status = "<span style=\"padding:3px 7px; color: green; border-radius:6px;\">They Accepted</span>";
+                            $status = "<span style=\"padding:3px 7px; color: blue; border-radius:6px;\">They Accepted</span>";
                         else if($status == 2) 
                             $status = "<span style=\"padding:3px 7px; color: red; border-radius:6px;\"><i>You</i> rejected </span>";
                         else if($status == 3) 
-                            $status = "<span style=\"padding:3px 7px; color: blue; border-radius:6px;\">Pending Thier approval</span>";
+                            $status = "<span style=\"padding:3px 7px; color: green; border-radius:6px;\">Pending Their approval</span>";
                         else if($status == 4) 
                             $status = "<span style=\"padding:3px 7px; color: red; border-radius:6px;\">They rejected</span>";
 
@@ -212,6 +214,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 </table>';
                 if($sql_type != "accepted"){
                     ?>
+                    <div id="response" style="color: red"></div>
                     <div id="action">
                         <button style="background-color: skyblue;" onclick="select_all()">Select all</button>
                         <button style="background-color: green;" onclick="accept_application()">Accept</button>

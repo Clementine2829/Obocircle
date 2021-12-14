@@ -136,25 +136,14 @@
                     <select id="sort_results">
                         <option value="">Default</option>
                         <option value="name">Name</option>
+                        <option value="status">Status</option>
+                        <option value="institution">Institution</option>
                         <option value="payment">Payment Method</option>
                         <option value="room">Room Type</option>
                     </select>
                 </div>
             </div>
             <div id="results" ></div>
-
-
-
-
-
-
-
-<div id="cle"></div>
-
-
-
-
-
             <script type="text/javascript">
                 $(document).ready(function(){
                     load_data();
@@ -219,23 +208,25 @@
                 function accept_application(){
                     var counter = document.getElementsByClassName('s_all');
                     let apps = "";
+                    $("#response").html("");
                     for(let i = 0; i < counter.length; i++){
                         if(document.getElementsByClassName('s_all')[i].checked){
                             apps += document.getElementsByClassName('_applicants')[i].value + ",";
                         }
                     }
                     if(apps){
-                        let payload = $('#payload').html();
-                        let url = ".management-accommodation/server/accepted-results.php?payload=" + payload + "&data=" + apps.substr(0, apps.length - 1);
+                        let payload = $('#payload').val();
+                        let url = "./management-accommodations/server/accepted-results.php?payload=" + payload + "&data=" + apps.substr(0, apps.length - 1);
                         send_data(url, accept_displayer, " ", "#action button:nth-child(2)", "Loading..", '#action button:nth-child(2)');
                     }
                 }
                 function accept_displayer(data, loc){
-                    $("#cle").html(data);
+                    show_students();
                     if(data == ""){
-                        alert("Data accepted successfully and emails were sent to all selected individuals");
-                        load_data("", "", "accepted");
-                    }else alert(data);
+                        let response = "<br><span style='color: blue;'>Data accepted successfully. <br>An email has been send to all the selected individuals.</span>";
+                        $("#response").html(response);
+                    }else $("#response").html(data);
+                        
                     $('#action button').prop('disabled', false);
                     $('#action button:nth-child(2)').html("Accept");
                 }

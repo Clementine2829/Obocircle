@@ -6,7 +6,7 @@
                 return;
             }
             $user_id = $_SESSION['s_id'];
-            require("../includes/conn.inc.php");
+            require("../../includes/conn.inc.php");
             $payload = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
             if($payload == ""){
                 $sql = "SELECT id, name
@@ -42,10 +42,8 @@
 		$new_load = explode(",", $load);
 		foreach ($new_load as $new_data => $value) {
 			$temp_id = $value;
-			$nowDate = date("Y/m/d/ H:i:s");
 			$sql_update = "UPDATE new_applicants 
-						   SET a_status = 1,
-						   status_date = $nowDate
+						   SET a_status = \"3\"
 						   WHERE id = \"$temp_id\"";
 			if ($connection->query($sql_update) == true){
 				//verything is set right, send them email to let them know of this 
@@ -56,7 +54,7 @@
 						WHERE id = \"$temp_id\" AND a_status = 1
 						LIMIT 1";
 				$sql_results = new SQL_results();
-				$results = $sql_results->applications($sql);
+				$results = $sql_results->results_applicaations($sql);
 				if($results->num_rows > 0){
 					$row = $results->fetch_assoc();
                     if(true){
@@ -67,7 +65,7 @@
 					}
 				}
 				$sql = "SELECT name 
-						FROM accommodation
+						FROM accommodations
 						WHERE id = \"$temp_id\"
 						LIMIT 1";
 				$sql_results = new SQL_results();
@@ -111,8 +109,8 @@ https://obocircle.com/
 
 Obocircle.com copyright © " . date('Y') . " | all rights reserved
 Powered and maintained by https://www.mcnetsolutions.co.za [McNet Solutions (Pty) Ltd]";
-				require '../../send-msg.php';
-			}
+				//require '../../server/send-email.php';
+			}else echo "Error: " . $connection->error;
 		}
 		$connection->close();
 	}else{
