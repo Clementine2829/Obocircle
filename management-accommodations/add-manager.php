@@ -1,3 +1,55 @@
+<?php session_start();
+
+$accommodation_name = "";
+if($_SERVER['REQUEST_METHOD'] == "POST"){    
+    if(isset($_SESSION['s_id']) || isset($_SESSION['s_user_type'])){
+        if($_SESSION['s_user_type'] != "premium_user"){
+            require_once '../access_denied.html';
+            return;
+        }
+        $user_id = $_SESSION['s_id'];
+        require("../includes/conn.inc.php");
+        $sql = "SELECT id, name
+                FROM accommodations
+                WHERE manager=\"$user_id\"";
+        $accommodation = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+        if($accommodation != ""){
+            $sql .= " AND (id = \"$accommodation\")";
+        }
+        $sql .= " LIMIT 15";
+        $sql_results = new SQL_results();
+        $results = $sql_results->results_accommodations($sql);
+        $div = "";
+        if($results->num_rows == 1){
+            $row = $results->fetch_assoc();
+            $accommodation_name = $row['name'];    
+        }else if($results->num_rows > 1){
+            while($row = $results->fetch_assoc()){
+                $div .= '<br><li><a href="./dashboard.php?payload='. $row['id'] . '">'. $row['name'] . '</a></li>';
+            }
+            ?>
+                <div id="select_accommodations">
+                    <br>
+                    <h5>Select an accommodation to manage below</h5>
+                    <ul>
+                        <?php echo $div; ?>
+                    </ul>
+                </div>
+            <?php
+            return;
+        }else if($results->num_rows < 1){
+            require_once 'accommodation-not-found.html';
+            return;
+        }
+    }else {
+        require_once '../offline.html';
+        return;
+    }
+}else{
+    echo "<span style='color: red'>Unknow request</span>";
+    return;
+}
+?>
 <style rel="stylesheet" type="text/css">
     #search_info{
         
@@ -42,7 +94,9 @@
 </style>
 <div id="manager_info">
     <div class="search_info">
-        <h4>Use the form below to find the person you wish to add as a manger for this accommodations</h4><br>
+        <h4>
+            Use the form below to find the person you wish to add as a manger for this accommodations 
+            <span id="accommodation_name"><?php echo $accommodation_name; ?> </span></h4><br>
         <label for="manager">Person's Ref Code: </label>
         <span class="err" id="err_manager_code"> * </span><br>
         <input type="text" id="search_manager" placeholder="Ref code">
@@ -58,11 +112,12 @@
         if(ref != ""){
             let url = "./server/find-person.php?action=management&ref=" + ref;
             let loc = "#results_manager_info";
+            console.log(url);
             send_data(url, displayer, loc, "", "", "#find_manager_btn");
         }
     }
     function get_ref(){
-        let pattern = /\d{6,6}/;
+        let pattern = /\d/;
         let ref = $("#search_manager").val();
         if(ref == ""){
             $("#err_manager_code").html("Ref code is required");
@@ -76,18 +131,16 @@
         }
     }
     function add_as_manager_fn(user){
+        let payload = $("#payload").val();
         let name = $("#full_name").html();
-        let con = confirm("Are you sure you want to add " + name + " as one of the managers for this accommodation?");
+        let a_name = " " + $("#accommodation_name").html();
+        let con = confirm("Are you sure you want to add " + name + " as one of the managers for this accommodation" + a_name + "?");
         if(con == true){
-            let url = "./server/find-person.php?action=add_as_manager&user=" + user;
+            let url = "./management-accommodations/server/add-manager.inc.php?user=" + user + "&payload=" + payload;
             send_data(url, alert_action, "", "", "", "#add_as_manager")
         }
     }
     function alert_action(data, loc){
-//        if(data == "success"){
-            let div = "<br><h5 style='color: blue'>Clementine has been successfully added as a manager to this accommodation</h5>"
-            $("#results_manager_info").html(div);
-  //      }
-        //alert(data);
+        $("#results_manager_info").html(data);
     }
 </script>

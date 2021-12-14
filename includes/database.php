@@ -171,6 +171,15 @@
         organization VARCHAR (20) NOT NULL,
         display CHAR (1) NOT NULL DEFAULT "0"
     )
+    CREATE TABLE managers(
+        accommodation_id VARCHAR (40) NOT NULL,
+        user_id VARCHAR (45) NOT NULL,
+        added_by VARCHAR (45) NOT NULL,
+        date_added VARCHAR (20) NOT NULL,
+        status CHAR (1) NOT NULL,
+        PRIMARY KEY (accommodation_id, user_id),
+		FOREIGN KEY (accommodation_id) REFERENCES accommodations (id) ON DELETE CASCADE
+    )
 ************************************************************************************************
     create database obo_users;
     create table users(
