@@ -147,14 +147,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$users_ex = "INSERT INTO users_extended (user_ex_id, user_id) VALUES(\"$user_ex\", \"$id\")";
 				if ($connection->query($users_ex)){
                     //do thing
-                } else echo "Error 1: " . $connection->error;
+                } //else echo "Error 1: " . $connection->error;
 				
 				$sql_validate_ref_code = "SELECT first_name FROM users WHERE ref_code = \"$ref_code\" LIMIT 1";
 				$results = $sql_results->results_profile($sql_validate_ref_code);
-				if($results->num_rows > 0){
+				if($results->num_rows > 0){ 
 					$sql_ref_code = "INSERT INTO refs VALUES(\"$ref_code\", \"$email\")";
 					if (!$connection->query($sql_ref_code)){
-						echo "Error 2: " . $connection->error;
+						//echo "Error 2: " . $connection->error;
 					}
 				}else{
 					if($ref_code != ""){
@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$sql_update = "INSERT INTO activate_account(activate_id, user_id, expire_date, veri_link)
 								VALUES(\"$veri_id\", \"$id\", \"$expire_date\", \"$link\")";
 				if ($connection->query($sql_update)){
-					$name = "Obocircle (Auto-generated-mail)";
+					$name = "Obocircle";
 					$subject = "Account Activation link";
 					$email = "no-reply@obocircle.com";
 					$recipient = $email;
@@ -187,7 +187,6 @@ Please use the code below to activate your account
 " . $link . "
 
 
-GxT2YBJCAL211211003335.jpg
 Copyright © " . date("Y") . " Obocircle.com | All rights reserved
 				info@obocircle.com";
 
@@ -227,7 +226,8 @@ function get_ref_code($sql_results, $sql_validate_ref_code=""){
 	while(true){
 		if($results->num_rows > 0){
 			$ref_code = rand(100000, 999999);
-	$sql_validate_ref_code = ($sql_validate_ref_code == "") ? "SELECT first_name FROM users WHERE ref_code = \"$ref_code\" LIMIT 1" : $sql_validate_ref_code;			$results = $sql_results->results_profile($sql_validate_ref_code);
+            $sql_validate_ref_code = ($sql_validate_ref_code == "") ? "SELECT first_name FROM users WHERE ref_code = \"$ref_code\" LIMIT 1" : $sql_validate_ref_code;			
+            $results = $sql_results->results_profile($sql_validate_ref_code);
 		}else{
 			break;
 		}

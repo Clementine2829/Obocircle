@@ -18,69 +18,63 @@
                 LEFT JOIN users_extended ON users.id = users_extended.user_id)
             WHERE users.ref_code = \"$user_id\"
             LIMIT 1";
-        require("../includes/conn.inc.php");
-        $sql_results = new SQL_results();
-        $results = $sql_results->results_profile($sql);
-        if($results->num_rows == 1){
-            $row = $results->fetch_assoc();
-            $user_id = $row['id'];
-            $user_name = $row['first_name'] . " " . $row['last_name'];
-            $gender = $row['gender'];
-            $address = $row['address'];
-            $phone = $row['phone'];
-            $email = $row['email'];
-                        
-            if($gender == "M") $gender = "Male";
-            else if($gender == "F") $gender = "Female";
-            else if($gender == "O") $gender = "Other";
+    require("../includes/conn.inc.php");
+    $sql_results = new SQL_results();
+    $results = $sql_results->results_profile($sql);
+    if($results->num_rows == 1){
+        $row = $results->fetch_assoc();
+        $user_id = $row['id'];
+        $user_name = $row['first_name'] . " " . $row['last_name'];
+        $gender = $row['gender'];
+        $address = $row['address'];
+        $phone = $row['phone'];
+        $email = $row['email'];
 
-            if($address != ""){
-                $temp_loc = explode("<br>", $address);
-                $address = "";
-                $counter = 0;
-                for($i = 0; $i < 4; $i++){
-                    if(isset($temp_loc[$i])){
-                        if($temp_loc[$i] == "") continue;
-                        else {
-                            $counter++;
-                            if($counter == 3){
-                                $address .= $temp_loc[$i] . " ";
-                            }else{
-                                $address .= $temp_loc[$i] . "<br>"; 
-                            }
-                            if($counter == 3 && $i == 3) $address .= "<br>";
+        if($gender == "M") $gender = "Male";
+        else if($gender == "F") $gender = "Female";
+        else if($gender == "O") $gender = "Other";
+
+        if($address != ""){
+            $temp_loc = explode("<br>", $address);
+            $address = "";
+            $counter = 0;
+            for($i = 0; $i < 4; $i++){
+                if(isset($temp_loc[$i])){
+                    if($temp_loc[$i] == "") continue;
+                    else {
+                        $counter++;
+                        if($counter == 3){
+                            $address .= $temp_loc[$i] . " ";
+                        }else{
+                            $address .= $temp_loc[$i] . "<br>"; 
                         }
-                    } 
-                }
-                $address = substr($address, 0, (strlen($address) - 4));  
-            }else $address = "<i style='color: gray'>Address N/A</i>";
-                
-            $sql = "SELECT date_added 
-                    FROM managers 
-                    WHERE user_id = \"$user_id\"
-                    LIMIT 1";
-            $results = $sql_results->results_accommodations($sql);
-            if($results->num_rows > 0){
-                $already_a_manager = true;
-            } 
-            $sql = "SELECT name 
-                    FROM accommodations 
-                    WHERE manager = \"$user_id\"
-                    LIMIT 1";
-            $results = $sql_results->results_accommodations($sql);
-            if($results->num_rows > 0){
-                $already_a_manager = true;
-            }   
-        }else{
-            echo '<p style="color: red">No one could be  found with that searched ref number, make sure it is correct and try again</p>';
-            return;
-        }
+                        if($counter == 3 && $i == 3) $address .= "<br>";
+                    }
+                } 
+            }
+            $address = substr($address, 0, (strlen($address) - 4));  
+        }else $address = "<i style='color: gray'>Address N/A</i>";
 
-
-/*echo '
-        <h4 class="err">Zero results found.</h4>
-        <p>Please make sure that the ref code is corrent and search again</p>';
-*/
+        $sql = "SELECT date_added 
+                FROM managers 
+                WHERE user_id = \"$user_id\"
+                LIMIT 1";
+        $results = $sql_results->results_accommodations($sql);
+        if($results->num_rows > 0){
+            $already_a_manager = true;
+        } 
+        $sql = "SELECT name 
+                FROM accommodations 
+                WHERE manager = \"$user_id\"
+                LIMIT 1";
+        $results = $sql_results->results_accommodations($sql);
+        if($results->num_rows > 0){
+            $already_a_manager = true;
+        }   
+    }else{
+        echo '<p style="color: red">No one could be  found with that searched ref number, make sure it is correct and try again</p>';
+        return;
+    }
 ?>
 <div class="info_container">
     <div class="info">
