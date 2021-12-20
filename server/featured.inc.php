@@ -107,6 +107,7 @@
 		}
 		if(sizeof($accommodations) > 0) {
             foreach($accommodations as $accommodation => $value){
+                print_r($accommodation);
                 $temp_accommodation = $accommodations[$accommodation]['id'];
                 $sql = "SELECT stars_values, scale_values, rate_counter
                         FROM star_and_scale_rating 
@@ -133,8 +134,53 @@
                     $accommodations[$accommodation]['reviews'] = $counter; 
                 }            
             }
+            $google_maps = [];
             if(isset($_REQUEST['map']) && $_REQUEST['map'] == "true"){
                 require_once '../maps-body.php';   
+                    ?>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=initMap&v=weekly" async></script>
+                    <script type="text/javascript">
+
+                    function initMap() {                    
+                        const map = new google.maps.Map(document.getElementById("accommodation_map"), {
+                            zoom: 13,
+                            center: { lat: -26.199070, lng: 28.058319 },
+                        });
+                        // Set LatLng and title text for the markers. The first marker (Boynton Pass)
+                        // receives the initial focus when tab is pressed. Use arrow keys to
+                        // move between markers; press tab again to cycle through the map controls.
+
+                        const tourStops = (<?php echo json_encode($google_maps); ?>);
+
+                        // Create an info window to share between markers.
+                        const infoWindow = new google.maps.InfoWindow();
+
+                        const image = {
+                            url: "./images/google_maps_logo.png",
+                            size: new google.maps.Size(75, 40),
+                            scaledSize: new google.maps.Size(100, 100),
+                        };
+                        // Create the markers.
+                        tourStops.forEach(([position, title], i) => {
+                            const marker = new google.maps.Marker({
+                                position,
+                                label: "R2500",
+                                map,
+                                icon: image,
+                                title: `${title}`,
+                                optimized: true,
+                            });
+
+                            // Add a click listener for each marker, and set up the info window.
+                            marker.addListener("click", () => {
+                                infoWindow.close();
+                                infoWindow.setContent(marker.getTitle());
+                                infoWindow.open(marker.getMap(), marker);
+                            });
+                        });
+                    }     
+                    </script>
+                <?php
                 return; //google maps requires coordinates 
             }
             ?>

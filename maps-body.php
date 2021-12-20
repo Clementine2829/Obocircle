@@ -1,5 +1,4 @@
 <?php
-$google_maps = [];
 foreach($accommodations as $accommodation => $value){
     if(isset($accommodations[$accommodation]["coordinates"])){ 
          $accommo_id = $accommodations[$accommodation]["id"];
@@ -49,10 +48,10 @@ foreach($accommodations as $accommodation => $value){
         $temp_coordinates = explode(",", $accommodations[$accommodation]["coordinates"]);
         $lat = (isset($temp_coordinates[0])) ? $temp_coordinates[0]: 0;
         $lng = (isset($temp_coordinates[1])) ? $temp_coordinates[1]: 0;
-        $temp_coordates = array(array('lat'=>$lat, 'lng'=>$lng), $div_container);
+        $temp_coordates = array(array('lat'=>floatval($lat), 'lng'=>floatval($lng)), $div_container);
         array_push($google_maps, $temp_coordates);
     }else continue;    
 }
-echo json_encode($google_maps);
+//echo json_encode($google_maps);
 
 ?>

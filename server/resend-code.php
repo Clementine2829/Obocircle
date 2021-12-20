@@ -3,7 +3,8 @@
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     require 'validate_data.php';
     require("../includes/conn.inc.php");
-
+    
+    $firstname = $email = "";
     $id = $_SESSION['s_id'];
     $sql = "SELECT user_type FROM users_extended WHERE user_id = \"$id\" AND profile_status = \"1\" LIMIT 1";
     $sql_results = new SQL_results();
@@ -11,6 +12,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     if($results->num_rows > 0){
         echo "activated";
         return;
+    }
+    $sql = "SELECT email, first_name FROM users WHERE id = \"$id\" LIMIT 1";
+    $results = $sql_results->results_profile($sql);
+    if($results->num_rows > 0){
+        $data = $results->fetch_assoc();
+        $firstname = $data['first_name'];
+        $email = $data['email'];
     }
     
     $db_login = new DB_login_updates();
@@ -36,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $email = "no-reply@obocircle.com";
         $recipient = $email;
         $message = "
-Hi, there,
+Hi, " . $firstname . ",
 
 Please use the code below to activate your account
 

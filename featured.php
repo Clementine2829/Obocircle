@@ -19,7 +19,6 @@
 	<script src="js/validate_email.js" type="text/javascript"></script>
 	<script src="js/footer.js" type="text/javascript"></script>
 	<script src="js/search.js" type="text/javascript"></script>
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=initMap&v=weekly" async></script>-->
     <script type="text/javascript">
 		var function_type = -1;
 		var page = 1;
