@@ -17,11 +17,9 @@
             return;
         }
         $msg = "";
-
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             $msg = "Invalid activation code. Please try again";   
-            $activation_code = (!empty($_POST['activate_account']) && preg_match('/\d{6}/', $_POST['activate_account'])) ? $_POST['activate_account'] : "";
-            
+            $activation_code = (isset($_POST['activate_account']) && preg_match('/\d{6}/', $_POST['activate_account'])) ? $_POST['activate_account'] : "";
             if($activation_code != ""){
                 $user = $_SESSION['s_id'];
                 $sql = "SELECT expire_date 
@@ -76,7 +74,7 @@
                         </div>
                         <div class="btns">
                             <button id="activate_account_btn">Activate</button>
-                            <button id="resend_code_btn" disabled>Resend code</button>
+                            <button id="resend_code_btn" onclick="resend_code()">Resend code</button>
                         </div>
                     </div>
                 </form>
@@ -102,7 +100,22 @@
             $('#resend_code_btn').click(function(){
                 
             });
-        }); 
+        });
+        function resend_code(){
+            let url = "./server/resend-code.php";
+            send_data(url, displayer_helper, "");
+        }
+        function displayer_helper(d, l){
+            if(d == "success"){
+                alert("An activation code has been been send to your email address as provided on our system, please check your inbox ");
+                document.getElementById('resend_code_btn').remove();
+            }else if(d == "activated"){
+                alert("Account activated already");
+                window.location = "./home.php";
+            }else{
+                alert(d)
+            }
+        }
     </script>
 </body>      
 </html>

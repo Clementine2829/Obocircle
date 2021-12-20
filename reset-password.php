@@ -39,8 +39,19 @@
 		@media only screen and (max-width: 800px){
 
 		}
-		@media only screen and (max-width: 800px){
-		
+		@media only screen and (max-width: 500px){
+		    #account_holder{
+		        width: 98%;
+		        margin: 1%;
+		    }
+		    .account_holder input[type=password]{
+		        width: 65%;
+		    }
+		    .account_holder input[type=password]{
+		        width: auto;
+		        padding: 1% 8%;
+		    }
+            #footer3{display: none;}		
 		}
 	</style>
 	<?php

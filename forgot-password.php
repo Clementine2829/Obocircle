@@ -135,6 +135,7 @@
         #user_info .sub_container .recover input {
             width: 60%;
         }
+        #footer4{display: none;}
     }
 </style>
     <div class="row">
