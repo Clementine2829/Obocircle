@@ -1,7 +1,40 @@
 <?php
 foreach($accommodations as $accommodation => $value){
     if(isset($accommodations[$accommodation]["coordinates"])){ 
-         $accommo_id = $accommodations[$accommodation]["id"];
+                
+        $room_id = $accommodations[$accommodation]['room']["id"];
+        echo "<br>" . $room_id . "<br>";
+        $sql = "SELECT bursary, cash FROM single_s WHERE room_id = \"$room_id\" LIMIT 1";
+
+        $results = $sql_results->results_accommodations($sql);
+        if ($results->num_rows > 0) {
+            $row = $results->fetch_assoc();
+            $accommodations[$accommodation]['room']["single_sharing_amount"] = ($row['bursary'] != "") ? "R" . $row['bursary'] : "R" . $row['cash'];
+        }
+        $sql = "SELECT bursary, cash FROM double_s WHERE room_id = \"$room_id\" LIMIT 1";
+        $results = $sql_results->results_accommodations($sql);
+        if ($results->num_rows > 0) {
+            $row = $results->fetch_assoc();
+            $accommodations[$accommodation]['room']["double_sharing_amount"] = ($row['bursary'] != "") ? "R" . $row['bursary'] : "R" . $row['cash'];
+        }
+        $sql = "SELECT bursary, cash FROM multi_s WHERE room_id = \"$room_id\" LIMIT 1";
+        $results = $sql_results->results_accommodations($sql);
+        if ($results->num_rows > 0) {
+            $row = $results->fetch_assoc();
+            $accommodations[$accommodation]['room']["multi_sharing_amount"] = ($row['bursary'] != "") ? "R" . $row['bursary'] : "R" . $row['cash'];
+        }
+
+        if($accommodations[$accommodation]['room']['double_available'] == 1){
+            $accommodations[$accommodation]['display_ammount'] = $accommodations[$accommodation]['room']['double_sharing_amount'];
+        }else if($accommodations[$accommodation]['room']['multi_available'] != 1){
+            //default display even though it is not available     
+            $accommodations[$accommodation]['display_ammount'] = $accommodations[$accommodation]['room']['single_sharing_amount'];
+        }else if($accommodations[$accommodation]['room']['multi_available'] == 1){
+            $accommodations[$accommodation]['display_ammount'] = $accommodations[$accommodation]['room']['single_sharing_amount'];
+        }
+        $ammount = $accommodations[$accommodation]['display_ammount'];
+        array_push($ammounts, $ammount);
+        $accommo_id = $accommodations[$accommodation]["id"];
         $sql = "SELECT images.image
                 FROM (images
                     INNER JOIN accommodation_images ON images.image_id = accommodation_images.image_id)

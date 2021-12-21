@@ -208,7 +208,7 @@
             Website link(Optional) <span style="color: gray; font-style: italic">E.g. https://obocircle.com/</span>
         </label>
         <span class="err" id="err_website"></span><br>
-        <input type="text" id='website' placeholder="Your website URL" value="<?php echo $website; ?>"><br><br>
+        <input type="text" id='website' placeholder="Your website URL" onblur="get_website()" value="<?php echo $website; ?>"><br><br>
         <span id="err_update_main_page" class="err"></span>
         <input type="button" id="update_main_page" value="Update Changes">
     </div>
@@ -281,14 +281,14 @@
         function get_website(){
             let website = $('#website').val();
             if(website != ""){
-                //let pattern = "/(http|https)+(://)+(wwww)?+[a-zA-Z0-9\-\.]/";
-                let pattern = "/^[a-zA-Z0-9\-\.\:\/]+$/";
-                if(!website.match(pattern)){
-                    $('#err_website').html("Invalid website format, refer to the e.g given above");
-                    return "";
-                }else{
+                //let pattern = /((http|https)+(\:\/\/))?+(wwww)?+[a-zA-Z0-9\-\.]*$/;
+                let pattern = /^[a-zA-Z0-9\-\.\:\/]+$/;
+                if(website.match(pattern)){
                     $('#err_website').html("");
                     return website;
+                }else{
+                    $('#err_website').html("Invalid website format, refer to the e.g given above");
+                    return "";
                 } 
             }else $('#err_website').html("");                                
             return "";

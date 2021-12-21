@@ -90,7 +90,7 @@
                             WHERE accommo_id = \"$payload\"";
             if ($result->num_rows < 1) {
                 $website_id = rand_text($website, 10);
-                $sql_update = "INSET INTO websites
+                $sql_update = "INSERT INTO websites
                                 VALUES(\"$website_id\", \"$payload\", \"$website\")";
             }
             if ($connection->query($sql_update)){

@@ -30,12 +30,7 @@
 		}
 		function set_urls(fun){
 			return "next-prev.php?file=" + fun;
-/*			if(fun == "main"){
-			}else if(fun == "search"){
-				return "next-prev.php?file=search";
-				
-			}
-*/		}
+		}
     </script>
 	<script src="./js/next-prev.js" type="text/javascript"></script>
 	<script src="js/featured.js" type="text/javascript"></script>

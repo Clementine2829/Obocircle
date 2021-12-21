@@ -160,7 +160,7 @@
                                 <br>
                                 <a href="change-image.php?payload=' . $payload . '&image_no=' . 
                                 $my_array[$i]['image_id'] . '&src=' . $name . '&image=' . 
-                                $my_array[$i]['image'] . '">
+                                $my_array[$i]['image'] . '" target="_blank">
                                 Change Image</a> | 
                                 <a href="#" style="color: red" 
                                 onclick="delete_me(\'' . $my_array[$i]['image_id'] . '\',\'' . $payload . '\',\''. $my_array[$i]['image'] 

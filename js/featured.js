@@ -56,37 +56,3 @@ function get_guest_rating(){
     }    
     return 0;
 }
-/***********************************/
-
-function google_maps(){
-    var my_latlng = {lat: -26.199070, lng: 28.058319};
-
-    var map = new google.maps.Map(document.getElementById('accommodation_map'), {
-        zoom: 8, 
-        center:my_latlng
-    })
-
-    var marker = new google.maps.Marker({
-        position: my_latlng, 
-        map: map,
-        title: 'Truman House' 
-    });
-}
-function initMapDisplayer(data, loc){
-
-// Create the script tag, set the appropriate attributes
-var script = document.createElement('script');
-script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=initMap&v=weekly';
-script.async = true;
-
-// Attach your callback function to the `window` object
-window.initMap = function() {
-  // JS API is loaded and available
-};
-
-// Append the 'script' element to 'head'
-document.head.appendChild(script);
-    //initMap();
-}
-// The following example creates five accessible and
-// focusable markers.

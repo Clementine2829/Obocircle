@@ -459,6 +459,7 @@
 
                 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=initMap"></script>
                 <script type="text/javascript">
+/*                    
 function ipLookUp () {
   $.ajax('http://ip-api.com/json')
   .then(
@@ -510,7 +511,7 @@ function error(error_message) {
   // get your location some other way
   console.log('geolocation is not enabled on this browser')
   ipLookUp();
-}
+}*/
                 function initMap() {
                   const markerArray = [];
                   // Instantiate a directions service.
@@ -613,11 +614,11 @@ function error(error_message) {
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'about'){
             $sql = "SELECT accommodations.name, accommodations.about, 
-                            address.main_address, address.contact, address.email
+                            address.main_address, address.contact, address.geolocation, address.email
                     FROM(accommodations
                          INNER JOIN address ON accommodations.id = address.accommo_id) 
                     WHERE id = \"$accommodation\" LIMIT 1";
-            $name = $about = $address = $phone = $email = "";
+            $name = $about = $address = $phone = $email = $lat = $lng = "";
             require("../includes/conn.inc.php");
             $sql_results = new SQL_results();
             $results = $sql_results->results_accommodations($sql);
@@ -625,16 +626,18 @@ function error(error_message) {
                 $data = $results->fetch_assoc();
                 if(true){
                     $name = $data['name'];
+                    $coordinates = explode(",", $data['geolocation']);
                     $about = $data['about'];
                     $phone = ($data['contact'] != "") ? $data['contact'] : "N/A";
                     $email = ($data['email'] != "") ? $data['email'] : "N/A";
                     $address = ($data['main_address'] != "") ? $data['main_address'] : "Address N/A";
+                    $lat = (isset($coordinates[0])) ? $coordinates[0] : 0;
+                    $lng = (isset($coordinates[1])) ? $coordinates[1] : 0;
                 }
             }
             $phone = substr($phone, 0, 3) . ' ' . substr($phone, 3, 3) . ' ' . substr($phone, 6, 4);
             $address = str_replace(", ", "<br>", $address);  
             $temp_loc = explode("<br>", $address);
-
             $address = "";
             $counter = 0;
             for($i = 0; $i < 4; $i++){
@@ -655,6 +658,68 @@ function error(error_message) {
             
             ?>
             <!-- About -->
+                <style type="text/css">
+                    /* Optional: Makes the sample page fill the window. */
+                    html,
+                    body {
+                      height: 100%;
+                      margin: 0;
+                      padding: 0;
+                    }
+
+                    /* The popup bubble styling. */
+                    .popup-bubble {
+                      /* Position the bubble centred-above its parent. */
+                        font-size: 20px;
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      transform: translate(-50%, -100%);
+                      /* Style the bubble. */
+                      background-color: white;
+                      padding: 5px;
+                      border-radius: 5px;
+                      font-family: sans-serif;
+                      overflow-y: auto;
+                      max-height: 60px;
+                      box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
+                    }
+
+                    /* The parent of the bubble. A zero-height div at the top of the tip. */
+                    .popup-bubble-anchor {
+                      /* Position the div a fixed distance above the tip. */
+                      position: absolute;
+                      width: 100%;
+                      bottom: 8px;
+                      left: 0;
+                    }
+
+                    /* This element draws the tip. */
+                    .popup-bubble-anchor::after {
+                      content: "";
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      /* Center the tip horizontally. */
+                      transform: translate(-50%, 0);
+                      /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+                      width: 0;
+                      height: 0;
+                      /* The tip is 8px high, and 12px wide. */
+                      border-left: 6px solid transparent;
+                      border-right: 6px solid transparent;
+                      border-top: 8px solid white;
+                    }
+
+                    /* JavaScript will position this div at the bottom of the popup tip. */
+                    .popup-container {
+                      cursor: auto;
+                      height: 0;
+                      position: absolute;
+                      /* The max width of the info window. */
+                      width: 200px;
+                    }
+                </style>
                <div id="about">
                         <div class="name">
                             <h3><?php echo $name; ?></h3>
@@ -666,9 +731,10 @@ function error(error_message) {
                             </h5>
                             <h5>Address</h5>
                             <p><?php echo $address; ?></p>
-                            <div id="view_on_map">
-
-                            </div>
+                            <div id="view_on_map"></div>    
+                            <div id="content" >
+                                <?php echo $name; ?>
+                           </div>
                         </div>
                         <div class="features">
                             <h5>Features</h5>
@@ -749,21 +815,79 @@ function error(error_message) {
                             ?>
                         </div>
                     </div>
-                <script type="text/javascript">
-                function my_map(){
-                    var my_latlng = {lat: -26.199070, lng: 28.058319};
-                    var map = new google.maps.Map(document.getElementById('view_on_map'), {
-                        zoom: 16, 
-                        center:my_latlng
-                    })
-                    var marker = new google.maps.Marker({
-                        position: my_latlng, 
-                        map: map,
-                        title: 'Truman House' 
-                    });
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=getMap&v=weekly" async></script>
+            <script type="text/javascript">
+                 let _map, _popup, Popup;
+
+                /** Initializes the map and the custom popup. */
+                function getMap() {
+                  _map = new google.maps.Map(document.getElementById("view_on_map"), {
+                    center: { lat: <?php echo $lat; ?>, lng: <?php echo $lng; ?> },
+                    zoom: 13,
+                  });
+                  /**
+                   * A customized popup on the map.
+                   */
+                  class Popup extends google.maps.OverlayView {
+                    position;
+                    containerDiv;
+                    constructor(position, content) {
+                      super();
+                      this.position = position;
+                      content.classList.add("popup-bubble");
+
+                      // This zero-height div is positioned at the bottom of the bubble.
+                      const bubbleAnchor = document.createElement("div");
+
+                      bubbleAnchor.classList.add("popup-bubble-anchor");
+                      bubbleAnchor.appendChild(content);
+                      // This zero-height div is positioned at the bottom of the tip.
+                      this.containerDiv = document.createElement("div");
+                      this.containerDiv.classList.add("popup-container");
+                      this.containerDiv.appendChild(bubbleAnchor);
+                      // Optionally stop clicks, etc., from bubbling up to the map.
+                      Popup.preventMapHitsAndGesturesFrom(this.containerDiv);
+                    }
+                    /** Called when the popup is added to the map. */
+                    onAdd() {
+                      this.getPanes().floatPane.appendChild(this.containerDiv);
+                    }
+                    /** Called when the popup is removed from the map. */
+                    onRemove() {
+                      if (this.containerDiv.parentElement) {
+                        this.containerDiv.parentElement.removeChild(this.containerDiv);
+                      }
+                    }
+                    /** Called each frame when the popup needs to draw itself. */
+                    draw() {
+                      const divPosition = this.getProjection().fromLatLngToDivPixel(
+                        this.position
+                      );
+                      // Hide the popup when it is far out of view.
+                      const display =
+                        Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000
+                          ? "block"
+                          : "none";
+
+                      if (display === "block") {
+                        this.containerDiv.style.left = divPosition.x + "px";
+                        this.containerDiv.style.top = divPosition.y + "px";
+                      }
+
+                      if (this.containerDiv.style.display !== display) {
+                        this.containerDiv.style.display = display;
+                      }
+                    }
                   }
+
+                  _popup = new Popup(
+                    new google.maps.LatLng(<?php echo $lat . ', ' . $lng; ?>),
+                    document.getElementById("content")
+                  );
+                  _popup.setMap(_map);
+                }
             </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwuWaT4B4W0Rlwch_OOItCWuPyTFILV8&callback=my_map"></script>
 
             <?php
         }else if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'reviews'){

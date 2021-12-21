@@ -1,9 +1,32 @@
 <?php 
 	session_start(); 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        if(!isset($_REQUEST['payload']) || $_REQUEST['payload'] == "" ||
-            !preg_match('/^[a-zA-Z0-9]*$/', $_REQUEST['payload'])) {
-            echo "Hello";
+        require("../../includes/conn.inc.php");
+        if(isset($_SESSION['s_id']) || isset($_SESSION['s_user_type'])){
+            if($_SESSION['s_user_type'] != "premium_user"){
+                echo "Unauthorized access denied";
+                return;
+            }
+            $user_id = $_SESSION['s_id'];
+            $payload = (isset($_REQUEST['payload']) && preg_match('/^[a-zA-Z0-9]+$/', $_REQUEST['payload'])) ? $_REQUEST['payload'] : "";
+            if($payload == ""){
+                $sql = "SELECT id, name
+                        FROM accommodations
+                        WHERE manager=\"$user_id\" LIMIT 15";
+
+                $sql_results = new SQL_results();
+                $results = $sql_results->results_accommodations($sql);
+                $div = "";
+                if($results->num_rows == 1){
+                    $row = $results->fetch_assoc();
+                    $payload = $row['id'];    
+                }else{
+                    echo "Internal error, please reload page to continue";
+                    return;
+                }
+            }
+        }else{
+            echo "Internal error, please reload page to continue";
             return;
         }
 

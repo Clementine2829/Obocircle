@@ -96,7 +96,7 @@
                                 "\nWe also encourage you to use our website to apply for any of the accommodations, " + 
                                 " including this one.\nFor more details, please see our Terms of use at the bottom of the page\n" +
                                 "Otherwise confirm to continue to visit the third-party website");
-            if(con == true) window.location = './redirect-site.php?content_id=' + url;
+            if(con == true) window.open('./redirect-site.php?payload=' + url);
         }
         function load_apply_form(url){
             load_template();

@@ -27,9 +27,9 @@
                     INNER JOIN rooms ON accommodations.id = rooms.accommo_id)
                     LEFT JOIN star_and_scale_rating ON accommodations.id = star_and_scale_rating.accommo_id)";
         if(preg_match('/(nsfas\s)]+$/', $search)){
-            $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.nsfas LIKE \"%$search%\") "; 
+            $sql .= " WHERE accommodations.display = 1) AND (accommodations.name LIKE \"%$search%\" OR accommodations.nsfas LIKE \"%$search%\") "; 
         }else if($search != ""){
-            $sql .= " WHERE (accommodations.name LIKE \"%$search%\" OR accommodations.about LIKE \"%$search%\" OR 
+            $sql .= " WHERE accommodations.display = 1) AND (accommodations.name LIKE \"%$search%\" OR accommodations.about LIKE \"%$search%\" OR 
                         address.main_address LIKE \"%$search%\" OR address.contact LIKE \"%$search%\") "; 
         }else $sql .= " WHERE (accommodations.display = 1) ";    
         
@@ -70,9 +70,10 @@
                                                  "single_available" =>$row['single_sharing'],
                                                  "double_available" =>$row['double_sharing'],
                                                  "multi_available" =>$row['multi_sharing'],
-                                                 "single_sharing_amount" =>"Amount N/A",
-                                                 "double_sharing_amount" =>"Amount N/A",
-                                                 "muti_sharing_amount" =>"Amount N/A"),
+                                                 "single_sharing_amount" =>"0.01",
+                                                 "double_sharing_amount" =>"0.01",
+                                                 "muti_sharing_amount" =>"0.01"),
+								"display_ammount" => 0,
 								"manager" => $row['manager'],
 								"stars" => 0,
 								"coordinates" => $row['geolocation'],
@@ -107,7 +108,6 @@
 		}
 		if(sizeof($accommodations) > 0) {
             foreach($accommodations as $accommodation => $value){
-                print_r($accommodation);
                 $temp_accommodation = $accommodations[$accommodation]['id'];
                 $sql = "SELECT stars_values, scale_values, rate_counter
                         FROM star_and_scale_rating 
@@ -135,6 +135,7 @@
                 }            
             }
             $google_maps = [];
+            $ammounts = [];
             if(isset($_REQUEST['map']) && $_REQUEST['map'] == "true"){
                 require_once '../maps-body.php';   
                     ?>
@@ -151,7 +152,8 @@
                         // move between markers; press tab again to cycle through the map controls.
 
                         const tourStops = (<?php echo json_encode($google_maps); ?>);
-
+                        const ammounts = (<?php echo json_encode($ammounts); ?>);
+                        
                         // Create an info window to share between markers.
                         const infoWindow = new google.maps.InfoWindow();
 
@@ -161,10 +163,10 @@
                             scaledSize: new google.maps.Size(100, 100),
                         };
                         // Create the markers.
-                        tourStops.forEach(([position, title], i) => {
+                        tourStops.forEach(([position, title, arr], i) => {
                             const marker = new google.maps.Marker({
                                 position,
-                                label: "R2500",
+                                label: ammounts[i], //"$accommodations[$accommodation]['display_ammount']",
                                 map,
                                 icon: image,
                                 title: `${title}`,
