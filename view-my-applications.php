@@ -1,5 +1,5 @@
     <!--header-->
-    <?php require_once('./header.php'); ?>
+    <?php require_once('./header.php'); $_SESSION['redir'] = "view-my-applications.php"; ?>
     <!--end header-->
     <div class="row">
     <div class="col-sm-1"></div>
@@ -46,7 +46,6 @@
         function send_application_response(){
             let accommodation = $("#accommodation_name").val();
             let action = $("#action").val();
-            alert(accommodation + " " + action);
             if(accommodation == "" || action == ""){
                 $("err_submit_msg").html("Please select both accommodation name and action to take before submit<br>");
                 return;
@@ -55,6 +54,20 @@
             }
             let url = "./server/manage-application.php?accommodation=" + accommodation + "&action=" + action;
             send_data(url, delete_application_helper, "");
+        }
+        function synch_applications(){
+            let accommodation = $("#accommodation_name").val();
+            let url = "./server/manage-application.php?accommodation=" + accommodation + "&action=synch-applications";
+            send_data(url, synch_apps, "");
+        }
+        function synch_apps(d, l){
+            console.log(d);
+            if(d == "found"){
+                alert("Applicatoins were found and page will reload to sychronize them");
+                window.location.reload();
+            }else if(d == "Not found"){
+                alert("No applicatoins were found linked to your applications, to help you make things simpler, please make sure you are using the same email you used on signup page, or update your email to the one you used to apply");
+            }
         }
     </script>
 </body>      

@@ -115,6 +115,7 @@
                         ?>
                         </tbody>
                     </table>
+                        <p style="color: brown; margin-top: 2%; text-align: center">If you have previously applied and some of your applications are not listed, click <a href='#' onclick='synch_applications()'>here</a> to sychronize them with your account</p><br>
                     <span id="temp_message" style="display: none"><?php echo $message; ?></span>
                     <?php 
                     
@@ -145,7 +146,8 @@
                 }
             }else{
                 echo "<br><h5 style='color: red'>No applications found</h5>
-                        <p>You can click <a href='./featured.php'>here</a> to browse for accommodations to apply for one</p><br>";
+                        <p>If you have previously applied, click <a href='#' onclick='synch_applications()'>here</a> to sychronize your applications with your account</p><br>
+                        <p>Otherwise click <a href='./featured.php'>here</a> to browse for accommodations and apply for residence</p><br>";
                 return;
             }
         }else{
